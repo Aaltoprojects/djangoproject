@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Search
+{% endblock %}
+
+{% block content %}
+
+Search page is here. Below you can search employee profiles from the data base:
+</br></br></br>
+
+<form method="post">
+	{% csrf_token %}
+	{{ form }}
+    <button type="submit"> Search </button>
+</form>
+
+{% endblock %}
