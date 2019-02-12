@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <title>{% block title %} Hello World {% endblock %}</title>
+    {% block header %}
+
+    {% endblock header %}
   </head>
   <body>
 
@@ -27,7 +30,7 @@
           <a class="nav-link" href="{% url 'about' %}">Create Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'search' %}">Search Profile</a>
+          <a class="nav-link" href="{% url 'index' %}">Search Profile</a>
         </li>         
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
