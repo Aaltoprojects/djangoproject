@@ -41,14 +41,31 @@ def search(request):
 
 			return render(request, search.html, {'form':form})
 
-	return render(request, 'search.html', {})
+	else:
+
+		return render(request, 'search.html', {})
 
 
 def create(request):
 
 	if request.method == 'POST':
 
+		emp = employees(
+			name=request.POST['fname'],
+			surname=request.POST['lname'],
+			pnumber=request.POST['pnumber'],
+			email=request.POST['email'],
+			title=request.POST['title'],
+			function=request.POST['function'],
+			siivous=request.POST['siivous'],
+			tetsaus=request.POST['tetsaus'],
+			johtaminen=request.POST['johtaminen'],)
+		emp.save()
+		print('Creation successful')
+
 		return render(request, 'created.html', {})
 
-	return render(request, 'create.html', {})
+	else:
+
+		return render(request, 'create.html', {})
 

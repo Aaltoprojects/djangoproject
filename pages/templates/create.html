@@ -24,7 +24,7 @@
 	<link rel="stylesheet" type="text/css" href={% static "css/main.css" %}>
 <!--===============================================================================================-->
 {% endblock header %}
-{% block title %} Index {% endblock title %}
+{% block title %} Create {% endblock title %}
 </head>
 <body>
 {% block content %}
@@ -32,7 +32,7 @@
 	<div class="bg-contact3" style="background-image: url({% static 'images/bg-01.jpg' %});">
 		<div class="container-contact3">
 			<div class="wrap-contact3">
-				<form class="contact3-form validate-form" action="/index/" method="POST">
+				<form class="contact3-form validate-form" action="/create/" method="POST">
 					{% csrf_token %}
 					<span class="contact3-form-title">
 						Please fill in your Information
@@ -71,6 +71,31 @@
 
 					<div class="wrap-input3 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						<input class="input3" type="text" name="email" placeholder="Email Address">
+						<span class="focus-input3"></span>
+					</div>
+
+					<div class="wrap-input3 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input3" type="text" name="title" placeholder="Title">
+						<span class="focus-input3"></span>
+					</div>
+
+					<div class="wrap-input3 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input3" type="text" name="function" placeholder="Function">
+						<span class="focus-input3"></span>
+					</div>
+
+					<div class="wrap-input3 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input3" type="number" min=0 max=3 name="siivous" placeholder="Siivous">
+						<span class="focus-input3"></span>
+					</div>
+
+					<div class="wrap-input3 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input3" type="number" min=0 max=3 name="tetsaus" placeholder="Tetsaus">
+						<span class="focus-input3"></span>
+					</div>
+
+					<div class="wrap-input3 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input3" type="number" min=0 max=3 name="johtaminen" placeholder="Johtaminen">
 						<span class="focus-input3"></span>
 					</div>
 
