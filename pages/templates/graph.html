@@ -1,31 +1,40 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Home
+Results
 {% endblock %}
 
 {% block content %}
+<br/>
+<div class= 'container'>
 
-<br/><br/><br/>
-Here is the data:
-<br/><br/><br/>
+	<br/><br/><br/>
+	Here is the data:
+	<br/><br/><br/>
 
-<form method="post">
-	{% csrf_token %}
-	{{ form }}
-    <button type="submit"> Submit </button>
+	<form method="post">
 
-<ul>
-	{% for key, value in data.items %}
-	<li> {{ key }} </li>
-		<ul>
-		{% for val in value %}
-		<li> {{ val }} </li>
-		{% endfor %}
-		</ul>
-	{% endfor %}
-</ul>
+		{% csrf_token %}
+		<table>
+		{{ form.as_table }}
+		</table>
+	    <button type="submit"> Submit </button>
 
-</form>
+		<table>
+			{% for key, value in data.items %}
 
+			{{ key }}
+
+				{% for val in value %}
+
+					{{ val }}
+					
+				{% endfor %}
+
+			{% endfor %}
+		</table>
+
+	</form>
+
+</div>
 {% endblock %}

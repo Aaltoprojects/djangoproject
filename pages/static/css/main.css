@@ -126,7 +126,8 @@ iframe {
 /*//////////////////////////////////////////////////////////////////
 [ Contact 2 ]*/
 .bg-contact3 {
-  width: 100%;  
+  width: 100%;
+  height: 100%;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -146,7 +147,6 @@ iframe {
   align-items: center;
   padding: 15px;
   background: rgba(255,255,255,0.5);
-  
 }
 
 .wrap-contact3 {

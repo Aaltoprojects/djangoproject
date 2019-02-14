@@ -5,14 +5,10 @@ Home
 {% endblock %}
 
 {% block content %}
+<br/>
+<div class= 'container'>
 
-Home page. Below you can search Finnish companies:
-<br/><br/><br/>
+This is home page.
 
-<form method="post">
-	{% csrf_token %}
-	{{ form }}
-    <button type="submit"> Search </button>
-</form>
-
+</div>
 {% endblock %}

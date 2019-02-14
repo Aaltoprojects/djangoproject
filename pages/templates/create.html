@@ -32,34 +32,45 @@
 	<div class="bg-contact3" style="background-image: url({% static 'images/bg-01.jpg' %});">
 		<div class="container-contact3">
 			<div class="wrap-contact3">
-				<form class="contact3-form validate-form">
+				<form class="contact3-form validate-form" action="/index/" method="POST">
+					{% csrf_token %}
 					<span class="contact3-form-title">
-						Contact Us
+						Please fill in your Information
 					</span>
 
 					<div class="wrap-contact3-form-radio">
 						<div class="contact3-form-radio m-r-42">
 							<input class="input-radio3" id="radio1" type="radio" name="choice" value="say-hi" checked="checked">
 							<label class="label-radio3" for="radio1">
-								Say Hi
+								Male
 							</label>
 						</div>
 
 						<div class="contact3-form-radio">
 							<input class="input-radio3" id="radio2" type="radio" name="choice" value="get-quote">
 							<label class="label-radio3" for="radio2">
-								Get a Quote
+								Female
 							</label>
 						</div>
 					</div>
 
-					<div class="wrap-input3 validate-input" data-validate="Name is required">
-						<input class="input3" type="text" name="name" placeholder="Your Name">
+					<div class="wrap-input3 validate-input" data-validate="First name is required">
+						<input class="input3" type="text" name="fname" placeholder="First Name">
+						<span class="focus-input3"></span>
+					</div>
+
+					<div class="wrap-input3 validate-input" data-validate="Last name is required">
+						<input class="input3" type="text" name="lname" placeholder="Last Name">
+						<span class="focus-input3"></span>
+					</div>
+
+					<div class="wrap-input3 validate-input" data-validate="Phone number is required">
+						<input class="input3" type="text" name="pnumber" placeholder="Phone Number">
 						<span class="focus-input3"></span>
 					</div>
 
 					<div class="wrap-input3 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input3" type="text" name="email" placeholder="Your Email">
+						<input class="input3" type="text" name="email" placeholder="Email Address">
 						<span class="focus-input3"></span>
 					</div>
 
@@ -84,11 +95,6 @@
 								<option>3000 $</option>
 							</select>
 						</div>
-						<span class="focus-input3"></span>
-					</div>
-
-					<div class="wrap-input3 validate-input" data-validate = "Message is required">
-						<textarea class="input3" name="message" placeholder="Your Message"></textarea>
 						<span class="focus-input3"></span>
 					</div>
 
