@@ -15,3 +15,6 @@ class create_employee_form(forms.Form):
     siivous = forms.IntegerField(label='Siivous')
     tetsaus = forms.IntegerField(label='Tetsaus')
     johtaminen = forms.IntegerField(label='Johtaminen')
+
+class search_form(forms.Form):
+    search_field = forms.CharField(label='Search employees', max_length=100)

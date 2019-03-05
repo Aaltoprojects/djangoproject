@@ -8,16 +8,16 @@ Search
 <br/>
 <div class= 'container'>
 
-	Search employees from the data base:
-	</br></br></br>
+Search employees from the data base:
+</br></br></br>
 
-	<form method="post">
-		{% csrf_token %}
-		<table>
-		{{ form.as_table }}
-		</table>
-	    <button type="submit"> Search </button>
-	</form>
+<form method="post">
+	{% csrf_token %}
+	<table>
+	{{ form.as_table }}
+	</table>
+    <button type="submit"> Search </button>
+</form>
 	
 </div>
 {% endblock %}

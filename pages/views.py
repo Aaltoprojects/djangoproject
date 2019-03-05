@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response
-from .forms import NameForm, create_employee_form
+from .forms import NameForm, create_employee_form, search_form
 from .models import employees
 from pages.asiakastieto import haetiedot
 import urllib.request
@@ -37,13 +37,14 @@ def search(request):
 
 	if request.method == 'POST':
 
+		form = search_form(request.POST)
 		if form.is_valid():
-
 			return render(request, search.html, {'form':form})
 
 	else:
+		form = search_form()
 
-		return render(request, 'search.html', {})
+	return render(request, 'search.html', {'form':form})
 
 
 def create(request):
