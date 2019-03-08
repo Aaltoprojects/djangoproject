@@ -7,7 +7,11 @@ import urllib.request
 import urllib.parse
 import re
 
+
 #homo
+
+#moi
+
 
 def home(request):
 
