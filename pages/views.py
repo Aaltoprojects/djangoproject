@@ -7,6 +7,8 @@ import urllib.request
 import urllib.parse
 import re
 
+#homo
+
 def home(request):
 
 	return render(request, 'home.html', {})
