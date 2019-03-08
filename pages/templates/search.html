@@ -8,7 +8,7 @@ Search
 <br/>
 <div class= 'container'>
 
-Search employees from the data base:
+Search employees by skills from the data base:
 </br></br></br>
 
 <form method="post">
@@ -16,8 +16,11 @@ Search employees from the data base:
 	<table>
 	{{ form.as_table }}
 	</table>
-    <button type="submit"> Search </button>
+    <button type="submit"> Find </button>
 </form>
-	
+	{% for row in data %}
+		{{ row }}
+		<br>
+	{% endfor %}
 </div>
 {% endblock %}

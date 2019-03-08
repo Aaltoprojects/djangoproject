@@ -3,15 +3,10 @@ from django.shortcuts import render, render_to_response
 from .forms import NameForm, create_employee_form, search_form
 from .models import employees
 from pages.asiakastieto import haetiedot
+from pages.search import search_database
 import urllib.request
 import urllib.parse
 import re
-
-
-#homo
-
-#moi
-
 
 def home(request):
 
@@ -45,7 +40,17 @@ def search(request):
 
 		form = search_form(request.POST)
 		if form.is_valid():
-			return render(request, search.html, {'form':form})
+			search_emp = form.cleaned_data['search_field']
+			
+			if search_emp == "siivous":
+				rows = search_database(7)
+				return render(request, 'search.html', {'form':form, 'data':rows})
+			elif search_emp == "johtaminen":
+				rows = search_database(8)
+				return render(request, 'search.html', {'form':form, 'data':rows})
+			elif search_emp == "tetsaus":
+				rows = search_database(9)
+				return render(request, 'search.html', {'form':form, 'data':rows})
 
 	else:
 		form = search_form()
