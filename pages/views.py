@@ -45,10 +45,10 @@ def search(request):
 			if search_emp == "siivous":
 				rows = search_database(7)
 				return render(request, 'search.html', {'form':form, 'data':rows})
-			elif search_emp == "johtaminen":
+			elif search_emp == "tetsaus":
 				rows = search_database(8)
 				return render(request, 'search.html', {'form':form, 'data':rows})
-			elif search_emp == "tetsaus":
+			elif search_emp == "johtaminen":
 				rows = search_database(9)
 				return render(request, 'search.html', {'form':form, 'data':rows})
 
