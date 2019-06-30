@@ -1,5 +1,8 @@
 from django import forms
 
+
+#Nämä on esimerkkeinä tässä, siitä miten formeja tehdään, ei vissiin käytetä vielä tässä vaiheessa kun ei ole työntekijöitä kannassa t. Amos
+
 #Company search form
 class NameForm(forms.Form):
     coname = forms.CharField(label='Company name', max_length=100)
