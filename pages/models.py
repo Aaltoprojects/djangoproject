@@ -1,5 +1,6 @@
 from django.db import models
 
+'''
 class employees(models.Model):
 	name = models.CharField(max_length = 30, default=None)
 	surname = models.CharField(max_length = 30, default=None)
@@ -14,3 +15,4 @@ class employees(models.Model):
 
 	def __str__(self):
 		return self.name + ' ' + self.surname
+'''

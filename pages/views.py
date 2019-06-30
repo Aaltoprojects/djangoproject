@@ -1,7 +1,6 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response
 from .forms import NameForm, create_employee_form, search_form
-from .models import employees
 from pages.asiakastieto import haetiedot
 from pages.search import search_database
 import urllib.request
