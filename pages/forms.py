@@ -31,3 +31,7 @@ class SearchProjectForm(forms.Form):
     end_date = forms.DateField(initial=datetime.date.today)
     favorite_fruit= forms.CharField(label='Rakennustyyppi', widget=forms.Select(choices=DESTINATION_TYPES))
     free_description = forms.CharField(label='Vapaa hakukenttä', max_length=100)
+
+
+class OmaTyhmaLuokka:
+    #asdasd
