@@ -5,7 +5,7 @@ from django import forms
 class SearchProjectForm(forms.Form):
     start_date = forms.DateField(initial=datetime.date.today)
     end_date = forms.DateField(initial=datetime.date.today)
-    destination_type = forms.CharField(label='Rakennustyyppi', widget=forms.Select(choices=constants.DESTINATION_TYPES))
+    structure_type = forms.CharField(label='Rakennustyyppi', widget=forms.Select(choices=constants.DESTINATION_TYPES))
     building_material = forms.CharField(label='Rakennusmateriaali', widget=forms.Select(choices=constants.BUILDING_MATERIALS))
     service = forms.CharField(label='Palvelu', widget=forms.Select(choices=constants.SERVICES))
     construction_operation = forms.CharField(label='Rakennustoimenpide', widget=forms.Select(choices=constants.CONSTRUCTION_OPERATIONS))
@@ -17,7 +17,7 @@ class Create_project(forms.Form):
     destination_name = forms.CharField(label='Kohteen nimi', max_length='200')
     start_date = forms.DateField(label='Aloitus pvm', widget=forms.SelectDateWidget(empty_label="Nothing", years=constants.YEARS))
     end_date = forms.DateField(label='Lopetus pvm', widget=forms.SelectDateWidget(empty_label="Nothing", years=constants.YEARS))
-    destination_type = forms.CharField(label='Rakennustyyppi', widget=forms.Select(choices=constants.DESTINATION_TYPES, attrs={'cols': 50}))
+    structure_type = forms.CharField(label='Rakennustyyppi', widget=forms.Select(choices=constants.DESTINATION_TYPES, attrs={'cols': 50}))
     building_material = forms.CharField(label='Rakennusmateriaali', widget=forms.Select(choices=constants.BUILDING_MATERIALS))
     service = forms.CharField(label='Palvelu', widget=forms.Select(choices=constants.SERVICES))
     construction_operation = forms.CharField(label='Rakennustoimenpide', widget=forms.Select(choices=constants.CONSTRUCTION_OPERATIONS))
