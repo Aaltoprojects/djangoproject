@@ -1,3 +1,4 @@
+import datetime
 from django import forms
 
 
@@ -21,3 +22,14 @@ class create_employee_form(forms.Form):
 
 class search_form(forms.Form):
     search_field = forms.CharField(label='Search employees', max_length=100)
+
+class SearchProjectForm(forms.Form):
+    DESTINATION_TYPES= [
+    (1, 'Asuinrakennus')
+    ]
+
+    start_date = forms.DateField(initial=datetime.date.today)
+    end_date = forms.DateField(initial=datetime.date.today)
+    favorite_fruit= forms.CharField(label='Rakennustyyppi', widget=forms.Select(choices=DESTINATION_TYPES))
+    free_description = forms.CharField(label='Vapaa hakukenttä', max_length=100)
+
