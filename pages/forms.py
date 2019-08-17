@@ -32,3 +32,17 @@ class SearchProjectForm(forms.Form):
     construction_operation = forms.CharField(label='Rakennustoimenpide', widget=forms.Select(choices=constants.CONSTRUCTION_OPERATIONS))
     free_description = forms.CharField(label='Vapaa hakukenttä', max_length=100)
     project_manager = forms.CharField(label='Projektin vetäjä', max_length=100)
+
+class Create_project(forms.Form):
+    project_name = forms.CharField(label='Projektin nimi', max_length='200')
+    destination_name = forms.CharField(label='Kohteen nimi', max_length='200')
+    start_date = forms.DateField(label='Aloitus pvm')
+    end_date = forms.DateField(label='Lopetus pvm')
+    destination_type = forms.IntegerField(label='Rakennustyyppi')
+    building_material = forms.IntegerField(label='Rakennusmateriaali')
+    service = forms.IntegerField(label='Palvelu')
+    construction_operation = forms.IntegerField(label='Rakennustoimenpide')
+    specific_project_type = forms.CharField(label='Osaamisalue', max_length='200')
+    project_description = forms.CharField(label='Projektin kuvaus', max_length='500')
+    documentation_path = forms.CharField(label='Polku tiedostojen sijaintiin', max_length='200')
+    project_manager = forms.CharField(label='Projektin johtaja', max_length='100')

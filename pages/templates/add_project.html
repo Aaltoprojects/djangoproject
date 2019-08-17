@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Luo projekti
+{% endblock %}
+
+{% block content %}
+
+Lisää projekti tietokantaan:
+
+<form method="post">
+	{% csrf_token %}
+	<table>
+	{{ form.as_table }}
+	</table>
+    <button type="submit"> Lisää </button>
+</form>
+
+{% for row in data %}
+	{{ row }}
+	<br>
+{% endfor %}
+
+{% endblock %}
