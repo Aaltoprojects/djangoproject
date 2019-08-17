@@ -2,6 +2,8 @@ import datetime
 from django import forms
 
 #Nämä on esimerkkeinä tässä, siitä miten formeja tehdään, ei vissiin käytetä vielä tässä vaiheessa kun ei ole työntekijöitä kannassa t. Amos
+class TestClassByArtturi(forms.Form):
+    #Changes in my local branch...
 
 #Company search form
 class NameForm(forms.Form):
