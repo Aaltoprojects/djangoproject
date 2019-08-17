@@ -2,8 +2,6 @@ import datetime
 from django import forms
 
 #Nämä on esimerkkeinä tässä, siitä miten formeja tehdään, ei vissiin käytetä vielä tässä vaiheessa kun ei ole työntekijöitä kannassa t. Amos
-class TestClassByArtturi(forms.Form):
-    #Changes in my local branch...
 
 #Company search form
 class NameForm(forms.Form):
@@ -33,7 +31,3 @@ class SearchProjectForm(forms.Form):
     end_date = forms.DateField(initial=datetime.date.today)
     favorite_fruit= forms.CharField(label='Rakennustyyppi', widget=forms.Select(choices=DESTINATION_TYPES))
     free_description = forms.CharField(label='Vapaa hakukenttä', max_length=100)
-
-
-class OmaTyhmaLuokka:
-    #asdasd
