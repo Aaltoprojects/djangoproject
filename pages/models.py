@@ -1,41 +1,36 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
-'''
-class employees(models.Model):
-	name = models.CharField(max_length = 30, default=None)
-	surname = models.CharField(max_length = 30, default=None)
-	pnumber = models.CharField(max_length = 30, default=None)
-	email = models.CharField(max_length = 30, default=None)
-	title = models.CharField(max_length = 30, default=None)
-	function = models.CharField(max_length = 30, default=None)
+class project(models.Model):
+	project_name = models.CharField(max_length = 200, default = None)
+	destination = models.CharField(max_length = 200, default = None)
+	start_date = models.DateField()
+	end_date = models.DateField()
 
-	siivous = models.IntegerField(default=None)
-	tetsaus = models.IntegerField(default=None)
-	johtaminen = models.IntegerField(default=None)
+	#4 Structure types, but keep more until confirmed
+	#Asuin-, Liike-, Teollisuus-, Geokohde
+	destination_type = models.IntegerField(default = None, validators=[MaxValueValidator(10), MinValueValidator(1)])
 
-	def __str__(self):
-		return self.name + ' ' + self.surname
-'''
+	#6 Building materials, but keep more until confirmed
+	#Puu, Betoni, Teräs, Tiili, Lasi, Kivi
+	building_material = models.IntegerField(default = None, validators=[MaxValueValidator(10), MinValueValidator(1)])
 
-class osaamisalue(models.Model):
-	nimi = models.CharField(max_length = 200, default = None)
-	rakennustyyppi = models.IntegerField(default = None)
-	rakennusmateriaali = models.IntegerField(default = None)
-	palvelu = models.IntegerField(default = None)
-	rakennutoimenpide = models.IntegerField(default = None)
+	#Is this field relevant? Need confirmation
+	#Suunnittelu, Tutkimus, jne.
+	service = models.IntegerField(default = None, validators=[MaxValueValidator(10), MinValueValidator(1)])
 
-	def __str__(self):
-		return self.nimi
+	#Can make service field obselete
+	#Korjaaminen, Uusiminen, Täydentäminen, Korottaminen
+	contruction_operation = models.IntegerField(default = None, validators=[MaxValueValidator(10), MinValueValidator(1)])
 
-class projektit(models.Model):
-	nimi = models.CharField(max_length = 200, default = None)
-	rakennustyyppi = models.IntegerField(default = None)
-	rakennusmateriaali = models.IntegerField(default = None)
-	palvelu = models.IntegerField(default = None)
-	rakennutoimenpide = models.IntegerField(default = None)
-	vapaa_kuvaus = models.CharField(max_length = 5000, default = None)
-	linkki_dokumentteihin = models.CharField(max_length = 200, default = None)
-	projektihenkilot = models.CharField(max_length = 1000, default = None)
+	#These types are listed from the Excel and are not defined by user
+	specific_project_type = models.CharField(max_length = 200, default = None)
+
+	project_description = models.CharField(max_length = 500, default = None)
+	documentation_path = models.CharField(max_length = 200, default = None)
+
+	#Currently registers project manager only, but in the future will include all employees
+	project_manager = models.CharField(max_length = 100, default = None)
 
 	def __str__(self):
-		return self.nimi
+		return self.project_name
