@@ -6,7 +6,15 @@ Luo projekti
 
 {% block content %}
 
-Lisää projekti tietokantaan:
+
+<div class="w3-container">
+<br>
+	<p>
+	<font size="5">
+	Lisää projekti tietokantaan:
+	</font>
+	</p>
+<br>
 
 <form method="post">
 	{% csrf_token %}
@@ -15,6 +23,8 @@ Lisää projekti tietokantaan:
 	</table>
     <button type="submit"> Lisää </button>
 </form>
+</div>
+<br><br>
 
 {% for row in data %}
 	{{ row }}

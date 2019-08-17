@@ -1,6 +1,5 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response
-from .forms import NameForm, create_employee_form, search_form, Create_project
 from .models import project
 from pages.asiakastieto import haetiedot
 from pages.search import search_database
@@ -25,20 +24,20 @@ def companysearch(request):
 
 	if request.method == 'POST':
 
-		form = NameForm(request.POST)
+		form = forms.NameForm(request.POST)
 
 		if form.is_valid():
 
 			coname = form.cleaned_data['coname']
 			coid = form.cleaned_data['coid']
 			data = haetiedot(str(coname), str(coid))
-			form = NameForm()
+			form = forms.NameForm()
 
 			return render(request, 'graph.html', {'form':form, 'data':data})
 
 	else:
 
-		form = NameForm()
+		form = forms.NameForm()
 
 	return render(request, 'searchcompany.html', {'form':form})
 
@@ -47,7 +46,7 @@ def search(request):
 
 	if request.method == 'POST':
 
-		form = search_form(request.POST)
+		form = forms.search_form(request.POST)
 		if form.is_valid():
 			search_emp = form.cleaned_data['search_field']
 			
@@ -62,7 +61,7 @@ def search(request):
 				return render(request, 'search.html', {'form':form, 'data':rows})
 
 	else:
-		form = search_form()
+		form = forms.search_form()
 
 	return render(request, 'search.html', {'form':form})
 
@@ -94,13 +93,13 @@ def create_project(request):
 
 	if request.method == 'GET':
 
-		form = Create_project()
+		form = forms.Create_project()
 
 		return render(request, 'add_project.html', {'form': form, 'data': []})
 
 	elif request.method == 'POST':
 
-		form = Create_project(request.POST)
+		form = forms.Create_project(request.POST)
 
 		if form.is_valid():
 
@@ -120,7 +119,7 @@ def create_project(request):
 				project_manager = request.POST['project_manager']
 				)
 			instance.save()
-			form = Create_project()
+			form = forms.Create_project()
 			data = [instance.project_name,
 					instance.destination,
 					instance.start_date,
