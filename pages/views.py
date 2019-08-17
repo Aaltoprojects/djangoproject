@@ -7,15 +7,19 @@ from pages.search import search_database
 import urllib.request
 import urllib.parse
 import re
-from .forms import SearchProjectForm
+import pages.forms as forms
+import pages.project_search as searcher
 
 def home(request):
+	result = ""
 	if request.method == 'POST':
-		form = SearchProjectForm(request.POST)
+		form = forms.SearchProjectForm(request.POST)
+		if form.is_valid():
+			result = searcher.project_search(form)
 	elif request.method == 'GET':
-		form = SearchProjectForm()
+		form = forms.SearchProjectForm()
 	
-	return render(request, 'home.html', {'form':form})
+	return render(request, 'home.html', {'form':form, 'result':result})
 
 def companysearch(request):
 
