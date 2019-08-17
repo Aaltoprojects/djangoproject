@@ -1,10 +1,6 @@
 import datetime
 from django import forms
 
-
-class ArtturiDummy(forms.Form):
-    #test git stash popping...
-    
 #Nämä on esimerkkeinä tässä, siitä miten formeja tehdään, ei vissiin käytetä vielä tässä vaiheessa kun ei ole työntekijöitä kannassa t. Amos
 
 #Company search form
