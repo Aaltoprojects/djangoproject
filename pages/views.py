@@ -30,7 +30,6 @@ def create_project(request):
 				project_name = request.POST['project_name'],
 				destination_name = request.POST['destination_name'],
 
-				#:TEMP SOLUTION - Z-FILL
 				start_date = request.POST['start_date_year'] 
 				+ '-' + request.POST['start_date_month'].zfill(2) 
 				+ '-' + request.POST['start_date_day'].zfill(2),
