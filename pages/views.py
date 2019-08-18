@@ -24,7 +24,6 @@ def create_project(request):
 		return render(request, 'add_project.html', {'form': form, 'data': []})
 	elif request.method == 'POST':
 		form = forms.CreateProject(request.POST)
-
 		if form.is_valid():
 			instance = Project(
 				project_name = form.cleaned_data['project_name'],
