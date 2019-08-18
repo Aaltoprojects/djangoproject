@@ -37,7 +37,7 @@ def create_sql_query(form_data):
 
 	return "SELECT project_name, specific_project_type FROM pages_project" + cond_str
 
-def project_search(form):
+def search(form):
 	form_data = {
 	'start_date': form.cleaned_data['start_date'],
 	'end_date': form.cleaned_data['end_date'],

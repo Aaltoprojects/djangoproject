@@ -5,14 +5,14 @@ import urllib.request
 import urllib.parse
 import re
 import pages.forms as forms
-import pages.project_search as searcher
+import pages.project_search
 
 def home(request):
 	result = ""
 	if request.method == 'POST':
 		form = forms.SearchProjectForm(request.POST)
 		if form.is_valid():
-			result = searcher.project_search(form)
+			result = pages.project_search.search(form)
 	elif request.method == 'GET':
 		form = forms.SearchProjectForm()
 	
