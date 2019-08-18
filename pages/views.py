@@ -8,7 +8,7 @@ import pages.forms as forms
 import pages.project_search
 
 def home(request):
-	result = ""
+	result = ''
 	if request.method == 'POST':
 		form = forms.SearchProjectForm(request.POST)
 		if form.is_valid():

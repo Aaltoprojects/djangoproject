@@ -1,13 +1,13 @@
 
 (function ($) {
-    "use strict";
+    'use strict';
 
 
     /*==================================================================
     [ Focus Contact2 ]*/
     $('.input3').each(function(){
         $(this).on('blur', function(){
-            if($(this).val().trim() != "") {
+            if($(this).val().trim() != '') {
                 $(this).addClass('has-val');
             }
             else {
@@ -19,14 +19,14 @@
 
     /*==================================================================
     [ Chose Radio ]*/
-    $("#radio1").on('change', function(){
-        if ($(this).is(":checked")) {
+    $('#radio1').on('change', function(){
+        if ($(this).is(':checked')) {
             $('.input3-select').slideUp(300);
         }
     });
 
-    $("#radio2").on('change', function(){
-        if ($(this).is(":checked")) {
+    $('#radio2').on('change', function(){
+        if ($(this).is(':checked')) {
             $('.input3-select').slideDown(300);
         }
     });
@@ -35,9 +35,9 @@
     
     /*==================================================================
     [ Validate ]*/
-    var name = $('.validate-input input[name="name"]');
-    var email = $('.validate-input input[name="email"]');
-    var message = $('.validate-input textarea[name="message"]');
+    var name = $('.validate-input input[name='name']');
+    var email = $('.validate-input input[name='email']');
+    var message = $('.validate-input textarea[name='message']');
 
 
     $('.validate-form').on('submit',function(){

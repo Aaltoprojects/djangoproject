@@ -5,10 +5,10 @@ import re
 from sqlite3 import Error
 
 ELEMS_DICT = {
-		"structure_type": ":value1",
- 		"building_material": ":value2",
- 		"service": ":value3",
- 		"construction_operation": ":value4"
+		'structure_type': ':value1',
+ 		'building_material': ':value2',
+ 		'service': ':value3',
+ 		'construction_operation': ':value4'
 		}
 
 def sum_filters(form_data):
@@ -20,17 +20,17 @@ def sum_filters(form_data):
 def create_sql_query(form_data):
 	sum_values = sum_filters(form_data)
 	first = True
-	cond_str = ""
+	cond_str = ''
 	if sum_values != 0:
-		cond_str = " WHERE"
+		cond_str = ' WHERE'
 		for filter, value in ELEMS_DICT.items():
 			if int(form_data[filter]) != 0:
 				if first:
 					first = False
-					cond_str += " " + filter +  " = " + value
+					cond_str += ' ' + filter +  ' = ' + value
 				else:
-					cond_str += " AND " + filter + " = " + value
-	return "SELECT project_name, specific_project_type FROM pages_project" + cond_str
+					cond_str += ' AND ' + filter + ' = ' + value
+	return 'SELECT * FROM pages_project' + cond_str
 
 def search(form):
 	form_data = {
@@ -44,7 +44,7 @@ def search(form):
 	}
 
 	sql_query_str = create_sql_query(form_data)
-	database = "db.sqlite3"
+	database = 'db.sqlite3'
 	connection = create_connection(database)
 	cursor = connection.cursor()
 	current = cursor.execute(sql_query_str,
