@@ -3,6 +3,7 @@ import urllib.request
 import urllib.parse
 import re
 from sqlite3 import Error
+from .models import Project
 import pages.constants as constants
 
 def sum_filters(form_data):

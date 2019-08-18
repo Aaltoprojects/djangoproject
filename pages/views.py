@@ -15,8 +15,9 @@ def home(request):
 		form = forms.SearchProjectForm(request.POST)
 		if form.is_valid():
 			result = pages.project_search.search(form)
+
 		form = forms.SearchProjectForm()
-	
+		
 	return render(request, 'home.html', {'form':form, 'result':result})
 
 def create_project(request):
