@@ -27,25 +27,18 @@ def create_project(request):
 
 		if form.is_valid():
 			instance = Project(
-				project_name = request.POST['project_name'],
-				destination_name = request.POST['destination_name'],
-
-				start_date = request.POST['start_date_year'] 
-				+ '-' + request.POST['start_date_month'].zfill(2) 
-				+ '-' + request.POST['start_date_day'].zfill(2),
-
-				end_date = request.POST['end_date_year']
-				+ '-' + request.POST['end_date_month'].zfill(2)
-				+ '-' + request.POST['end_date_day'].zfill(2),
-
-				structure_type = request.POST['structure_type'],
-				building_material = request.POST['building_material'],
-				service = request.POST['service'],
-				construction_operation = request.POST['construction_operation'],
-				specific_project_type = request.POST['specific_project_type'],
-				project_description = request.POST['project_description'],
-				documentation_path = request.POST['documentation_path'],
-				project_manager = request.POST['project_manager']
+				project_name = form.cleaned_data['project_name'],
+				destination_name = form.cleaned_data['destination_name'],
+				start_date = form.cleaned_data['start_date'],
+				end_date = form.cleaned_data['end_date'],
+				structure_type = form.cleaned_data['structure_type'],
+				building_material = form.cleaned_data['building_material'],
+				service = form.cleaned_data['service'],
+				construction_operation = form.cleaned_data['construction_operation'],
+				specific_project_type = form.cleaned_data['specific_project_type'],
+				project_description = form.cleaned_data['project_description'],
+				documentation_path = form.cleaned_data['documentation_path'],
+				project_manager = form.cleaned_data['project_manager']
 				)
 
 			instance.save()
