@@ -3,17 +3,11 @@ import urllib.request
 import urllib.parse
 import re
 from sqlite3 import Error
-
-ELEMS_DICT = {
-		'structure_type': ':value1',
- 		'building_material': ':value2',
- 		'service': ':value3',
- 		'construction_operation': ':value4'
-		}
+import pages.constants as constants
 
 def sum_filters(form_data):
 	sum = 0
-	for filter, _ in ELEMS_DICT.items():
+	for filter, _ in constants.ELEMS_DICT.items():
 		sum += int(form_data[filter])
 	return sum
 
@@ -23,7 +17,7 @@ def create_sql_query(form_data):
 	cond_str = ''
 	if sum_values != 0:
 		cond_str = ' WHERE'
-		for filter, value in ELEMS_DICT.items():
+		for filter, value in constants.ELEMS_DICT.items():
 			if int(form_data[filter]) != 0:
 				if first:
 					first = False
@@ -54,8 +48,8 @@ def search(form):
 	'value3':form_data['service'],
 	'value4':form_data['construction_operation']
 	})
-
-	return current.fetchall()
+	fetched_data = current.fetchall()
+	return fetched_data
 
 def create_connection(db_file):
 	try:

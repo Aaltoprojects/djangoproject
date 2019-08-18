@@ -1,4 +1,4 @@
-default_entry = (0, '-')
+default_entry = (0, '---')
 
 
 STRUCTURE_TYPES = [
@@ -34,3 +34,10 @@ CONSTRUCTION_OPERATIONS = [
 ]
 
 YEARS = range(2010,2024)
+
+ELEMS_DICT = {
+		'structure_type': ':value1',
+ 		'building_material': ':value2',
+ 		'service': ':value3',
+ 		'construction_operation': ':value4'
+		}
