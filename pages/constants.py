@@ -1,4 +1,5 @@
-default_entry = (0, 'None')
+default_entry = (0, '-')
+
 
 STRUCTURE_TYPES = [
 	default_entry,
