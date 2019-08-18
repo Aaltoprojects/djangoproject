@@ -49,7 +49,6 @@ def search(form):
 	}
 
 	sql_query_str = create_sql_query(form_data)
-
 	database = "db.sqlite3"
 	connection = create_connection(database)
 	cursor = connection.cursor()

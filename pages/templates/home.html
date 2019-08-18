@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Search Projects
+Etsi projekteja
 {% endblock %}
 
 {% block content %}
+
 <center><br/>
-<div class= 'container'>
+<div class='w3-container'>
 	<p>
 	<font size="5">
-	Etsi projektia tietokannasta
+	Etsi projekteja tietokannasta:
 	</font>
 	</p>
-
-	<form method="post">
+	<form method='post'>
 		{% csrf_token %}
 		<table>
 			{{ form.as_table }}
 		</table>
-	    <button type="submit"> Find </button>
+	    <button type='submit'> Etsi </button>
 	</form>
 </div>
-
-<dir>{{ result }}</dir>
+<br><br>
+{{ result }}
 </center>
 
 {% endblock %}

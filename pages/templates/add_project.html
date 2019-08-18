@@ -1,36 +1,31 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Luo projekti
+Lisää projekti
 {% endblock %}
 
 {% block content %}
 
-<center>
-<div class="w3-container">
-<br>
+<center><br/>
+<div class='w3-container'>
 	<p>
 	<font size="5">
 	Lisää projekti tietokantaan:
 	</font>
 	</p>
-<br>
-
-<form method="post">
-	{% csrf_token %}
-	<table>
-	{{ form.as_table }}
-	</table>
-    <button type="submit"> Lisää </button>
-</form>
+	<form method='post'>
+		{% csrf_token %}
+		<table>
+			{{ form.as_table }}
+		</table>
+	    <button type='submit'> Lisää </button>
+	</form>
 </div>
 <br><br>
-
 {% for row in data %}
 	{{ row }}
 	<br>
 {% endfor %}
 </center>
-
 
 {% endblock %}

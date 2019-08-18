@@ -1,6 +1,6 @@
 default_entry = (0, 'None')
 
-DESTINATION_TYPES = [
+STRUCTURE_TYPES = [
 	default_entry,
 	(1, 'Asuinrakennus'),
 	(2, 'Liikerakennukset'),
