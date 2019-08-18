@@ -1,7 +1,6 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response
 from .models import Project
-from pages.search import search_database
 import urllib.request
 import urllib.parse
 import re
@@ -21,17 +20,25 @@ def home(request):
 
 def create_project(request):
 	if request.method == 'GET':
-		form = forms.Create_project()
+		form = forms.CreateProject()
 		return render(request, 'add_project.html', {'form': form, 'data': []})
 	elif request.method == 'POST':
-		form = forms.Create_project(request.POST)
+		form = forms.CreateProject(request.POST)
 
 		if form.is_valid():
 			instance = Project(
 				project_name = request.POST['project_name'],
 				destination_name = request.POST['destination_name'],
-				start_date = request.POST['start_date'],
-				end_date = request.POST['end_date'],
+
+				#:TEMP SOLUTION - Z-FILL
+				start_date = request.POST['start_date_year'] 
+				+ '-' + request.POST['start_date_month'].zfill(2) 
+				+ '-' + request.POST['start_date_day'].zfill(2),
+
+				end_date = request.POST['end_date_year']
+				+ '-' + request.POST['end_date_month'].zfill(2)
+				+ '-' + request.POST['end_date_day'].zfill(2),
+
 				structure_type = request.POST['structure_type'],
 				building_material = request.POST['building_material'],
 				service = request.POST['service'],
@@ -43,7 +50,7 @@ def create_project(request):
 				)
 
 			instance.save()
-			form = forms.Create_project()
+			form = forms.CreateProject()
 
 			data = [instance.project_name,
 					instance.destination_name,

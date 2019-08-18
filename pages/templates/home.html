@@ -5,9 +5,13 @@ Search Projects
 {% endblock %}
 
 {% block content %}
-<br/>
+<center><br/>
 <div class= 'container'>
-Search company: <br>
+	<p>
+	<font size="5">
+	Etsi projektia tietokannasta
+	</font>
+	</p>
 
 	<form method="post">
 		{% csrf_token %}
@@ -19,4 +23,6 @@ Search company: <br>
 </div>
 
 <dir>{{ result }}</dir>
+</center>
+
 {% endblock %}

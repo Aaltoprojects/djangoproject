@@ -45,8 +45,7 @@ def project_search(form):
 	'building_material': form.cleaned_data['building_material'],
 	'service': form.cleaned_data['service'],
 	'construction_operation': form.cleaned_data['construction_operation'],
-	'free_description': form.cleaned_data['free_description'],
-	'project_manager': form.cleaned_data['project_manager'],
+	'project_manager': form.cleaned_data['project_manager']
 	}
 
 	sql_query_str = create_sql_query(form_data)
