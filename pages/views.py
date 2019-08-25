@@ -1,6 +1,8 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response
+from django_tables2 import RequestConfig
 from .models import Project
+from .tables import SearchResultTable
 import urllib.request
 import urllib.parse
 import re
@@ -17,8 +19,10 @@ def home(request):
 			result = pages.project_search.search(form)
 
 		form = forms.SearchProjectForm()
-		
-	return render(request, 'home.html', {'form':form, 'result':result})
+	#Amoksen queryset testaukset alkaa tästä (alunperin 'result':result):
+	result_table = SearchResultTable(Project.project_db.all())
+	RequestConfig(request).configure(result_table)
+	return render(request, 'home.html', {'form':form, 'result':result_table})
 
 def create_project(request):
 	data = []

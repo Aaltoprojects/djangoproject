@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load render_table from django_tables2 %}
 
 {% block title %}
 Etsi projekteja
@@ -23,16 +24,7 @@ Etsi projekteja
 </div>
 <br>
 
-<table>
-	{% for row in result %}
-		<tr>
-			{% for cell in row %}
-				<td>{{ cell }}</td>
-			{% endfor %}
-		</tr>
-	{% endfor %}
-</table>
+{% render_table result %}
 
 </center>
-
 {% endblock %}

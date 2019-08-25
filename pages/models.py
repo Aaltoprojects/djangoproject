@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Project(models.Model):
+	project_db = models.Manager()
+
 	project_name = models.CharField(max_length=200)
 	destination_name = models.CharField(max_length=200)
 	start_date = models.DateField(null=True)
