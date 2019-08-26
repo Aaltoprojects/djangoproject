@@ -43,7 +43,35 @@ Etsi projekteja
 	</div>
 </div>
 <br>
-<center>
-{% render_table result %}
-</center>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+   	  <th scope="col">Projektin ID</th>
+      <th scope="col">Projektin nimi</th>
+      <th scope="col">Kohteen nimi</th>
+      <th scope="col">Aloituspäivämäärä</th>
+      <th scope="col">Lopetuspäivämäärä</th>
+      <th scope="col">Rakennustyyppi</th>
+      <th scope="col">Rakennusmateriaali</th>
+      <th scope="col">Palvelu</th>
+      <th scope="col">Rakennustoimenpide</th>
+      <th scope="col">Osaamisalue</th>
+      <th scope="col">Projektin kuvaus</th>
+      <th scope="col">Polku tiedostojen sijaintiin</th>
+      <th scope="col">Projektin vetäjä</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for project in result %}
+		<tr>
+  		{% for col in project %}
+  			<td>{{col}}</td>
+  		{% endfor %}
+  		</tr>
+  	{% endfor %}
+  </tbody>
+</table>
+
+
 {% endblock %}

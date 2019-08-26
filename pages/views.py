@@ -22,7 +22,7 @@ def home(request):
 	#Amoksen queryset testaukset alkaa tästä (alunperin 'result':result):
 	result_table = SearchResultTable(Project.project_db.all())
 	RequestConfig(request).configure(result_table)
-	return render(request, 'home.html', {'form':form, 'result':result_table})
+	return render(request, 'home.html', {'form':form, 'result':result})
 
 def create_project(request):
 	data = []
