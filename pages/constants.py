@@ -1,4 +1,4 @@
-default_entry = (0, '---')
+default_entry = (0, '—')
 
 
 STRUCTURE_TYPES = [

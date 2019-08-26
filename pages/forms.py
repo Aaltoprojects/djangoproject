@@ -3,8 +3,8 @@ import pages.constants as constants
 from django import forms
 
 class SearchProjectForm(forms.Form):
-    start_date = forms.DateField(required=False,label='Aloitus pvm',widget=forms.SelectDateWidget(empty_label='---',years=constants.YEARS[1:]))
-    end_date = forms.DateField(required=False,label='Lopetus pvm',widget=forms.SelectDateWidget(empty_label='---',years=constants.YEARS[1:]))
+    start_date = forms.DateField(required=False,label='Aloitus pvm',widget=forms.SelectDateWidget(empty_label='—',years=constants.YEARS[1:]))
+    end_date = forms.DateField(required=False,label='Lopetus pvm',widget=forms.SelectDateWidget(empty_label='—',years=constants.YEARS[1:]))
     structure_type = forms.CharField(required=False,label='Rakennustyyppi',widget=forms.Select(choices=constants.STRUCTURE_TYPES))
     building_material = forms.CharField(required=False,label='Rakennusmateriaali',widget=forms.Select(choices=constants.BUILDING_MATERIALS))
     service = forms.CharField(required=False,label='Palvelu',widget=forms.Select(choices=constants.SERVICES))
@@ -14,8 +14,8 @@ class SearchProjectForm(forms.Form):
 class CreateProject(forms.Form):
     project_name = forms.CharField(label='Projektin nimi',max_length=200)
     destination_name = forms.CharField(label='Kohteen nimi',max_length=200)
-    start_date = forms.DateField(required=False,label='Aloitus pvm',widget=forms.SelectDateWidget(empty_label='---',years=constants.YEARS))
-    end_date = forms.DateField(required=False,label='Lopetus pvm',widget=forms.SelectDateWidget(empty_label='---',years=constants.YEARS))
+    start_date = forms.DateField(required=False,label='Aloitus pvm',widget=forms.SelectDateWidget(empty_label='—',years=constants.YEARS))
+    end_date = forms.DateField(required=False,label='Lopetus pvm',widget=forms.SelectDateWidget(empty_label='—',years=constants.YEARS))
     structure_type = forms.CharField(label='Rakennustyyppi',widget=forms.Select(choices=constants.STRUCTURE_TYPES[1:]))
     building_material = forms.CharField(label='Rakennusmateriaali',widget=forms.Select(choices=constants.BUILDING_MATERIALS[1:]))
     service = forms.CharField(label='Palvelu',widget=forms.Select(choices=constants.SERVICES[1:]))
