@@ -1,0 +1,5 @@
+django
+django-tables2
+django-bootstrap3
+django-bootstrap4
+django-crispy-forms
