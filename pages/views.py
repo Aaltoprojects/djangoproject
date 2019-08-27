@@ -17,9 +17,6 @@ def home(request):
 		form = forms.SearchProjectForm(request.POST)
 		if form.is_valid():
 			result = pages.project_search.search(form)
-		print(result)
-		print("here is result !!!!!!! ^^^^")
-		form = forms.SearchProjectForm()
 	result = SearchResultTable(result)
 	RequestConfig(request).configure(result)
 	return render(request, 'home.html', {'form':form, 'result':result})
@@ -47,7 +44,6 @@ def create_project(request):
 			)
 			instance.save()
 			form = forms.CreateProject()
-
 			data = [instance.id,
 					instance.project_name,
 					instance.destination_name,
@@ -61,5 +57,4 @@ def create_project(request):
 					instance.project_description,
 					instance.documentation_path,
 					instance.project_manager]
-
 	return render(request, 'add_project.html', {'form': form, 'data': data})
