@@ -1,6 +1,5 @@
 default_entry = (0, '—')
 
-
 STRUCTURE_TYPES = [
 	default_entry,
 	(1, 'Asuinrakennus'),
@@ -42,4 +41,4 @@ ELEMS_DICT = {
  		'construction_operation': ':value4'
 		}
 
-DJANGO_TABLES2_TEMPLATE = 'django_tables2/table.html'
+DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap4.html'

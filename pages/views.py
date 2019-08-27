@@ -7,7 +7,7 @@ import urllib.request
 import urllib.parse
 import re
 import pages.forms as forms
-import pages.project_search
+import pages.scripts.project_search as project_search
 
 def home(request):
 	result = []
@@ -16,7 +16,7 @@ def home(request):
 	elif request.method == 'POST':
 		form = forms.SearchProjectForm(request.POST)
 		if form.is_valid():
-			result = pages.project_search.search(form)
+			result = project_search.search(form)
 	result = SearchResultTable(result)
 	RequestConfig(request).configure(result)
 	return render(request, 'home.html', {'form':form, 'result':result})
