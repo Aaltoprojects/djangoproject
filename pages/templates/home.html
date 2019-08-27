@@ -43,7 +43,7 @@ Etsi projekteja
 	</div>
 </div>
 <br>
-
+{% if result %}
 <table class="table table-bordered">
   <thead class="thead-dark">
     <tr>
@@ -78,6 +78,7 @@ Etsi projekteja
   	{% endfor %}
   </tbody>
 </table>
-
+{% else %}
+{% endif %}
 
 {% endblock %}

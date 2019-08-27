@@ -59,11 +59,41 @@ Lisää projekti
 		</div>
 	</div>
 </div>
-
 <br>
-{% for row in data %}
-	{{ row }}
-	<br>
-{% endfor %}
+{% if data %}
+	<table class="table table-bordered">
+	  <thead class="thead-dark">
+	    <tr>
+	   	  <th scope="col">Projektin ID</th>
+	      <th scope="col">Projektin nimi</th>
+	      <th scope="col">Kohteen nimi</th>
+	      <th scope="col">Aloituspäivämäärä</th>
+	      <th scope="col">Lopetuspäivämäärä</th>
+	      <th scope="col">Rakennustyyppi</th>
+	      <th scope="col">Rakennusmateriaali</th>
+	      <th scope="col">Palvelu</th>
+	      <th scope="col">Rakennustoimenpide</th>
+	      <th scope="col">Osaamisalue</th>
+	      <th scope="col">Projektin kuvaus</th>
+	      <th scope="col">Polku tiedostojen sijaintiin</th>
+	      <th scope="col">Projektin vetäjä</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	<tr>
+	      {% for value in data %}
+			<td>
+			{% if value %}
+			  {{value}}
+			{% else %}
+			  —
+			{% endif %}
+		    </td>
+	  	  {% endfor %}
+	  	</tr>
+	  </tbody>
+	</table>
+{% else %}
+{% endif %}
 
 {% endblock %}

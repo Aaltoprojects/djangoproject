@@ -48,7 +48,8 @@ def create_project(request):
 			instance.save()
 			form = forms.CreateProject()
 
-			data = [instance.project_name,
+			data = [instance.id,
+					instance.project_name,
 					instance.destination_name,
 					instance.start_date,
 					instance.end_date,
