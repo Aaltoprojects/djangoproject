@@ -14,71 +14,40 @@ Etsi projekteja
 			<hr class="mt-0 mb-4">
 			<form method='post'>
 				{% csrf_token %}
-			    <div class="row">
-			      <div class="col-6">
-			        {{ form.start_date|as_crispy_field }}
-			      </div>
-			      <div class="col-6">
-			        {{ form.end_date|as_crispy_field }}
-			      </div>
-			    </div>
-			    <div class="row">
-			      <div class="col-6">
-			        {{ form.structure_type|as_crispy_field }}
-			      </div>
-			      <div class="col-6">
-			        {{ form.building_material|as_crispy_field }}
-			      </div>
-			      <div class="col-6">
-			        {{ form.service|as_crispy_field }}
-			      </div>
-			      <div class="col-6">
-			        {{ form.construction_operation|as_crispy_field }}
-			      </div>
-			    </div>
-			    {{ form.project_manager|as_crispy_field }}
-			    <button type="submit" class="btn btn-primary">Etsi</button>
+				<div class="row">
+					<div class="col-6">
+						{{ form.start_date|as_crispy_field }}
+					</div>
+					<div class="col-6">
+						{{ form.end_date|as_crispy_field }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						{{ form.structure_type|as_crispy_field }}
+					</div>
+					<div class="col-6">
+						{{ form.building_material|as_crispy_field }}
+					</div>
+					<div class="col-6">
+						{{ form.service|as_crispy_field }}
+					</div>
+					<div class="col-6">
+						{{ form.construction_operation|as_crispy_field }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						{{ form.project_manager|as_crispy_field }}
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary">Etsi</button>
 			</form>
 		</div>
 	</div>
 </div>
 <br>
-{% if result %}
-<table class="table table-bordered">
-  <thead class="thead-dark">
-    <tr>
-   	  <th scope="col">Projektin ID</th>
-      <th scope="col">Projektin nimi</th>
-      <th scope="col">Kohteen nimi</th>
-      <th scope="col">Aloituspäivämäärä</th>
-      <th scope="col">Lopetuspäivämäärä</th>
-      <th scope="col">Rakennustyyppi</th>
-      <th scope="col">Rakennusmateriaali</th>
-      <th scope="col">Palvelu</th>
-      <th scope="col">Rakennustoimenpide</th>
-      <th scope="col">Osaamisalue</th>
-      <th scope="col">Projektin kuvaus</th>
-      <th scope="col">Polku tiedostojen sijaintiin</th>
-      <th scope="col">Projektin vetäjä</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for project in result %}
-		<tr>
-  		{% for col in project %}
-  			<td>
-  			{% if col %}
-				{{col}}
-			{% else %}
-    			—
-			{% endif %}
-  			</td>
-  		{% endfor %}
-  		</tr>
-  	{% endfor %}
-  </tbody>
-</table>
-{% else %}
-{% endif %}
+
+{% render_table result %}
 
 {% endblock %}

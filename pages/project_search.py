@@ -6,26 +6,21 @@ from sqlite3 import Error
 from .models import Project
 import pages.constants as constants
 
-def sum_filters(form_data):
-	sum = 0
-	for filter, _ in constants.ELEMS_DICT.items():
-		sum += int(form_data[filter])
-	return sum
-
 def create_sql_query(form_data):
-	sum_values = sum_filters(form_data)
-	first = True
-	cond_str = ''
-	if sum_values != 0:
-		cond_str = ' WHERE'
-		for filter, value in constants.ELEMS_DICT.items():
-			if int(form_data[filter]) != 0:
-				if first:
-					first = False
-					cond_str += ' ' + filter +  ' = ' + value
-				else:
-					cond_str += ' AND ' + filter + ' = ' + value
-	return 'SELECT * FROM pages_project' + cond_str
+	data_struc = Project.project_db.all()
+	temp1 = int(form_data['structure_type'])
+	temp2 = int(form_data['building_material'])
+	temp3 = int(form_data['service'])
+	temp4 = int(form_data['construction_operation'])
+	if temp1 != 0:
+		data_struc = data_struc.filter(structure_type = temp1)
+	if temp2 != 0:
+		data_struc = data_struc.filter(building_material = temp2)
+	if temp3 != 0:
+		data_struc = data_struc.filter(service = temp3)
+	if temp4 != 0:
+		data_struc = data_struc.filter(construction_operation = temp4)
+	return data_struc
 
 def search(form):
 	form_data = {
@@ -37,26 +32,5 @@ def search(form):
 	'construction_operation': form.cleaned_data['construction_operation'],
 	'project_manager': form.cleaned_data['project_manager']
 	}
-
-	sql_query_str = create_sql_query(form_data)
-	database = 'db.sqlite3'
-	connection = create_connection(database)
-	cursor = connection.cursor()
-	current = cursor.execute(sql_query_str,
-	{
-	'value1':form_data['structure_type'],
-	'value2':form_data['building_material'],
-	'value3':form_data['service'],
-	'value4':form_data['construction_operation']
-	})
-	fetched_data = current.fetchall()
-	return fetched_data
-
-def create_connection(db_file):
-	try:
-		conn = sqlite3.connect(db_file)
-		return conn
-	except Error as err:
-		print(err)
-
-	return None
+	data_qs = create_sql_query(form_data)
+	return data_qs

@@ -17,11 +17,11 @@ def home(request):
 		form = forms.SearchProjectForm(request.POST)
 		if form.is_valid():
 			result = pages.project_search.search(form)
-
+		print(result)
+		print("here is result !!!!!!! ^^^^")
 		form = forms.SearchProjectForm()
-	#Amoksen queryset testaukset alkaa tästä (alunperin 'result':result):
-	result_table = SearchResultTable(Project.project_db.all())
-	RequestConfig(request).configure(result_table)
+	result = SearchResultTable(result)
+	RequestConfig(request).configure(result)
 	return render(request, 'home.html', {'form':form, 'result':result})
 
 def create_project(request):
