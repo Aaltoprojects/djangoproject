@@ -58,4 +58,3 @@ def create_project(request):
 					instance.documentation_path,
 					instance.project_manager]
 	return render(request, 'add_project.html', {'form': form, 'data': data})
->>>>>>> Stashed changes
