@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Tarkistathan tiedot ennen lisäystä:
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	{% for field in data %}
+		{{field}}
+	{% endfor %}
+</div>
+<br>
+
+{% endblock %}

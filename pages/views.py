@@ -25,6 +25,7 @@ def create_project(request):
 	data = []
 	if request.method == 'GET':
 		form = forms.CreateProject()
+		return render(request, 'add_project.html', {'form': form, 'data': data})
 	elif request.method == 'POST':
 		form = forms.CreateProject(request.POST)
 		if form.is_valid():
@@ -57,4 +58,4 @@ def create_project(request):
 					instance.project_description,
 					instance.documentation_path,
 					instance.project_manager]
-	return render(request, 'add_project.html', {'form': form, 'data': data})
+			return render(request, 'add_project_preview.html', {'data': data})
