@@ -10,6 +10,7 @@ class SearchProjectForm(forms.Form):
     service = forms.CharField(required=False,label='Palvelu',widget=forms.Select(choices=constants.SERVICES))
     construction_operation = forms.CharField(required=False,label='Rakennustoimenpide',widget=forms.Select(choices=constants.CONSTRUCTION_OPERATIONS))
     project_manager = forms.CharField(required=False,label='Projektin vetäjä',max_length=100)
+    key_phrase_search = forms.CharField(required=False,label='Avainsanahaku',max_length=100)
 
 class CreateProject(forms.Form):
     project_name = forms.CharField(label='Projektin nimi',max_length=200)
