@@ -17,8 +17,8 @@ def home(request):
 		form = forms.SearchProjectForm(request.POST)
 		if form.is_valid():
 			result = project_search.search(form)
-	result = SearchResultTable(result)
-	RequestConfig(request).configure(result)
+			result = SearchResultTable(result)
+			RequestConfig(request).configure(result)
 	return render(request, 'home.html', {'form':form, 'result':result})
 
 def create_project(request):
