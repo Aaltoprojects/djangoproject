@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Lisää alkioita tietokantaan
+{% endblock %}
+
+{% block content %}
+<center><br/>
+<div class= 'container'>
+	<p>
+	<font size="5">
+	Lisää alkioita tietokantaan
+	</font>
+	</p>
+
+	<form method="post">
+		{% csrf_token %}
+	    <button type="submit"> Lisää </button>
+	</form>
+</div>
+
+<dir>{{ result }}</dir>
+</center>
+
+{% endblock %}

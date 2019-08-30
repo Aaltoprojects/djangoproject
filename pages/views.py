@@ -8,6 +8,7 @@ import urllib.parse
 import re
 import pages.forms as forms
 import pages.scripts.project_search as project_search
+import pages.scripts.entries_to_database as entry_adder
 
 def home(request):
 	result = []
@@ -59,3 +60,10 @@ def create_project(request):
 					instance.documentation_path,
 					instance.project_manager]
 			return render(request, 'add_project_preview.html', {'data': data})
+
+def add_entries_to_db(request):
+    if request.method == 'GET':
+        return render(request , 'add_entries_to_db.html', {'result': ""})
+    elif request.method == 'POST':
+        entry_adder.add_entries()
+        return render(request , 'add_entries_to_db.html', {'result': "Done"})
