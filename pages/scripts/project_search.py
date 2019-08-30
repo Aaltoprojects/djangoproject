@@ -9,23 +9,28 @@ from django.db.models import Q
 
 def sql_query(form_data):
 	data_qs = Project.project_db.all()
-	temp1 = int(form_data['structure_type'])
-	temp2 = int(form_data['building_material'])
-	temp3 = int(form_data['service'])
-	temp4 = int(form_data['construction_operation'])
-	temp5 = str(form_data['key_phrase_search'])
-	print(temp5)
-	if temp1 != 0:
-		data_qs = data_qs.filter(structure_type = temp1)
-	if temp2 != 0:
-		data_qs = data_qs.filter(building_material = temp2)
+	temp1 = str(form_data['start_date'])
+	temp2 = str(form_data['end_date'])
+	temp3 = int(form_data['structure_type'])
+	temp4 = int(form_data['building_material'])
+	temp5 = int(form_data['service'])
+	temp6 = int(form_data['construction_operation'])
+	temp7 = str(form_data['key_phrase_search'])
+	if temp1 != "None":
+		data_qs = data_qs.filter(end_date__range = [temp1, "2100-01-01"])
+	if temp2 != "None":
+		data_qs = data_qs.filter(start_date__range = ["1970-01-01", temp2])
 	if temp3 != 0:
-		data_qs = data_qs.filter(service = temp3)
+		data_qs = data_qs.filter(structure_type = temp3)
 	if temp4 != 0:
-		data_qs = data_qs.filter(construction_operation = temp4)
-	if temp5 != "":
+		data_qs = data_qs.filter(building_material = temp4)
+	if temp5 != 0:
+		data_qs = data_qs.filter(service = temp5)
+	if temp6 != 0:
+		data_qs = data_qs.filter(construction_operation = temp6)
+	if temp7 != "":
 		qset = Q()
-		for term in temp5.split():
+		for term in temp7.split():
 			tmp = Q()
 			tmp |= Q(destination_name__contains=term)
 			tmp |= Q(project_name__contains=term)
@@ -35,6 +40,7 @@ def sql_query(form_data):
 			tmp |= Q(project_manager__contains=term)
 			qset &= tmp
 		data_qs = data_qs.filter(qset)
+
 	return data_qs
 
 def search(form):
@@ -45,7 +51,6 @@ def search(form):
 	'building_material': form.cleaned_data['building_material'],
 	'service': form.cleaned_data['service'],
 	'construction_operation': form.cleaned_data['construction_operation'],
-	'project_manager': form.cleaned_data['project_manager'],
 	'key_phrase_search': form.cleaned_data['key_phrase_search']
 	}
 	data_qs = sql_query(form_data)
