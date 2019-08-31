@@ -22,6 +22,7 @@ def home(request):
 			RequestConfig(request).configure(result)
 	return render(request, 'home.html', {'form':form, 'result':result})
 
+#This view is currently obselete and will be deleted soon
 def create_project(request):
 	data = []
 	if request.method == 'GET':
