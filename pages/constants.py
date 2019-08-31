@@ -33,6 +33,7 @@ CONSTRUCTION_OPERATIONS = [
 ]
 
 YEARS = range(2010,2024)
+DATE_FORMAT = '%d.%m.%Y'
 
 ELEMS_DICT = {
 		'structure_type': ':value1',
