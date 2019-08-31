@@ -41,7 +41,7 @@ def sql_query(form_data):
 			qset &= tmp
 		data_qs = data_qs.filter(qset)
 
-	return data_qs.values('id')
+	return data_qs
 
 def search(form):
 	form_data = {
