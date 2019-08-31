@@ -40,5 +40,3 @@ ELEMS_DICT = {
  		'service': ':value3',
  		'construction_operation': ':value4'
 		}
-
-DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap4.html'

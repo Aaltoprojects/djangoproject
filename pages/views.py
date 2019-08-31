@@ -67,3 +67,9 @@ def add_entries_to_db(request):
     elif request.method == 'POST':
         entry_adder.add_entries()
         return render(request , 'add_entries_to_db.html', {'result': "Done"})
+
+def edit_entry(request, project_id):
+	current_project = Project.project_db.all().filter(id = project_id)
+	current_project_table = SearchResultTable(current_project)
+	current_project_table = RequestConfig(request).configure(current_project_table)
+	return render(request, 'edit_entry.html', {'row_data': current_project})
