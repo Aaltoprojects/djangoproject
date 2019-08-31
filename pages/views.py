@@ -59,7 +59,7 @@ def create_project(request):
 					instance.project_description,
 					instance.documentation_path,
 					instance.project_manager]
-		return render(request, 'add_project_preview.html', {'data': data})
+		return render(request, 'snippets/add_project_preview.html', {'data': data})
 
 def add_entries_to_db(request):
     if request.method == 'GET':

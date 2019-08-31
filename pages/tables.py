@@ -6,4 +6,4 @@ class SearchResultTable(tables.Table):
 	class Meta:
 		model = Project
 		attrs = {'class': 'table table-bordered'}
-	Muokkaa = TemplateColumn(template_name = 'edit_button.html')
+	Muokkaa = TemplateColumn(template_name = 'snippets/edit_button.html')
