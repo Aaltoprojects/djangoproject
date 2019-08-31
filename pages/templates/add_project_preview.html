@@ -1,20 +1,37 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load i18n %}
 {% load render_table from django_tables2 %}
 {% load crispy_forms_tags %}
 
-{% block title %}
-Lisää projekti
-{% endblock %}
-
 {% block content %}
-
-{% if form.errors %}<h1>{% trans "Please correct the following errors" %}</h1>{% endif %}
-
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-8">
-			<h1 class="mt-2">Lisää projekti</h1>
+			<h1 class="mt-2">Syötettävän projektin tiedot</h1>
+			<hr class="mt-0 mb-4">
+			<table>
+			{% for field in form %}
+			<tr>
+			<th>{{ field.label }}:</th>
+			<td>{{ field.data }}</td>
+			</tr>
+			{% endfor %}
+			</table>
+			<form action="" method="post">{% csrf_token %}
+			{% for field in form %}{{ field.as_hidden }}
+			{% endfor %}
+			<input type="hidden" name="{{ stage_field }}" value="2" />
+			<input type="hidden" name="{{ hash_field }}" value="{{ hash_value }}" />
+			<p><input type="submit" value="{% trans "Submit" %}" /></p>
+			</form>
+		</div>
+	</div>
+</div>
+<br>
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-8">
+			<h1 class="mt-2">Muokkaa tietoja vielä</h1>
 			<hr class="mt-0 mb-4">
 			<form action="" method="post">
 				{% csrf_token %}
