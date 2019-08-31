@@ -7,4 +7,4 @@ class SomeModelFormPreview(FormPreview):
     def done(self, request, cleaned_data):
         # Do something with the cleaned_data, then redirect
         # to a "success" page.
-        return HttpResponseRedirect('/home')
+        return HttpResponseRedirect('/success')

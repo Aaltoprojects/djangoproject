@@ -73,3 +73,6 @@ def edit_entry(request, project_id):
 	current_project_table = SearchResultTable(current_project)
 	current_project_table = RequestConfig(request).configure(current_project_table)
 	return render(request, 'edit_entry.html', {'row_data': current_project})
+
+def post_success(request):
+	return render(request, 'snippets/success.html')
