@@ -1,8 +1,9 @@
 import django_tables2 as tables
+from django_tables2 import TemplateColumn
 from .models import Project
-import pages.constants as constants
 
 class SearchResultTable(tables.Table):
 	class Meta:
 		model = Project
-		template_name = constants.DJANGO_TABLES2_TEMPLATE
+		attrs = {'class': 'table table-bordered'}
+	Muokkaa = TemplateColumn(template_name = 'edit_button.html')
