@@ -5,7 +5,6 @@ from django.forms import DateInput
 from .widgets import FengyuanChenDatePickerInput
 import pages.constants as constants
 
-
 class SearchProjectForm(forms.Form):
     start_date = forms.DateField(required=False, label='Aikaisin lopetuspäivä', input_formats=[constants.DATE_FORMAT], widget=FengyuanChenDatePickerInput(attrs={'autocomplete':'off'}))
     end_date = forms.DateField(required=False, label='Myöhäisin aloituspäivä', input_formats=[constants.DATE_FORMAT], widget=FengyuanChenDatePickerInput(attrs={'autocomplete':'off'}))
@@ -15,7 +14,7 @@ class SearchProjectForm(forms.Form):
     construction_operation = forms.CharField(required=False,label='Rakennustoimenpide',widget=forms.Select(choices=constants.CONSTRUCTION_OPERATIONS))
     key_phrase_search = forms.CharField(required=False,label='Avainsanahaku',max_length=100)
 
-class CreateProject(forms.Form):
+class CreateProjectForm(forms.Form):
     project_name = forms.CharField(label='Projektin nimi',max_length=200)
     destination_name = forms.CharField(label='Kohteen nimi',max_length=200)
     start_date = forms.DateTimeField(label='Aloituspäivä', input_formats=[constants.DATE_FORMAT], widget=FengyuanChenDatePickerInput(attrs={'autocomplete':'off'}))

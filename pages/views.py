@@ -22,14 +22,29 @@ def home(request):
 			RequestConfig(request).configure(result)
 	return render(request, 'home.html', {'form':form, 'result':result})
 
-#This view is currently obselete and will be deleted soon
+def post_success(request):
+	return render(request, 'snippets/success.html')
+
+def edit_entry(request, project_id):
+	current_project = Project.project_db.all().filter(id = project_id)[0]
+	return render(request, 'edit_entry.html', {'row_data': current_project})
+
+def add_entries_to_db(request):
+    if request.method == 'GET':
+        return render(request , 'add_entries_to_db.html', {'result': ""})
+    elif request.method == 'POST':
+        entry_adder.add_entries()
+        return render(request , 'add_entries_to_db.html', {'result': "Done"})
+
+#Below view function is currently obselete and will be deleted soon
+'''
 def create_project(request):
 	data = []
 	if request.method == 'GET':
-		form = forms.CreateProject()
+		form = forms.CreateProjectForm()
 		return render(request, 'add_project.html', {'form': form, 'data': data})
 	elif request.method == 'POST':
-		form = forms.CreateProject(request.POST)
+		form = forms.CreateProjectForm(request.POST)
 		if form.is_valid():
 			instance = Project(
 			project_name = form.cleaned_data['project_name'],
@@ -46,7 +61,7 @@ def create_project(request):
 			project_manager = form.cleaned_data['project_manager']
 			)
 			instance.save()
-			form = forms.CreateProject()
+			form = forms.CreateProjectForm()
 			data = [instance.id,
 					instance.project_name,
 					instance.destination_name,
@@ -61,19 +76,4 @@ def create_project(request):
 					instance.documentation_path,
 					instance.project_manager]
 		return render(request, 'add_project.html', {'data': data})
-
-def add_entries_to_db(request):
-    if request.method == 'GET':
-        return render(request , 'add_entries_to_db.html', {'result': ""})
-    elif request.method == 'POST':
-        entry_adder.add_entries()
-        return render(request , 'add_entries_to_db.html', {'result': "Done"})
-
-def edit_entry(request, project_id):
-	current_project = Project.project_db.all().filter(id = project_id)
-	current_project_table = SearchResultTable(current_project)
-	current_project_table = RequestConfig(request).configure(current_project_table)
-	return render(request, 'edit_entry.html', {'row_data': current_project})
-
-def post_success(request):
-	return render(request, 'snippets/success.html')
+'''

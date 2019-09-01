@@ -1,10 +1,4 @@
-import sqlite3
-import urllib.request
-import urllib.parse
-import re
-from sqlite3 import Error
 from pages.models import Project
-import pages.constants as constants
 from django.db.models import Q
 
 def sql_query(form_data):
@@ -40,7 +34,6 @@ def sql_query(form_data):
 			tmp |= Q(project_manager__contains=term)
 			qset &= tmp
 		data_qs = data_qs.filter(qset)
-
 	return data_qs
 
 def search(form):

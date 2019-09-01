@@ -3,7 +3,7 @@ from django.conf.urls import url
 from . import views
 import re
 from pages.formpreview import SomeModelFormPreview
-from pages.forms import CreateProject
+from pages.forms import CreateProjectForm
 from django import forms
 
 urlpatterns = [
@@ -11,6 +11,6 @@ urlpatterns = [
 	#delete when project ready ^
 	path('', views.home, name = 'home'),
 	url(r'^edit/(?P<project_id>\w+)', views.edit_entry, name='edit_entry'),
-	url(r'^post/$', SomeModelFormPreview(CreateProject), name = 'add_project'),
+	url(r'^post/$', SomeModelFormPreview(CreateProjectForm), name = 'add_project'),
 	path('success', views.post_success),
 ]
