@@ -2,12 +2,10 @@ from formtools.preview import FormPreview
 from django.http import HttpResponseRedirect
 from pages.models import Project
 
-class SomeModelFormPreview(FormPreview):
+class CreateProjectPreview(FormPreview):
 	form_template = 'add_project.html'
 	preview_template = 'add_project_preview.html'
 	def done(self, request, cleaned_data):
-		# Do something with the cleaned_data, then redirect
-		# to a "success" page.
 		instance = Project(
 		project_name = cleaned_data['project_name'],
 		destination_name = cleaned_data['destination_name'],

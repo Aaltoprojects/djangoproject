@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response
 from django_tables2 import RequestConfig
-from .models import Project
+import pages.models as models
 from .tables import SearchResultTable
 import urllib.request
 import urllib.parse
@@ -26,7 +26,7 @@ def post_success(request):
 	return render(request, 'snippets/success.html')
 
 def edit_entry(request, project_id):
-	current_project = Project.project_db.all().filter(id = project_id)[0]
+	current_project = models.Project.project_db.all().filter(id = project_id)[0]
 	return render(request, 'edit_entry.html', {'row_data': current_project})
 
 def add_entries_to_db(request):

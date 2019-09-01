@@ -1,6 +1,6 @@
 from django import generic
-from .models import Project
+import models
 
 class ListView(generic.ListView)
-    model = Project
+    model = models.Project
     template_name = 'todas.html'
