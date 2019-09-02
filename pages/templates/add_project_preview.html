@@ -13,7 +13,7 @@ Lisää projekti
 		<div class="col-8">
 			<h1 class="mt-2">Projektin tiedot</h1>
 			<hr class="mt-0 mb-4">
-			<table>
+			<table class="table table-bordered">
 			{% for field in form %}
 			<tr>
 			<th>{{ field.label }}:</th>
@@ -27,7 +27,7 @@ Lisää projekti
 			<input type="hidden" name="{{ stage_field }}" value="2" />
 			<input type="hidden" name="{{ hash_field }}" value="{{ hash_value }}" />
 			<br>
-			<p><input type="submit"  class="btn btn-primary" value='{% trans "Tallenna" %}' /></p>
+			<p><input type="submit"  class="btn btn-success" value='{% trans "Tallenna" %}' /></p>
 			</form>
 		</div>
 	</div>
