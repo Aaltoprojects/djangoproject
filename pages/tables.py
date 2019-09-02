@@ -3,7 +3,7 @@ from django_tables2 import TemplateColumn
 import pages.models as models
 
 class SearchResultTable(tables.Table):
-	Lisätiedot = TemplateColumn(template_name = 'snippets/edit_button.html')
+	Tiedot = TemplateColumn(template_name = 'snippets/edit_button.html')
 	class Meta:
 		model = models.Project
 		fields = (

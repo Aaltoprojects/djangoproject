@@ -31,7 +31,7 @@ def edit_entry(request, project_id):
 
 def add_entries_to_db(request):
     if request.method == 'GET':
-        return render(request , 'add_entries_to_db.html', {'result': ""})
+        return render(request , 'add_entries_to_db.html', {'result': ''})
     elif request.method == 'POST':
         entry_adder.add_entries()
-        return render(request , 'add_entries_to_db.html', {'result': "Done"})
+        return render(request , 'add_entries_to_db.html', {'result': 'Done'})

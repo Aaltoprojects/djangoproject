@@ -10,10 +10,10 @@ def sql_query(form_data):
 	temp5 = int(form_data['service'])
 	temp6 = int(form_data['construction_operation'])
 	temp7 = str(form_data['key_phrase_search'])
-	if temp1 != "None":
-		data_qs = data_qs.filter(end_date__range = [temp1, "2100-01-01"])
-	if temp2 != "None":
-		data_qs = data_qs.filter(start_date__range = ["1970-01-01", temp2])
+	if temp1 != 'None':
+		data_qs = data_qs.filter(end_date__range = [temp1, '2100-01-01'])
+	if temp2 != 'None':
+		data_qs = data_qs.filter(start_date__range = ['1970-01-01', temp2])
 	if temp3 != 0:
 		data_qs = data_qs.filter(structure_type = temp3)
 	if temp4 != 0:
@@ -22,7 +22,7 @@ def sql_query(form_data):
 		data_qs = data_qs.filter(service = temp5)
 	if temp6 != 0:
 		data_qs = data_qs.filter(construction_operation = temp6)
-	if temp7 != "":
+	if temp7 != '':
 		qset = Q()
 		for term in temp7.split():
 			tmp = Q()
