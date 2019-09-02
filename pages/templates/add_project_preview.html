@@ -11,7 +11,7 @@ Lisää projekti
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-8">
-			<h2 class="mt-2">Syötettävän projektin tiedot</h2>
+			<h1 class="mt-2">Projektin tiedot</h1>
 			<hr class="mt-0 mb-4">
 			<table>
 			{% for field in form %}
@@ -26,7 +26,8 @@ Lisää projekti
 			{% endfor %}
 			<input type="hidden" name="{{ stage_field }}" value="2" />
 			<input type="hidden" name="{{ hash_field }}" value="{{ hash_value }}" />
-			<p><input type="submit" value="{% trans "Submit" %}" /></p>
+			<br>
+			<p><input type="submit"  class="btn btn-primary" value='{% trans "Tallenna" %}' /></p>
 			</form>
 		</div>
 	</div>
@@ -35,7 +36,7 @@ Lisää projekti
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-8">
-			<h2 class="mt-2">Muokkaa tietoja vielä</h2>
+			<h2 class="mt-2">Muokkaa vielä tietoja</h2>
 			<hr class="mt-0 mb-4">
 			<form action="" method="post">
 				{% csrf_token %}
@@ -84,7 +85,7 @@ Lisää projekti
 					</div>
 				</div>
 				<input type="hidden" name="{{ stage_field }}" value="1" />
-				<p><input type="submit" value="{% trans "Syötä" %}" /></p>
+				<p><input type="submit" class="btn btn-primary" value='{% trans "Päivitä" %}' /></p>
 			</form>
 		</div>
 	</div>
