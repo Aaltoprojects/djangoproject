@@ -25,9 +25,9 @@ def home(request):
 def post_success(request):
 	return render(request, 'snippets/success.html')
 
-def edit_entry(request, project_id):
+def view_entry(request, project_id):
 	current_project = models.Project.project_db.all().filter(id = project_id)[0]
-	return render(request, 'edit_entry.html', {'row_data': current_project})
+	return render(request, 'view_entry.html', {'row_data': current_project})
 
 def add_entries_to_db(request):
     if request.method == 'GET':

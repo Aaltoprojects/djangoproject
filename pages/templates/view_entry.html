@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-8">
+			<h1 class="mt-2">Projektin tiedot</h1>
+			<hr class="mt-0 mb-4">
+			<table class="table table-bordered">
+				<tr>
+				<th>Projektin nimi:</th>
+				<td>{{ row_data.project_name }}</td>
+				</tr>
+				<tr>
+				<th>Kohteen nimi:</th>
+				<td>{{ row_data.destination_name }}</td>
+				</tr>
+				<tr>
+				<th>Aloituspäivämäärä:</th>
+				<td>{{ row_data.start_date }}</td>
+				</tr>
+				<tr>
+				<th>Lopetuspäivämäärä:</th>
+				<td>{{ row_data.end_date }}</td>
+				</tr>
+				<tr>
+				<th>Rakennustyyppi:</th>
+				<td>{{ row_data.structure_type }}</td>
+				</tr>
+				<tr>
+				<th>Rakennusmateriaali:</th>
+				<td>{{ row_data.building_material }}</td>
+				</tr>
+				<tr>
+				<th>Palvelu:</th>
+				<td>{{ row_data.service }}</td>
+				</tr>
+				<tr>
+				<th>Rakennustoimenpide:</th>
+				<td>{{ row_data.construction_operation }}</td>
+				</tr>
+				<tr>
+				<th>Osaamisalue:</th>
+				<td>{{ row_data.specific_project_type }}</td>
+				</tr>
+				<tr>
+				<th>Projektin kuvaus:</th>
+				<td>{{ row_data.project_description }}</td>
+				</tr>
+				<tr>
+				<th>Polku tiedostojen sijaintiin:</th>
+				<td>{{ row_data.documentation_path }}</td>
+				</tr>
+				<tr>
+				<th>Projektin vetäjä:</th>
+				<td>{{ row_data.project_manager }}</td>
+				</tr>
+			</table>
+			<br>
+			<a class="btn btn-primary" href="{% url 'home' %}">Takaisin</a>
+		</div>
+	</div>
+</div>
+{% endblock content %}
