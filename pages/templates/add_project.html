@@ -8,12 +8,13 @@ Lisää projekti
 {% endblock %}
 
 {% block content %}
+
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-8">
 			<h1 class="mt-2">Lisää projekti</h1>
 			<hr class="mt-0 mb-4">
-			<form action="" method="post">
+			<form action="" id="add_project_form" method="post">
 				{% csrf_token %}
 				<div class="row">
 					<div class="col-6">
@@ -60,10 +61,26 @@ Lisää projekti
 					</div>
 				</div>
 				<input type="hidden" name="{{ stage_field }}" value="1" />
-				<p><input type="submit" class="btn btn-primary" value='{% trans "Esikatsele" %}' /></p>
+				<p><input type="submit" id="submit_button" class="btn btn-primary" value='{% trans "Esikatsele" %}' /></p>
 			</form>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	document.getElementById("submit_button").addEventListener("click", function(){
+	  window.btn_clicked = true; 
+	});
+
+	var formChanged = false;
+	var myForm = document.getElementById('add_project_form');
+	myForm.addEventListener('change', () => formChanged = true);
+	window.addEventListener('beforeunload', (event) => {
+	  if (formChanged && !window.btn_clicked) {
+		  event.preventDefault();
+		  event.returnValue = '';
+	  }
+	});
+</script>
 
 {% endblock %}
