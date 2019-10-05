@@ -1,5 +1,6 @@
 from pages.models import Project
 from django.db.models import Q
+import pages.constants as constants
 
 def sql_query(form_data):
 	if str(form_data['structure_type']) == '' or str(form_data['building_material']) == '' or str(form_data['service']) == '' or str(form_data['construction_operation']) == '':
@@ -8,22 +9,22 @@ def sql_query(form_data):
 		data_qs = Project.project_db.all()
 		temp1 = str(form_data['start_date'])
 		temp2 = str(form_data['end_date'])
-		temp3 = int(form_data['structure_type'])
-		temp4 = int(form_data['building_material'])
-		temp5 = int(form_data['service'])
-		temp6 = int(form_data['construction_operation'])
+		temp3 = str(form_data['structure_type'])
+		temp4 = str(form_data['building_material'])
+		temp5 = str(form_data['service'])
+		temp6 = str(form_data['construction_operation'])
 		temp7 = str(form_data['key_phrase_search'])
 		if temp1 != 'None':
 			data_qs = data_qs.filter(end_date__range = [temp1, '2100-01-01'])
 		if temp2 != 'None':
 			data_qs = data_qs.filter(start_date__range = ['1970-01-01', temp2])
-		if temp3 != 0:
+		if temp3 != constants.default_entry[0]:
 			data_qs = data_qs.filter(structure_type = temp3)
-		if temp4 != 0:
+		if temp4 != constants.default_entry[0]:
 			data_qs = data_qs.filter(building_material = temp4)
-		if temp5 != 0:
+		if temp5 != constants.default_entry[0]:
 			data_qs = data_qs.filter(service = temp5)
-		if temp6 != 0:
+		if temp6 != constants.default_entry[0]:
 			data_qs = data_qs.filter(construction_operation = temp6)
 		if temp7 != '':
 			qset = Q()
@@ -31,7 +32,7 @@ def sql_query(form_data):
 				tmp = Q()
 				tmp |= Q(destination_name__contains=term)
 				tmp |= Q(project_name__contains=term)
-				tmp |= Q(specific_project_type__contains=term)
+				tmp |= Q(keywords=term)
 				tmp |= Q(project_description__contains=term)
 				tmp |= Q(documentation_path__contains=term)
 				tmp |= Q(project_manager__contains=term)

@@ -19,7 +19,7 @@ def add_entries():
 						building_material = building_mat[0],
 						service = srvc[0],
 						construction_operation = construction_oper[0],
-						specific_project_type = description,
+						keywords = description,
 						project_description = '',
 						documentation_path = 'Esimerkki/Kansio ' + str(count),
 						project_manager = 'Projektin vetäjä ' + str(count)

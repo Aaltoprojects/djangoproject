@@ -15,7 +15,7 @@ class SearchResultTable(tables.Table):
 			'building_material',
 			'service',
 			'construction_operation',
-			'specific_project_type',
+			'keywords',
 			)
 		empty_text = 'Ei tuloksia'
 		show_header = True

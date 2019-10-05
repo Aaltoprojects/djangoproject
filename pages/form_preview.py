@@ -15,7 +15,7 @@ class CreateProjectPreview(FormPreview):
 		building_material = cleaned_data['building_material'],
 		service = cleaned_data['service'],
 		construction_operation = cleaned_data['construction_operation'],
-		specific_project_type = cleaned_data['specific_project_type'],
+		keywords = cleaned_data['keywords'],
 		project_description = cleaned_data['project_description'],
 		documentation_path = cleaned_data['documentation_path'],
 		project_manager = cleaned_data['project_manager'],
