@@ -3,7 +3,7 @@ from django_tables2 import TemplateColumn
 import pages.models as models
 
 class SearchResultTable(tables.Table):
-	Tiedot = TemplateColumn(template_name = 'snippets/view_entry_button.html')
+	Tiedot = TemplateColumn(template_name = 'snippets/view_entry_button.html', orderable=False)
 	class Meta:
 		model = models.Project
 		fields = (
