@@ -11,13 +11,10 @@ import pages.scripts.project_search as project_search
 import pages.scripts.entries_to_database as entry_adder
 
 def home(request):
-	result = []
-	if request.method == 'GET':
-		form = forms.SearchProjectForm()
-	elif request.method == 'POST':
-		form = forms.SearchProjectForm(request.POST)
-		if form.is_valid():
-			result = project_search.search(form)
+	form = forms.SearchProjectForm(request.GET)
+	if form.is_valid():
+		result = project_search.search(form)
+		if result != []:
 			result = SearchResultTable(result)
 			RequestConfig(request).configure(result)
 	return render(request, 'home.html', {'form':form, 'result':result})
