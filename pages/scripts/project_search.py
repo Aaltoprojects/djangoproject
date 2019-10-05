@@ -32,7 +32,7 @@ def sql_query(form_data):
 				tmp = Q()
 				tmp |= Q(destination_name__contains=term)
 				tmp |= Q(project_name__contains=term)
-				tmp |= Q(keywords=term)
+				tmp |= Q(keywords__contains=term)
 				tmp |= Q(project_description__contains=term)
 				tmp |= Q(documentation_path__contains=term)
 				tmp |= Q(project_manager__contains=term)
