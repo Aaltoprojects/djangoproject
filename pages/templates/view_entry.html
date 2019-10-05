@@ -12,51 +12,51 @@
 			<table class="table table-bordered">
 				<tr>
 				<th>Projektin nimi:</th>
-				<td>{{ row_data.project_name }}</td>
+				<td>{{ row_data.project_name|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Kohteen nimi:</th>
-				<td>{{ row_data.destination_name }}</td>
+				<td>{{ row_data.destination_name|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Aloituspäivämäärä:</th>
-				<td>{{ row_data.start_date }}</td>
+				<td>{{ row_data.start_date|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Lopetuspäivämäärä:</th>
-				<td>{{ row_data.end_date }}</td>
+				<td>{{ row_data.end_date|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Rakennustyyppi:</th>
-				<td>{{ row_data.structure_type }}</td>
+				<td>{{ row_data.structure_type|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Rakennusmateriaali:</th>
-				<td>{{ row_data.building_material }}</td>
+				<td>{{ row_data.building_material|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Palvelu:</th>
-				<td>{{ row_data.service }}</td>
+				<td>{{ row_data.service|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Rakennustoimenpide:</th>
-				<td>{{ row_data.construction_operation }}</td>
+				<td>{{ row_data.construction_operation|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Avainsanat:</th>
-				<td>{{ row_data.keywords }}</td>
+				<td>{{ row_data.keywords|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Projektin kuvaus:</th>
-				<td>{{ row_data.project_description }}</td>
+				<td>{{ row_data.project_description|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Polku tiedostojen sijaintiin:</th>
-				<td>{{ row_data.documentation_path }}</td>
+				<td>{{ row_data.documentation_path|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Projektin vetäjä:</th>
-				<td>{{ row_data.project_manager }}</td>
+				<td>{{ row_data.project_manager|default_if_none:"" }}</td>
 				</tr>
 			</table>
 			<br>
