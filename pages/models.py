@@ -11,10 +11,10 @@ class Project(models.Model):
 	#relevant field? Confirm.
 	service = models.CharField(max_length=100, verbose_name='Palvelu')
 	construction_operation = models.CharField(max_length=100, verbose_name='Rakennustoimenpide')
-	keywords = models.CharField(null=True,default=None,max_length=200, verbose_name='Avainsanat')
-	project_description = models.CharField(null=True,default=None,max_length=1000, verbose_name='Projektin kuvaus')
-	documentation_path = models.CharField(null=True,default=None,max_length=500, verbose_name='Polku tiedostojen sijaintiin')
-	project_manager = models.CharField(null=True,default=None,max_length=100, verbose_name='Projektin vetäjä')
+	keywords = models.CharField(null=True,default='',max_length=200, verbose_name='Avainsanat')
+	project_description = models.CharField(null=True,default='',max_length=1000, verbose_name='Projektin kuvaus')
+	documentation_path = models.CharField(null=True,default='',max_length=500, verbose_name='Polku tiedostojen sijaintiin')
+	project_manager = models.CharField(null=True,default='',max_length=100, verbose_name='Projektin vetäjä')
 
 	def __str__(self):
 		return self.project_name
