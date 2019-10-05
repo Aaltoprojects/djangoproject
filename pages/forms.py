@@ -3,7 +3,6 @@ import pages.constants as constants
 from django import forms
 from django.forms import DateInput
 from .widgets import FengyuanChenDatePickerInput
-import pages.constants as constants
 
 class SearchProjectForm(forms.Form):
     start_date = forms.DateField(required=False, label='Aikaisin lopetuspäivä', input_formats=[constants.DATE_FORMAT], widget=FengyuanChenDatePickerInput(attrs={'autocomplete':'off'}))
