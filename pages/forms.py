@@ -23,6 +23,6 @@ class CreateProjectForm(forms.Form):
     service = forms.CharField(label='Palvelu',widget=forms.Select(choices=constants.SERVICES[1:]))
     construction_operation = forms.CharField(label='Rakennustoimenpide',widget=forms.Select(choices=constants.CONSTRUCTION_OPERATIONS[1:]))
     keywords = forms.CharField(required=False,empty_value=None,label='Avainsanat',max_length=200,widget=forms.TextInput(attrs={'autocomplete':'off'}))
-    project_description = forms.CharField(required=False,empty_value=None,label='Projektin kuvaus',max_length=500,widget=forms.Textarea(attrs={'cols':50,'rows':5}))
-    documentation_path = forms.CharField(required=False,empty_value=None,label='Polku tiedostojen sijaintiin',max_length=200,widget=forms.TextInput(attrs={'autocomplete':'off'}))
+    project_description = forms.CharField(required=False,empty_value=None,label='Projektin kuvaus',max_length=1000,widget=forms.Textarea(attrs={'cols':50,'rows':5}))
+    documentation_path = forms.CharField(required=False,empty_value=None,label='Polku tiedostojen sijaintiin',max_length=500,widget=forms.TextInput(attrs={'autocomplete':'off'}))
     project_manager = forms.CharField(required=False,empty_value=None,label='Projektin vetäjä',max_length=100,widget=forms.TextInput(attrs={'autocomplete':'off'}))
