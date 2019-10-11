@@ -1,4 +1,4 @@
-default_entry = ('—', '—')
+default_entry = ('', '—')
 YEARS = range(2010,2024)
 DATE_FORMAT = '%d.%m.%Y'
 
