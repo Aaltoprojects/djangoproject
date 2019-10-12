@@ -12,8 +12,7 @@ import pages.scripts.project_search as project_search
 def home(request):
 	form = forms.SearchProjectForm(request.GET)
 	if form.is_valid():
-		result = SearchResultTable(project_search.search(form))
-		RequestConfig(request).configure(result)
+		result = project_search.search(form)
 	return render(request, 'home.html', {'form':form, 'result':result})
 
 def post_success(request):

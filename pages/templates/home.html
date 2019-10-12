@@ -49,8 +49,41 @@ Etsi projekteja tietokannasta
 </div>
 <br>
 
-{% if result %}
-{% render_table result %}
-{% endif %}
+<table id="table_id" class="display responsive" width='100%'>
+    <thead>
+        <tr>
+            <th class='all'>Projektin nimi</th>
+            <th class='all'>Kohteen nimi</th>
+            <th class='all'>Aloituspäivä</th>
+            <th class='all'>Lopetuspäivä</th>
+            <th class='min-desktop'>Tyyppi</th>
+            <th class='min-desktop'>Materiaali</th>
+            <th class='min-desktop'>Palvelu</th>
+            <th class='min-desktop'>Toimenpide</th>
+            <th class='min-desktop'>Avainsanat</th>
+        </tr>
+    </thead>
+    <tbody>
+    	{% for item in result %}
+       		<tr>
+            	<td>{{ item.project_name }}</td>
+            	<td>{{ item.destination_name }}</td>
+            	<td>{{ item.start_date }}</td>
+            	<td>{{ item.end_date }}</td>
+            	<td>{{ item.structure_type }}</td>
+            	<td>{{ item.building_material }}</td>
+            	<td>{{ item.service }}</td>
+            	<td>{{ item.construction_operation }}</td>
+            	<td>{{ item.keywords }}</td>
+        	</tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>
 
 {% endblock %}
