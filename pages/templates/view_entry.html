@@ -20,11 +20,11 @@
 				</tr>
 				<tr>
 				<th>Aloituspäivämäärä:</th>
-				<td>{{ row_data.start_date|default_if_none:"" }}</td>
+				<td>{{ row_data.start_date|date:'d.m.Y'|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Lopetuspäivämäärä:</th>
-				<td>{{ row_data.end_date|default_if_none:"" }}</td>
+				<td>{{ row_data.end_date|date:'d.m.Y'|default_if_none:"" }}</td>
 				</tr>
 				<tr>
 				<th>Rakennustyyppi:</th>
