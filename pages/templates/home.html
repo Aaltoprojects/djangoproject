@@ -48,7 +48,7 @@ Etsi projekteja tietokannasta
 	</div>
 </div>
 <br>
-
+{% if result %}
 <table id="table_id" class="display responsive" width='100%'>
     <thead>
         <tr>
@@ -85,5 +85,5 @@ $(document).ready( function () {
     $('#table_id').DataTable();
 } );
 </script>
-
+{% endif %}
 {% endblock %}

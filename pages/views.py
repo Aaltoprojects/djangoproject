@@ -11,9 +11,10 @@ import pages.scripts.project_search as project_search
 
 def home(request):
 	form = forms.SearchProjectForm(request.GET)
-	if form.is_valid():
+	if form.is_valid() and form.has_changed():
 		result = project_search.search(form)
-	return render(request, 'home.html', {'form':form, 'result':result})
+		return render(request, 'home.html', {'form':form, 'result':result})
+	return render(request, 'home.html', {'form':form})
 
 def post_success(request):
 	return render(request, 'snippets/success.html')
