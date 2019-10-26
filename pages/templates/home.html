@@ -49,7 +49,7 @@ Etsi projekteja tietokannasta
 </div>
 <br>
 {% if result %}
-<table id="table_id" class="display responsive" width='100%'>
+<table id="project_table" class="display responsive" width='100%'>
     <thead>
         <tr>
             <th class='all'>Projektin nimi</th>
@@ -61,6 +61,9 @@ Etsi projekteja tietokannasta
             <th class='min-desktop'>Palvelu</th>
             <th class='min-desktop'>Toimenpide</th>
             <th class='min-desktop'>Avainsanat</th>
+            <th class='none'>Projektin kuvaus</th>
+            <th class='none'>Polku tiedostojen sijaintiin</th>
+            <th class='none'>Projektin vetäjä</th>
         </tr>
     </thead>
     <tbody>
@@ -75,6 +78,9 @@ Etsi projekteja tietokannasta
             	<td>{{ item.service }}</td>
             	<td>{{ item.construction_operation }}</td>
             	<td>{{ item.keywords }}</td>
+            	<td>{{ item.project_description }}</td>
+            	<td>{{ item.documentation_path }}</td>
+            	<td>{{ item.project_manager }}</td>
         	</tr>
         {% endfor %}
     </tbody>
@@ -82,8 +88,11 @@ Etsi projekteja tietokannasta
 
 <script>
 $(document).ready( function () {
-    $('#table_id').DataTable();
+    $('#project_table').DataTable( {
+    	searching: false
+    } );
 } );
 </script>
 {% endif %}
+
 {% endblock %}
