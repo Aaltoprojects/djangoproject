@@ -1,8 +1,6 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response
-from django_tables2 import RequestConfig
 import pages.models as models
-from .tables import SearchResultTable
 import urllib.request
 import urllib.parse
 import re

@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pages',
-    'django_tables2',
     'bootstrap3',
     'bootstrap4',
     'crispy_forms',
@@ -51,8 +50,6 @@ INSTALLED_APPS = [
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
