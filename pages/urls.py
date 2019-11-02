@@ -8,7 +8,6 @@ from django import forms
 
 urlpatterns = [
 	path('', views.home, name = 'home'),
-	url(r'^view/(?P<project_id>\w+)', views.view_entry, name='view_entry'),
 	url(r'^post/$', CreateProjectPreview(CreateProjectForm), name = 'add_project'),
 	path('success', views.post_success),
 ]
