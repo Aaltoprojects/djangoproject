@@ -70,8 +70,8 @@ Etsi projekteja tietokannasta
        		<tr>
             	<td>{{ item.project_name }}</td>
             	<td>{{ item.destination_name }}</td>
-            	<td>{{ item.start_date }}</td>
-            	<td>{{ item.end_date }}</td>
+            	<td>{{ item.start_date|date:"d.m.Y" }}</td>
+            	<td>{{ item.end_date|date:"d.m.Y" }}</td>
             	<td>{{ item.structure_type }}</td>
             	<td>{{ item.building_material }}</td>
             	<td>{{ item.service }}</td>
