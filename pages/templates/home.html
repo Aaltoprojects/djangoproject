@@ -86,10 +86,9 @@ Etsi projekteja tietokannasta
 </table>
 
 <script>
-$(document).ready( function () {
-    $('#project_table').DataTable( {
-    	searching: false
-    } );
+$('#project_table').DataTable( {
+    language: {"url":"https://cdn.datatables.net/plug-ins/1.10.20/i18n/Finnish.json"},
+    searching: false
 } );
 </script>
 {% endif %}
