@@ -54,8 +54,9 @@ class SearchProjectForm(forms.Form):
 class CreateProjectForm(forms.Form):
     project_name = forms.CharField(
         label='Projektin nimi',
-        required=False,
+        required=True,
         help_text="Anna projektin nimi",
+        empty_value='—',
         max_length=200,
         widget=forms.TextInput(attrs={'autocomplete':'off'})
     )
@@ -63,6 +64,7 @@ class CreateProjectForm(forms.Form):
         label='Kohteen nimi',
         required=False,
         help_text="Anna kohteen nimi",
+        empty_value='—',
         max_length=200,
         widget=forms.TextInput(attrs={'autocomplete':'off'})
     )
@@ -84,30 +86,35 @@ class CreateProjectForm(forms.Form):
         label='Rakennustyyppi',
         required=False,
         help_text="Projektin kohteen rakennustyyppi",
+        empty_value='—',
         widget=forms.Select(choices=constants.STRUCTURE_TYPES)
     )
     building_material = forms.CharField(
         label='Rakennusmateriaali',
         required=False,
         help_text="Projektin kohteen rakennusmateriaali",
+        empty_value='—',
         widget=forms.Select(choices=constants.BUILDING_MATERIALS)
     )
     service = forms.CharField(
         label='Palvelu',
         required=False,
         help_text="Projektissa tarjoamamme palvelu",
+        empty_value='—',
         widget=forms.Select(choices=constants.SERVICES)
     )
     construction_operation = forms.CharField(
         label='Rakennustoimenpide',
         required=False,
         help_text="Projektin rakennustoimenpide",
+        empty_value='—',
         widget=forms.Select(choices=constants.CONSTRUCTION_OPERATIONS)
     )
-    keywords = forms.CharField(label='Avainsanat',
+    keywords = forms.CharField(
+        label='Avainsanat',
         required=False,
         help_text="Anna muutamia avainsanoja, joilla projekti on helppo löytää",
-        empty_value=None,
+        empty_value='—',
         max_length=200,
         widget=forms.TextInput(attrs={'autocomplete':'off'})
     )
@@ -115,7 +122,7 @@ class CreateProjectForm(forms.Form):
         label='Projektin kuvaus',
         required=False,
         help_text="Kuvaile vapaasti projektin sisältöä (max 1000 merkkiä)",
-        empty_value=None,
+        empty_value='—',
         max_length=1000,
         widget=forms.Textarea(attrs={'cols':50,'rows':5})
     )
@@ -123,14 +130,15 @@ class CreateProjectForm(forms.Form):
         label='Polku tiedostojen sijaintiin',
         required=False,
         help_text="Kopioi tähän projektikansion polku (esim C:/Ideastructura/Projektit/Projekti-2019)",
-        empty_value=None,
+        empty_value='—',
         max_length=500,
         widget=forms.TextInput(attrs={'autocomplete':'off'})
     )
-    project_manager = forms.CharField(label='Projektin vetäjä',
+    project_manager = forms.CharField(
+        label='Projektin vetäjä',
         required=False,
         help_text="Projektipäällikön nimi",
-        empty_value=None,
+        empty_value='—',
         max_length=100,
         widget=forms.TextInput(attrs={'autocomplete':'off'})
     )
