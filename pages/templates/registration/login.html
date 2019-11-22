@@ -1,18 +1,26 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
-{% block title %}Login{% endblock %}
+
+{% block title %}
+Kirjaudu sisään
+{% endblock %}
 
 {% block content %}
-<div class="text-center col-sm-5 col-md-3 col-lg-2 col-centered ">
-  <h2>Login</h2>
-  <form method="post" class="form-signin">
-    {% csrf_token %}
-    {% bootstrap_form form class="text-center form-label-group" %}
-    {% buttons %}
-    <button type="submit" class="btn btn-primary">Login</button>
-    {% endbuttons %}
-  </form>
-</div>
 
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-4">
+      	<h1 class="mt-2">Kirjaudu sisään</h1>
+      	<hr class="mt-0 mb-4">
+      	<form method="post" class="form-signin">
+    		{% csrf_token %}
+    		{% bootstrap_form form class="text-center form-label-group" %}
+    		{% buttons %}
+    		<button type="submit" class="btn btn-primary">Login</button>
+    		{% endbuttons %}
+  		</form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

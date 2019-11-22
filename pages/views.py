@@ -30,8 +30,7 @@ def post_success(request):
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(
-        max_length=254, help_text='Enter a valid email address.')
-
+        max_length=254, help_text='Syötä toimiva sähköpostiosoite.')
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2',)
