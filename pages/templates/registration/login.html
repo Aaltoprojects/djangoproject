@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="text-center col-sm-5 col-md-3 col-lg-2 col-centered ">
+  <h2>Login</h2>
+  <form method="post" class="form-signin">
+    {% csrf_token %}
+    {% bootstrap_form form class="text-center form-label-group" %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">Login</button>
+    {% endbuttons %}
+  </form>
+</div>
+
+
+{% endblock %}
