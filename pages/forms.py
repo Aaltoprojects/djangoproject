@@ -1,5 +1,6 @@
 import datetime
 import pages.constants as constants
+import pages.models as models
 from django import forms
 from django.forms import DateInput
 from .widgets import FengyuanChenDatePickerInput
@@ -23,25 +24,32 @@ class SearchProjectForm(forms.Form):
         label='Rakennustyyppi',
         required=False,
         help_text="Projektin kohteen rakennustyyppi",
-        widget=forms.Select(choices=constants.STRUCTURE_TYPES)
+        widget=forms.Select(choices=constants.FILTER_CATEGORIES)
     )
     building_material = forms.CharField(
         label='Rakennusmateriaali',
         required=False,
         help_text="Projektin kohteen rakennustyyppi",
-        widget=forms.Select(choices=constants.BUILDING_MATERIALS)
+        widget=forms.Select(choices=constants.FILTER_CATEGORIES)
     )
     service = forms.CharField(
         label='Palvelu',
         required=False,
         help_text="Projektin kohteen rakennustyyppi",
-        widget=forms.Select(choices=constants.SERVICES)
+        widget=forms.Select(choices=constants.FILTER_CATEGORIES)
     )
     construction_operation = forms.CharField(
         label='Rakennustoimenpide',
         required=False,
         help_text="Projektissa tehty rakennustoimenpide",
-        widget=forms.Select(choices=constants.CONSTRUCTION_OPERATIONS)
+        widget=forms.Select(choices=constants.FILTER_CATEGORIES)
+    )
+    structural_component = forms.CharField(
+        label='Rakenneosa',
+        required=False,
+        help_text="Projektin rakenneosa",
+        empty_value='—',
+        widget=forms.Select(choices=constants.FILTER_CATEGORIES)
     )
     key_phrase_search = forms.CharField(
         label='Avainsanahaku',
@@ -87,35 +95,35 @@ class CreateProjectForm(forms.Form):
         required=False,
         help_text="Projektin kohteen rakennustyyppi",
         empty_value='—',
-        widget=forms.Select(choices=constants.STRUCTURE_TYPES)
+        widget=forms.Select(choices=constants.FILTER_CATEGORIES)
     )
     building_material = forms.CharField(
         label='Rakennusmateriaali',
         required=False,
         help_text="Projektin kohteen rakennusmateriaali",
         empty_value='—',
-        widget=forms.Select(choices=constants.BUILDING_MATERIALS)
+        widget=forms.Select(choices=constants.FILTER_CATEGORIES)
     )
     service = forms.CharField(
         label='Palvelu',
         required=False,
         help_text="Projektissa tarjoamamme palvelu",
         empty_value='—',
-        widget=forms.Select(choices=constants.SERVICES)
+        widget=forms.Select(choices=constants.FILTER_CATEGORIES)
     )
     construction_operation = forms.CharField(
         label='Rakennustoimenpide',
         required=False,
         help_text="Projektin rakennustoimenpide",
         empty_value='—',
-        widget=forms.Select(choices=constants.CONSTRUCTION_OPERATIONS)
+        widget=forms.Select(choices=constants.FILTER_CATEGORIES)
     )
     structural_component = forms.CharField(
         label='Rakenneosa',
         required=False,
         help_text="Projektin rakenneosa",
         empty_value='—',
-        widget=forms.Select(choices=constants.CONSTRUCTION_OPERATIONS)
+        widget=forms.Select(choices=constants.FILTER_CATEGORIES)
     )
     keywords = forms.CharField(
         label='Avainsanat',
@@ -153,5 +161,5 @@ class CreateProjectForm(forms.Form):
 class AddFilterForm(forms.ModelForm):
 
     class Meta:
-        model = Filter
+        model = models.Filter
         fields = ['category', 'filter_name']

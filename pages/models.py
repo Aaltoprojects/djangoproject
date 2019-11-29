@@ -1,6 +1,23 @@
 from django.db import models
 import pages.constants as constants
 
+class Filter(models.Model):
+
+	filter_db = models.Manager()
+
+	category = models.CharField(
+		max_length=200,
+		verbose_name='Filtterikategoria',
+		choices=constants.FILTER_CATEGORIES,
+		)
+	filter_name = models.CharField(
+		max_length=200,
+		verbose_name='Filtteri',
+		)
+
+	def __str__(self):
+		return self.filter_name
+
 class Project(models.Model):
 
 	project_db = models.Manager()
@@ -45,20 +62,3 @@ class Project(models.Model):
 
 	def __str__(self):
 		return self.project_name
-
-class Filter(models.Model):
-
-	filter_db = models.Manager()
-
-	category = models.CharField(
-		max_length=200,
-		verbose_name='Filtterikategoria',
-		widget=forms.Select(choices=constants.FILTER_CATEGORIES),
-		)
-	filter_name = models.CharField(
-		max_length=200,
-		verbose_name='Filtteri',
-		)
-
-	def __str__(self):
-		return self.filter_name
