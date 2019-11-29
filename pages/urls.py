@@ -14,4 +14,5 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
 	url(r'^post/$', CreateProjectPreview(CreateProjectForm), name = 'add_project'),
 	path('success', views.post_success),
+	path('add_filter', views.add_filter, name = 'add_filter'),
 ]

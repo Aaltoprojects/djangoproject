@@ -110,6 +110,13 @@ class CreateProjectForm(forms.Form):
         empty_value='—',
         widget=forms.Select(choices=constants.CONSTRUCTION_OPERATIONS)
     )
+    structural_component = forms.CharField(
+        label='Rakenneosa',
+        required=False,
+        help_text="Projektin rakenneosa",
+        empty_value='—',
+        widget=forms.Select(choices=constants.CONSTRUCTION_OPERATIONS)
+    )
     keywords = forms.CharField(
         label='Avainsanat',
         required=False,
@@ -142,3 +149,9 @@ class CreateProjectForm(forms.Form):
         max_length=100,
         widget=forms.TextInput(attrs={'autocomplete':'off'})
     )
+
+class AddFilterForm(forms.ModelForm):
+
+    class Meta:
+        model = Filter
+        fields = ['category', 'filter_name']

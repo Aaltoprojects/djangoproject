@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/style.css' %}"/>
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-8">
+			<h1 class="mt-2">Lisää uusi filtteri</h1>
+			<hr class="mt-0 mb-4">
+			<form class="form-signup" enctype="multipart/form-data" method="post">
+				{% csrf_token %}
+				{% for field in form %}
+					<div class="col-6">
+						{{ field|as_crispy_field }}
+					</div>
+				{% endfor %}
+				<div class="col-6">
+					<button type="submit" class="btn btn-primary">Lisää</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

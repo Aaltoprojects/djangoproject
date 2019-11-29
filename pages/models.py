@@ -1,4 +1,5 @@
 from django.db import models
+import pages.constants as constants
 
 class Project(models.Model):
 
@@ -20,22 +21,6 @@ class Project(models.Model):
 		null=True,
 		verbose_name='Lopetuspäivämäärä',
 		)
-	structure_type = models.CharField(
-		max_length=100,
-		verbose_name='Rakennustyyppi',
-		)
-	building_material = models.CharField(
-		max_length=100,
-		verbose_name='Rakennusmateriaali',
-		)
-	service = models.CharField(
-		max_length=100,
-		verbose_name='Palvelu',
-		)
-	construction_operation = models.CharField(
-		max_length=100,
-		verbose_name='Rakennustoimenpide',
-		)
 	keywords = models.CharField(
 		null=True,
 		max_length=200,
@@ -56,6 +41,24 @@ class Project(models.Model):
 		max_length=100,
 		verbose_name='Projektin vetäjä',
 		)
+	filters = models.ManyToManyField(Filter)
 
 	def __str__(self):
 		return self.project_name
+
+class Filter(models.Model):
+
+	filter_db = models.Manager()
+
+	category = models.CharField(
+		max_length=200,
+		verbose_name='Filtterikategoria',
+		widget=forms.Select(choices=constants.FILTER_CATEGORIES),
+		)
+	filter_name = models.CharField(
+		max_length=200,
+		verbose_name='Filtteri',
+		)
+
+	def __str__(self):
+		return self.filter_name

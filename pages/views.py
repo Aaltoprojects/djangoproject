@@ -11,7 +11,7 @@ import pages.models as models
 import urllib.request
 import urllib.parse
 import re
-from pages.forms import SearchProjectForm
+from pages.forms import SearchProjectForm, AddFilterForm
 from django import forms
 import pages.scripts.project_search as project_search
 
@@ -25,6 +25,15 @@ def home(request):
 
 def post_success(request):
 	return render(request, 'snippets/success.html')
+
+@login_required(login_url='/login/')
+def add_filter(request):
+    if request.method == 'POST':
+        form = AddFilterForm(request.POST)
+        if form.is_valid():
+            new_filter = form.save()
+    form = AddFilterForm()
+    return render(request, 'add_filter.html', {'form': form})
 
 # Signup and login functionalities:
 
