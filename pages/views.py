@@ -13,7 +13,6 @@ import urllib.parse
 import re
 from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm
 from django import forms
-import pages.scripts.project_search as project_search
 import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
 
@@ -31,8 +30,10 @@ def home(request):
                 'result': result,
                 }
     if form.is_valid():
-        result = []
-        #context['result'] = project_search.search(form)
+        data_dict = request.GET.copy()
+        print(data_dict)
+        result = sql_util.search(form, data_dict)
+        context['result'] = result
     return render(request, 'home.html', context)
 
 @login_required(login_url='/login/')
