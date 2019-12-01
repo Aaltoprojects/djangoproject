@@ -32,20 +32,67 @@ Lisää projekti
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-6">
-						{{ form.structure_type|as_crispy_field }}
+					<div class="col-12">
+						<label>
+							Rakennustyyppi
+						</label>
+						<select class="js-example-basic-multiple" name="structure_type" multiple="multiple" style="width: 100%">
+							{% for filter in f1 %}
+								<option value= "{{ filter }}" > {{ filter }} </option>
+							{% endfor %}
+						</select>
 					</div>
-					<div class="col-6">
-						{{ form.building_material|as_crispy_field }}
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-12">
+						<label>
+							Rakennusmateriaali
+						</label>
+						<select class="js-example-basic-multiple" name="building_material" multiple="multiple" style="width: 100%">
+							{% for filter in f2 %}
+								<option value= "{{ filter }}" > {{ filter }} </option>
+							{% endfor %}
+						</select>
 					</div>
-					<div class="col-6">
-						{{ form.service|as_crispy_field }}
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-12">
+						<label>
+							Palvelu
+						</label>
+						<select class="js-example-basic-multiple" name="service" multiple="multiple" style="width: 100%">
+							{% for filter in f3 %}
+								<option value= "{{ filter }}" > {{ filter }} </option>
+							{% endfor %}
+						</select>
 					</div>
-					<div class="col-6">
-						{{ form.construction_operation|as_crispy_field }}
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-12">
+						<label>
+							Rakennustoimenpide
+						</label>
+						<select class="js-example-basic-multiple" name="construction_operation" multiple="multiple" style="width: 100%">
+							{% for filter in f4 %}
+								<option value= "{{ filter }}" > {{ filter }} </option>
+							{% endfor %}
+						</select>
 					</div>
-					<div class="col-6">
-						{{ form.structural_component|as_crispy_field }}
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-12">
+						<label>
+							Rakenneosa
+						</label>
+						<select class="js-example-basic-multiple" name="structural_component" multiple="multiple" style="width: 100%">
+							{% for filter in f5 %}
+								<option value= "{{ filter }}" > {{ filter }} </option>
+							{% endfor %}
+						</select>
 					</div>
 				</div>
 				<div class="row">
@@ -62,8 +109,7 @@ Lisää projekti
 						{{ form.documentation_path|as_crispy_field }}
 					</div>
 				</div>
-				<input type="hidden" name="{{ stage_field }}" value="1" />
-				<p><input type="submit" id="submit_button" class="btn btn-primary" value='{% trans "Esikatsele" %}' /></p>
+				<button type="submit" class="btn btn-primary">Esikatsele</button>
 			</form>
 		</div>
 	</div>
@@ -82,6 +128,18 @@ Lisää projekti
 		  event.preventDefault();
 		  event.returnValue = '';
 	  }
+	});
+</script>
+
+<script>
+	$(document).ready(function() {
+	    $('.js-example-basic-multiple').select2();
+	});
+</script>
+
+<script>
+	$(".js-example-theme-multiple").select2({
+		theme: "classic"
 	});
 </script>
 

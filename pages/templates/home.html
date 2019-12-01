@@ -7,6 +7,7 @@ Etsi projekteja tietokannasta
 {% endblock %}
 
 {% block content %}
+
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-8">
@@ -23,24 +24,72 @@ Etsi projekteja tietokannasta
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-6">
-						{{ form.structure_type|as_crispy_field }}
-					</div>
-					<div class="col-6">
-						{{ form.building_material|as_crispy_field }}
-					</div>
-					<div class="col-6">
-						{{ form.service|as_crispy_field }}
-					</div>
-					<div class="col-6">
-						{{ form.construction_operation|as_crispy_field }}
-					</div>
-					<div class="col-6">
-						{{ form.structural_component|as_crispy_field }}
+					<div class="col-12">
+						<label>
+							Rakennustyyppi
+						</label>
+						<select class="js-example-basic-multiple" name="structure_type" multiple="multiple" style="width: 100%">
+							{% for filter in f1 %}
+								<option value= "{{ filter }}" > {{ filter }} </option>
+							{% endfor %}
+						</select>
 					</div>
 				</div>
+				<br>
 				<div class="row">
-					<div class="col-7">
+					<div class="col-12">
+						<label>
+							Rakennusmateriaali
+						</label>
+						<select class="js-example-basic-multiple" name="building_material" multiple="multiple" style="width: 100%">
+							{% for filter in f2 %}
+								<option value= "{{ filter }}" > {{ filter }} </option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-12">
+						<label>
+							Palvelu
+						</label>
+						<select class="js-example-basic-multiple" name="service" multiple="multiple" style="width: 100%">
+							{% for filter in f3 %}
+								<option value= "{{ filter }}" > {{ filter }} </option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-12">
+						<label>
+							Rakennustoimenpide
+						</label>
+						<select class="js-example-basic-multiple" name="construction_operation" multiple="multiple" style="width: 100%">
+							{% for filter in f4 %}
+								<option value= "{{ filter }}" > {{ filter }} </option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-12">
+						<label>
+							Rakenneosa
+						</label>
+						<select class="js-example-basic-multiple" name="structural_component" multiple="multiple" style="width: 100%">
+							{% for filter in f5 %}
+								<option value= "{{ filter }}" > {{ filter }} </option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-12">
 						{{ form.key_phrase_search|as_crispy_field }}
 					</div>
 				</div>
@@ -50,7 +99,9 @@ Etsi projekteja tietokannasta
 	</div>
 </div>
 <br>
+
 {% if result %}
+
 <table id="project_table" class="display responsive" width='100%'>
     <thead>
         <tr>
@@ -88,11 +139,25 @@ Etsi projekteja tietokannasta
     </tbody>
 </table>
 
-<script>
-$('#project_table').DataTable( {
-    language: {"url":"https://cdn.datatables.net/plug-ins/1.10.20/i18n/Finnish.json"},
-    searching: false
-} );
-</script>
 {% endif %}
+
+<script>
+	$('#project_table').DataTable( {
+	    language: {"url":"https://cdn.datatables.net/plug-ins/1.10.20/i18n/Finnish.json"},
+	    searching: false
+	} );
+</script>
+
+<script>
+	$(document).ready(function() {
+	    $('.js-example-basic-multiple').select2();
+	});
+</script>
+
+<script>
+	$(".js-example-theme-multiple").select2({
+		theme: "classic"
+	});
+</script>
+
 {% endblock %}

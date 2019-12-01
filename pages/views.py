@@ -11,17 +11,61 @@ import pages.models as models
 import urllib.request
 import urllib.parse
 import re
-from pages.forms import SearchProjectForm, AddFilterForm
+from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm
 from django import forms
 import pages.scripts.project_search as project_search
+import pages.scripts.sql_util as sql_util
+import pages.scripts.parse_util as parse_util
 
 @login_required(login_url='/login/')
 def home(request):
-	form = SearchProjectForm(request.GET)
-	if form.is_valid():
-		result = project_search.search(form)
-		return render(request, 'home.html', {'form':form, 'result':result})
-	return render(request, 'home.html', {'form':form})
+    form = SearchProjectForm(request.GET)
+    f1,f2,f3,f4,f5 = sql_util.get_filters()
+    result = []
+    context = {'form': form,
+                'f1': f1,
+                'f2': f2,
+                'f3': f3,
+                'f4': f4,
+                'f5': f5,
+                'result': result,
+                }
+    if form.is_valid():
+        result = []
+        #context['result'] = project_search.search(form)
+    return render(request, 'home.html', context)
+
+@login_required(login_url='/login/')
+def add_project(request):
+    f1,f2,f3,f4,f5 = sql_util.get_filters()
+    if request.method == 'POST':
+        form = CreateProjectForm(request.POST)
+        if form.is_valid():
+            data = request.POST.copy()
+            input_filters = parse_util.parse_input_filters(data)
+            obj = models.Project(
+            project_name = form.cleaned_data['project_name'],
+            destination_name = form.cleaned_data['destination_name'],
+            start_date = form.cleaned_data['start_date'],
+            end_date = form.cleaned_data['end_date'],
+            keywords = form.cleaned_data['keywords'],
+            project_description = form.cleaned_data['project_description'],
+            documentation_path = form.cleaned_data['documentation_path'],
+            project_manager = form.cleaned_data['project_manager'],
+            )
+            obj.save()
+            for f in input_filters:
+                obj.filters.add(f)
+            return render(request, 'snippets/success.html')
+    form = CreateProjectForm()
+    context = {'form': form,
+    'f1': f1,
+    'f2': f2,
+    'f3': f3,
+    'f4': f4,
+    'f5': f5,
+    }
+    return render(request, 'add_project.html', context)
 
 def post_success(request):
 	return render(request, 'snippets/success.html')
