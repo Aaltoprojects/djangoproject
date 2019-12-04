@@ -31,8 +31,8 @@ def home(request):
                 }
     if form.is_valid():
         data_dict = request.GET.copy()
-        print(data_dict)
         result = sql_util.search(form, data_dict)
+        print(result)
         context['result'] = result
     return render(request, 'home.html', context)
 
@@ -40,6 +40,7 @@ def home(request):
 def add_project(request):
     f1,f2,f3,f4,f5 = sql_util.get_filters()
     if request.method == 'POST':
+        print("VITTUUUUUU")
         form = CreateProjectForm(request.POST)
         if form.is_valid():
             data = request.POST.copy()

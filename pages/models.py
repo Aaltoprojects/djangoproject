@@ -45,7 +45,7 @@ class Project(models.Model):
 		)
 	project_description = models.CharField(
 		null=True,
-		max_length=1000,
+		max_length=10000,
 		verbose_name='Projektin kuvaus',
 		)
 	documentation_path = models.CharField(

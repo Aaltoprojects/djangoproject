@@ -72,7 +72,7 @@ class CreateProjectForm(forms.Form):
         label='Projektin kuvaus',
         help_text="Kuvaile vapaasti projektin sisältöä (max 1000 merkkiä)",
         empty_value='—',
-        max_length=1000,
+        max_length=5000,
         widget=forms.Textarea(attrs={'cols':50,'rows':5}),
     )
     documentation_path = forms.CharField(

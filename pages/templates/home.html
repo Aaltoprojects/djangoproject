@@ -115,6 +115,7 @@ Etsi projekteja tietokannasta
 		            <th class='min-desktop'>Materiaali</th>
 		            <th class='min-desktop'>Palvelu</th>
 		            <th class='min-desktop'>Toimenpide</th>
+		            <th class='min-desktop'>Osa</th>
 		            <th class='min-desktop'>Avainsanat</th>
 		            <th class='none'>Projektin kuvaus</th>
 		            <th class='none'>Polku tiedostojen sijaintiin</th>
@@ -129,10 +130,41 @@ Etsi projekteja tietokannasta
 		            	<td>{{ item.destination_name }}</td>
 		            	<td>{{ item.start_date|date:"d.m.Y" }}</td>
 		            	<td>{{ item.end_date|date:"d.m.Y" }}</td>
-		            	<td>{{ item.structure_type }}</td>
-		            	<td>{{ item.building_material }}</td>
-		            	<td>{{ item.service }}</td>
-		            	<td>{{ item.construction_operation }}</td>
+		            	<td>
+		            	{% for f1 in item.filters.all %}
+		            		{% if f1.category == "Rakennustyyppi" %}
+		            			{{ f1 }}
+		            		{% endif %}
+		            	{% endfor %}
+		            	</td>
+		            	<td>
+		            	{% for f2 in item.filters.all %}
+		            		{% if f2.category == "Rakennusmateriaali" %}
+		            			{{ f2 }}
+		            		{% endif %}
+		            	{% endfor %}
+		            	</td>
+		            	<td>
+		            	{% for f3 in item.filters.all %}
+		            		{% if f3.category == "Palvelu" %}
+		            			{{ f3 }}
+		            		{% endif %}
+		            	{% endfor %}
+		            	</td>
+		            	<td>
+		            	{% for f4 in item.filters.all %}
+		            		{% if f4.category == "Rakennustoimenpide" %}
+		            			{{ f4 }}
+		            		{% endif %}
+		            	{% endfor %}
+		            	</td>
+		            	<td>
+		            	{% for f5 in item.filters.all %}
+		            		{% if f5.category == "Rakenneosa" %}
+		            			{{ f5 }}
+		            		{% endif %}
+		            	{% endfor %}
+		            	</td>
 		            	<td>{{ item.keywords }}</td>
 		            	<td>{{ item.project_description }}</td>
 		            	<td>{{ item.documentation_path }}</td>
