@@ -12,4 +12,5 @@ urlpatterns = [
 	path('post/', views.add_project, name='add_project'),
 	path('success', views.post_success),
 	path('add_filter', views.add_filter, name='add_filter'),
+	path('edit_project/<int:id>', views.edit_project, name='edit_project'),
 ]

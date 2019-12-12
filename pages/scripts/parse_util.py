@@ -8,6 +8,20 @@ def format_qset(data_qs):
             array.append(name)
         return array
 
+def filters_qs_to_dict(filters_qs):
+	values = filters_qs.values()
+	filters_dict = {'Rakennustyyppi': [],
+					'Rakennusmateriaali': [],
+					'Palvelu': [],
+					'Rakennustoimenpide': [],
+					'Rakenneosa': [],
+					}
+	for d in values:
+		category = d['category']
+		filter_name = d['filter_name']
+		filters_dict[category].append(filter_name)
+	return filters_dict
+
 def parse_input_filters(data):
 	chosen_filters = []
 	chosen_filters += data.getlist('structure_type')
