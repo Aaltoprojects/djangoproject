@@ -166,7 +166,7 @@ Etsi projekteja tietokannasta
 		            	{% endfor %}
 		            	</td>
 		            	<td>{{ item.keywords }}</td>
-		            	<td>{{ item.project_description }}</td>
+		            	<td>{{ item.project_description | linebreaks }}</td>
 		            	<td>{{ item.documentation_path }}</td>
 		            	<td>{{ item.project_manager }}</td>
 		            	<td>

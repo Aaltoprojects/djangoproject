@@ -44,19 +44,20 @@ def add_project(request):
         if form.is_valid():
             data = request.POST.copy()
             input_filters = parse_util.parse_input_filters(data)
-            obj = models.Project(
-            project_name = form.cleaned_data['project_name'],
-            destination_name = form.cleaned_data['destination_name'],
-            start_date = form.cleaned_data['start_date'],
-            end_date = form.cleaned_data['end_date'],
-            keywords = form.cleaned_data['keywords'],
-            project_description = form.cleaned_data['project_description'],
-            documentation_path = form.cleaned_data['documentation_path'],
-            project_manager = form.cleaned_data['project_manager'],
-            )
-            obj.save()
-            for f in input_filters:
-                obj.filters.add(f)
+            for i in range(100):
+                obj = models.Project(
+                project_name = form.cleaned_data['project_name'],
+                destination_name = form.cleaned_data['destination_name'],
+                start_date = form.cleaned_data['start_date'],
+                end_date = form.cleaned_data['end_date'],
+                keywords = form.cleaned_data['keywords'],
+                project_description = form.cleaned_data['project_description'],
+                documentation_path = form.cleaned_data['documentation_path'],
+                project_manager = form.cleaned_data['project_manager'],
+                )
+                obj.save()
+                for f in input_filters:
+                    obj.filters.add(f)
             return render(request, 'snippets/success.html')
     f1,f2,f3,f4,f5 = sql_util.get_filters()
     form = CreateProjectForm()
