@@ -2,15 +2,11 @@ from pages.models import Project, Filter
 from django.db.models import Q
 import pages.constants as constants
 from pages.scripts.parse_util import format_qset
+from pages.constants import FILTER_CATEGORY_NAMES
 
 
 def get_filters():
-    f1 = format_qset(Filter.filter_db.filter(category='Rakennustyyppi'))
-    f2 = format_qset(Filter.filter_db.filter(category='Rakennusmateriaali'))
-    f3 = format_qset(Filter.filter_db.filter(category='Palvelu'))
-    f4 = format_qset(Filter.filter_db.filter(category='Rakennustoimenpide'))
-    f5 = format_qset(Filter.filter_db.filter(category='Rakenneosa'))
-    return f1, f2, f3, f4, f5
+    return tuple(format_qset(Filter.filter_db.filter(category=filter)) for filter in FILTER_CATEGORY_NAMES)
 
 
 def sql_query(form, data_dict):

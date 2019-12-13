@@ -12,12 +12,9 @@ def format_qset(data_qs):
 
 def filters_qs_to_dict(filters_qs):
     values = filters_qs.values()
-    filters_dict = {'Rakennustyyppi': [],
-                    'Rakennusmateriaali': [],
-                    'Palvelu': [],
-                    'Rakennustoimenpide': [],
-                    'Rakenneosa': [],
-                    }
+    filters_dict = {}
+    for filter in constants.FILTER_CATEGORY_NAMES:
+        filters_dict[filter] = []
     for d in values:
         category = d['category']
         filter_name = d['filter_name']
