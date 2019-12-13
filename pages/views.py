@@ -4,6 +4,7 @@ from django.shortcuts import render, render_to_response, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.core import mail
 
@@ -128,7 +129,7 @@ def post_success(request):
     return render(request, 'snippets/success.html')
 
 
-@login_required(login_url='/login/')
+@user_passes_test(lambda u: u.is_superuser,login_url='/admin/login/')
 def add_filter(request):
     if request.method == 'POST':
         form = AddFilterForm(request.POST)
