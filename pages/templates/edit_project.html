@@ -141,19 +141,10 @@ Muokkaa projektia
 
 <script>
 	$(document).ready(function() {
-	    $('.js-example-basic-multiple').select2();
-	});
-</script>
-
-<script>
-	$(".js-example-theme-multiple").select2({
-		theme: "classic"
-	});
-</script>
-
-<script>
-	$(".js-example-placeholder-multiple").select2({
-    placeholder: "Select a state"
+	    $('.js-example-basic-multiple').select2({
+	    	theme: "bootstrap",
+	    	placeholder: "Valitse yksi tai useampi"
+	    });
 	});
 </script>
 
