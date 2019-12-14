@@ -98,6 +98,15 @@ Etsi projekteja tietokannasta
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+	    $('.js-example-basic-multiple').select2({
+	    	theme: "bootstrap"
+	    });
+	});
+</script>
+
 <br>
 
 {% if result %}
@@ -187,17 +196,5 @@ Etsi projekteja tietokannasta
 </script>
 
 {% endif %}
-
-<script>
-	$(document).ready(function() {
-	    $('.js-example-basic-multiple').select2();
-	});
-</script>
-
-<script>
-	$(".js-example-theme-multiple").select2({
-		theme: "classic"
-	});
-</script>
 
 {% endblock %}
