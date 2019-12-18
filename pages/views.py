@@ -34,8 +34,8 @@ def home(request):
                'result': result,
                }
     if form.is_valid():
-        data_dict = request.GET.copy()
-        result = sql_util.search(form, data_dict)
+        input_data = request.GET.copy()
+        result = sql_util.search(form, input_data)
         context['result'] = result
     return render(request, 'home.html', context)
 
@@ -45,21 +45,8 @@ def add_project(request):
     if request.method == 'POST':
         form = CreateProjectForm(request.POST)
         if form.is_valid():
-            data = request.POST.copy()
-            input_filters = parse_util.parse_input_filters(data)
-            obj = models.Project(
-                project_name=form.cleaned_data['project_name'],
-                destination_name=form.cleaned_data['destination_name'],
-                start_date=form.cleaned_data['start_date'],
-                end_date=form.cleaned_data['end_date'],
-                keywords=form.cleaned_data['keywords'],
-                project_description=form.cleaned_data['project_description'],
-                documentation_path=form.cleaned_data['documentation_path'],
-                project_manager=form.cleaned_data['project_manager'],
-            )
-            obj.save()
-            for f in input_filters:
-                obj.filters.add(f)
+            input_data = request.POST.copy()
+            sql_util.save_entry_to_db(form, input_data)
             return render(request, 'snippets/success.html')
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     form = CreateProjectForm()
@@ -79,20 +66,8 @@ def edit_project(request, id):
     if request.method == 'POST':
         form = CreateProjectForm(request.POST)
         if form.is_valid():
-            data = request.POST.copy()
-            input_filters = parse_util.parse_input_filters(data)
-            project.project_name = form.cleaned_data['project_name']
-            project.destination_name = form.cleaned_data['destination_name']
-            project.start_date = form.cleaned_data['start_date']
-            project.end_date = form.cleaned_data['end_date']
-            project.keywords = form.cleaned_data['keywords']
-            project.project_description = form.cleaned_data['project_description']
-            project.documentation_path = form.cleaned_data['documentation_path']
-            project.project_manager = form.cleaned_data['project_manager']
-            project.save()
-            project.filters.clear()
-            for f in input_filters:
-                project.filters.add(f)
+            input_data = request.POST.copy()
+            sql_util.edit_entry_in_db(project, form, input_data)
             return render(request, 'snippets/success.html')
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     filters_qset = project.filters.all()

@@ -1,7 +1,7 @@
 from pages.models import Project, Filter
 from django.db.models import Q
 import pages.constants as constants
-from pages.scripts.parse_util import format_qset
+from pages.scripts.parse_util import format_qset, parse_input_filters
 from pages.constants import FILTER_CATEGORY_NAMES
 
 
@@ -54,3 +54,34 @@ def sql_query(form, data_dict):
 def search(form, data_dict):
     data_qs = sql_query(form, data_dict)
     return data_qs
+
+def save_entry_to_db(form, input_data):
+    input_filters = parse_util.parse_input_filters(input_data)
+    obj = Project(
+                project_name=form.cleaned_data['project_name'],
+                destination_name=form.cleaned_data['destination_name'],
+                start_date=form.cleaned_data['start_date'],
+                end_date=form.cleaned_data['end_date'],
+                keywords=form.cleaned_data['keywords'],
+                project_description=form.cleaned_data['project_description'],
+                documentation_path=form.cleaned_data['documentation_path'],
+                project_manager=form.cleaned_data['project_manager'],
+                )
+    obj.save()
+    for input_filter in input_filters:
+        obj.filters.add(input_filter)
+
+def edit_entry_in_db(project, form, input_data):
+    input_filters = parse_input_filters(input_data)
+    project.project_name = form.cleaned_data['project_name']
+    project.destination_name = form.cleaned_data['destination_name']
+    project.start_date = form.cleaned_data['start_date']
+    project.end_date = form.cleaned_data['end_date']
+    project.keywords = form.cleaned_data['keywords']
+    project.project_description = form.cleaned_data['project_description']
+    project.documentation_path = form.cleaned_data['documentation_path']
+    project.project_manager = form.cleaned_data['project_manager']
+    project.save()
+    project.filters.clear()
+    for input_filter in input_filters:
+        project.filters.add(input_filter)
