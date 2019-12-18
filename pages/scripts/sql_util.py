@@ -50,7 +50,7 @@ def sql_query(data_dict):
             tmp |= Q(project_manager__icontains=term)
             qset &= tmp
         data_qs = data_qs.filter(qset)
-    print(data_qs)
+
     return data_qs
 
 

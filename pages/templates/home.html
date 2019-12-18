@@ -110,8 +110,81 @@ Etsi projekteja tietokannasta
 
 <br>
 
-<div class="d-flex-md justify-content-center" id="result_table">
-
+<div class="d-flex-md justify-content-center">
+	<div class="ml-5 mr-5">
+		<table id="project_table" class="table table-striped table-bordered display responsive" width='100%' data-order='[[ 0, "desc" ]]'>
+			<thead>
+			    <tr>
+			        <th class='all'>Projektin nimi</th>
+			        <th class='all'>Kohteen nimi</th>
+			        <th class='all'>Aloituspäivä</th>
+			        <th class='all'>Lopetuspäivä</th>
+			        <th class='min-desktop'>Tyyppi</th>
+			        <th class='min-desktop'>Materiaali</th>
+			        <th class='min-desktop'>Palvelu</th>
+			        <th class='min-desktop'>Toimenpide</th>
+			        <th class='min-desktop'>Osa</th>
+			        <th class='min-desktop'>Avainsanat</th>
+			        <th class='none'>Projektin kuvaus</th>
+			        <th class='none'>Polku tiedostojen sijaintiin</th>
+			        <th class='none'>Projektipäällikkö</th>
+			        <th class='none'>Toiminnot</th>
+			    </tr>
+			</thead>
+			<tbody>
+				{% for item in result %}
+			   		<tr>
+			        	<td>{{ item.project_name }}</td>
+			        	<td>{{ item.destination_name }}</td>
+			        	<td>{{ item.start_date|date:"d.m.Y" }}</td>
+			        	<td>{{ item.end_date|date:"d.m.Y" }}</td>
+			        	<td>
+			        	{% for f1 in item.filters.all %}
+			        		{% if f1.category == "Rakennustyyppi" %}
+			        			{{ f1 }}
+			        		{% endif %}
+			        	{% endfor %}
+			        	</td>
+			        	<td>
+			        	{% for f2 in item.filters.all %}
+			        		{% if f2.category == "Rakennusmateriaali" %}
+			        			{{ f2 }}
+			        		{% endif %}
+			        	{% endfor %}
+			        	</td>
+			        	<td>
+			        	{% for f3 in item.filters.all %}
+			        		{% if f3.category == "Palvelu" %}
+			        			{{ f3 }}
+			        		{% endif %}
+			        	{% endfor %}
+			        	</td>
+			        	<td>
+			        	{% for f4 in item.filters.all %}
+			        		{% if f4.category == "Rakennustoimenpide" %}
+			        			{{ f4 }}
+			        		{% endif %}
+			        	{% endfor %}
+			        	</td>
+			        	<td>
+			        	{% for f5 in item.filters.all %}
+			        		{% if f5.category == "Rakenneosa" %}
+			        			{{ f5 }}
+			        		{% endif %}
+			        	{% endfor %}
+			        	</td>
+			        	<td>{{ item.keywords }}</td>
+			        	<td>{{ item.project_description | linebreaks }}</td>
+			        	<td>{{ item.documentation_path }}</td>
+			        	<td>{{ item.project_manager }}</td>
+			        	<td>
+							<a href="edit_project/{{ item.id }}" class="btn btn-secondary">Muokkaa tietoja</a>
+						</td>
+			    	</tr>
+			    {% endfor %}
+			</tbody>
+		</table>
+	</div>
 </div>
 
 <script>
@@ -123,20 +196,21 @@ Etsi projekteja tietokannasta
 
 <script type='text/javascript'>
 	$(function(){
-		$('#search_button').click(function(){
+		$('#search_button').click(function(ev){
 			$.ajax({
 				type: 'GET',
 				url: '/search/',
 				data: $('#search_project_form').serialize(),
 				success: function(data, textStatus, jqXHR) {
                 	console.log( "Success!" );
-                	$('#result_table').html(data);
+                	$('#project_table').html(data);
 	            },
 	            error: function(data, textStatus, jqXHR) {
 	                console.log( "Error!" );
 	            },
 	            dataType: 'html'
 			});
+			ev.preventDefault();
 		});
 	});
 </script>

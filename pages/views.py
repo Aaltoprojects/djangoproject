@@ -22,7 +22,7 @@ import pages.scripts.parse_util as parse_util
 
 @login_required(login_url='/login/')
 def home(request):
-    form = SearchProjectForm(request.GET)
+    form = SearchProjectForm()
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     result = []
     context = {'form': form,
@@ -38,18 +38,17 @@ def home(request):
 
 @login_required(login_url='/login/')
 def search_project(request):
-  if request.method == 'GET':
-    f1, f2, f3, f4, f5 = sql_util.get_filters()
-    input_data = request.GET.copy()
-    result = sql_util.search(input_data)
-    context = {'f1': f1,
-               'f2': f2,
-               'f3': f3,
-               'f4': f4,
-               'f5': f5,
-               'result': result,
-    }
-  return render(request, 'snippets/ajax_result_table.html', context)
+  f1, f2, f3, f4, f5 = sql_util.get_filters()
+  input_data = request.GET.copy()
+  result = sql_util.search(input_data)
+  context = {'f1': f1,
+             'f2': f2,
+             'f3': f3,
+             'f4': f4,
+             'f5': f5,
+             'result': result,
+  }
+  return render(request, 'snippets/success.html')
 
 
 @login_required(login_url='/login/')
