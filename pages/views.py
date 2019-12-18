@@ -130,12 +130,24 @@ def post_success(request):
 
 @user_passes_test(lambda u: u.is_superuser,login_url='/admin/login/')
 def add_filter(request):
+    indicator = 'NOT EXISTS'
     if request.method == 'POST':
         form = AddFilterForm(request.POST)
         if form.is_valid():
-            new_filter = form.save()
+            input_category = form.cleaned_data['category']
+            input_name = form.cleaned_data['filter_name']
+            db_ins = models.Filter.filter_db.filter(category=input_category,
+                                            filter_name__iexact=input_name,
+                                            )
+            if not db_ins:
+                new_filter = form.save()
+            else:
+                indicator = 'EXISTS'
     form = AddFilterForm()
-    return render(request, 'add_filter.html', {'form': form})
+    context = {'form': form,
+                'indicator': indicator,
+                }
+    return render(request, 'add_filter.html', context)
 
 # Signup and login functionalities:
 
