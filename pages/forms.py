@@ -117,7 +117,7 @@ class CreateProjectForm(forms.Form):
         ),
     )
     project_manager = forms.CharField(
-        label='Projektin vetäjä',
+        label='Projektipäällikkö',
         required=False,
         empty_value='—',
         max_length=100,
