@@ -19,11 +19,18 @@
 					</div>
 				{% endfor %}
 				<div class="col-6">
-					<button type="submit" class="btn btn-primary">Lisää</button>
+					<button type="submit" id="submit_button" class="btn btn-primary" onclick="return confirm('Haluatko varmasti tallentaa tämän filterin?');">Lisää</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
+
+
+{% if indicator == 'EXISTS' %}
+<script type="text/javascript">
+	alert('Yritit luoda jo olemassa olevaa filtteriä');
+</script>
+{% endif %}
 
 {% endblock content %}
