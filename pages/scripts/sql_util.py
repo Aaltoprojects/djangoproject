@@ -1,3 +1,4 @@
+import datetime as dt
 from pages.models import Project, Filter
 from django.db.models import Q
 import pages.constants as constants
@@ -9,10 +10,10 @@ def get_filters():
     return tuple(format_qset(Filter.filter_db.filter(category=filter)) for filter in FILTER_CATEGORY_NAMES)
 
 
-def sql_query(form, data_dict):
-    temp1 = str(form.cleaned_data['start_date'])
-    temp2 = str(form.cleaned_data['end_date'])
-    temp3 = str(form.cleaned_data['key_phrase_search'])
+def sql_query(data_dict):
+    temp1 = str(data_dict.getlist('start_date')[0])
+    temp2 = str(data_dict.getlist('end_date')[0])
+    temp3 = str(data_dict.getlist('key_phrase_search')[0])
     filter_names = []
     data_qs = Project.project_db.all()
 
@@ -31,9 +32,11 @@ def sql_query(form, data_dict):
         filter_qs = Filter.filter_db.filter(filter_name__in=filter_names)
         data_qs = data_qs.filter(filters__in=filter_qs)
 
-    if temp1 != 'None':
+    if temp1 != '':
+        temp1 = str(dt.datetime.strptime(temp1,'%d.%m.%Y').strftime('%Y-%m-%d'))
         data_qs = data_qs.filter(end_date__range=[temp1, '2100-01-01'])
-    if temp2 != 'None':
+    if temp2 != '':
+        temp2 = str(dt.datetime.strptime(temp2,'%d.%m.%Y').strftime('%Y-%m-%d'))
         data_qs = data_qs.filter(start_date__range=['1970-01-01', temp2])
     if temp3 != '':
         qset = Q()
@@ -47,12 +50,12 @@ def sql_query(form, data_dict):
             tmp |= Q(project_manager__icontains=term)
             qset &= tmp
         data_qs = data_qs.filter(qset)
-
+    print(data_qs)
     return data_qs
 
 
-def search(form, data_dict):
-    data_qs = sql_query(form, data_dict)
+def search(data_dict):
+    data_qs = sql_query(data_dict)
     return data_qs
 
 def save_entry_to_db(form, input_data):

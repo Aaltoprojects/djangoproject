@@ -33,20 +33,23 @@ def home(request):
                'f5': f5,
                'result': result,
                }
-    if form.is_valid():
-        input_data = request.GET.copy()
-        result = sql_util.search(form, input_data)
-        context['result'] = result
     return render(request, 'home.html', context)
 
 
 @login_required(login_url='/login/')
 def search_project(request):
   if request.method == 'GET':
+    f1, f2, f3, f4, f5 = sql_util.get_filters()
     input_data = request.GET.copy()
-    print('Here we have parameter values!')
-    print(input_data)
-  return render(request, 'snippets/success.html')
+    result = sql_util.search(input_data)
+    context = {'f1': f1,
+               'f2': f2,
+               'f3': f3,
+               'f4': f4,
+               'f5': f5,
+               'result': result,
+    }
+  return render(request, 'snippets/ajax_result_table.html', context)
 
 
 @login_required(login_url='/login/')
