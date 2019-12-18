@@ -13,7 +13,7 @@ Etsi projekteja tietokannasta
 		<div class="col-8">
 			<h1 class="mt-2">Etsi projekti</h1>
 			<hr class="mt-0 mb-4">
-			<form method='get'>
+			<form id='search_project_form' method='get'>
 				{% csrf_token %}
 				<div class="row">
 					<div class="col-6">
@@ -93,7 +93,7 @@ Etsi projekteja tietokannasta
 						{{ form.key_phrase_search|as_crispy_field }}
 					</div>
 				</div>
-				<button type="submit" class="btn btn-primary">Etsi</button>
+				<button type="submit" id="search_button" class="btn btn-primary">Etsi</button>
 			</form>
 		</div>
 	</div>
@@ -105,6 +105,24 @@ Etsi projekteja tietokannasta
 	    	theme: "bootstrap",
 	    	placeholder: "Valitse yksi tai useampi"
 	    });
+	});
+</script>
+
+<script type='text/javascript'>
+	$(function(){
+		$('#search_button').click(function(){
+			$.ajax({
+				type: 'GET',
+				url: '/search/',
+				data: $('#search_project_form').serialize(),
+				success: function(data) {
+                	console.log( "Success!" );
+	            },
+	            error: function(data) {
+	                console.log( "Error!" );
+	            },
+			});
+		});
 	});
 </script>
 

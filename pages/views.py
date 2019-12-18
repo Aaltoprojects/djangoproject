@@ -41,6 +41,15 @@ def home(request):
 
 
 @login_required(login_url='/login/')
+def search_project(request):
+  if request.method == 'GET':
+    input_data = request.GET.copy()
+    print('Here we have parameter values!')
+    print(input_data)
+  return render(request, 'snippets/success.html')
+
+
+@login_required(login_url='/login/')
 def add_project(request):
     if request.method == 'POST':
         form = CreateProjectForm(request.POST)
@@ -107,19 +116,15 @@ def post_success(request):
 def add_filter(request):
     indicator = 'NOT EXISTS'
     if request.method == 'POST':
-        form = AddFilterForm(request.POST)
-        if form.is_valid():
-            input_category = form.cleaned_data['category']
-            input_name = form.cleaned_data['filter_name']
-            db_ins = models.Filter.filter_db.filter(category=input_category,
-                                            filter_name__iexact=input_name,
-                                            )
-            if not db_ins:
-                new_filter = form.save()
+        add_filter_form = AddFilterForm(request.POST)
+        if add_filter_form.is_valid():
+            matching_qs = sql_util.check_if_exists_in_db(add_filter_form)
+            if not matching_qs:
+                new_filter = add_filter_form.save()
             else:
                 indicator = 'EXISTS'
-    form = AddFilterForm()
-    context = {'form': form,'indicator': indicator,}
+    add_filter_form = AddFilterForm()
+    context = {'form': add_filter_form,'indicator': indicator,}
     return render(request, 'add_filter.html', context)
 
 # Signup and login functionalities:

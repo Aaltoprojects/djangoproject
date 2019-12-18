@@ -85,3 +85,11 @@ def edit_entry_in_db(project, form, input_data):
     project.filters.clear()
     for input_filter in input_filters:
         project.filters.add(input_filter)
+
+def check_if_exists_in_db(add_filter_form):
+    input_category = add_filter_form.cleaned_data['category']
+    input_name = add_filter_form.cleaned_data['filter_name']
+    matching_qs = Filter.filter_db.filter(category=input_category,
+                                            filter_name__iexact=input_name,
+                                            )
+    return matching_qs

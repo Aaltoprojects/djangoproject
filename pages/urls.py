@@ -5,6 +5,7 @@ import re
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('search/', views.search_project, name='search_project'),
     path('', include('django.contrib.auth.urls')),
     url(r'^signup/$', views.signup, name='signup'),
     path('confirm', views.confirmUser, name='User confirmed'),
