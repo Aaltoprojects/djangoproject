@@ -119,9 +119,7 @@ def add_filter(request):
             else:
                 indicator = 'EXISTS'
     form = AddFilterForm()
-    context = {'form': form,
-                'indicator': indicator,
-                }
+    context = {'form': form,'indicator': indicator,}
     return render(request, 'add_filter.html', context)
 
 # Signup and login functionalities:
