@@ -48,7 +48,7 @@ def search_project(request):
              'f5': f5,
              'result': result,
   }
-  return render(request, 'snippets/success.html')
+  return render(request, 'snippets/ajax_result_table.html', context)
 
 
 @login_required(login_url='/login/')
