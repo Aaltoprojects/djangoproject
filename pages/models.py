@@ -56,7 +56,7 @@ class Project(models.Model):
 	project_manager = models.CharField(
 		null=True,
 		max_length=100,
-		verbose_name='Projektin vetäjä',
+		verbose_name='Projektipäällikkö',
 		)
 	filters = models.ManyToManyField(Filter)
 
