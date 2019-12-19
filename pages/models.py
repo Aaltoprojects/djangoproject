@@ -58,11 +58,6 @@ class Project(models.Model):
 		max_length=100,
 		verbose_name='Projektipäällikkö',
 		)
-	Thís_is_test_field = models.CharField(
-		null=True,
-		max_length=100,
-		verbose_name='Testikenttä',
-		)
 	filters = models.ManyToManyField(Filter)
 
 	def __str__(self):
