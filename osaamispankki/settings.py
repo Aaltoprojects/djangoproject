@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'jn%d6#nxfkr#2bkovuyhw&cwf_0ne_5fg-dre&hyrd^dtq+#lt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('OSAAMISPANKKI_DEBUG_MODE')
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'arcane-temple-76036.herokuapp.com',
