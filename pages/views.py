@@ -123,7 +123,8 @@ def add_filter(request):
                 new_filter = add_filter_form.save()
             else:
                 indicator = 'EXISTS'
-    add_filter_form = AddFilterForm()
+    elif request.method == 'GET':
+        add_filter_form = AddFilterForm()
     context = {'form': add_filter_form,'indicator': indicator,}
     return render(request, 'add_filter.html', context)
 
