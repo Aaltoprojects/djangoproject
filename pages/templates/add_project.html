@@ -36,7 +36,7 @@ Lisää projekti
 						<label>
 							Rakennustyyppi
 						</label>
-						<select class="js-example-basic-multiple" name="structure_type" multiple="multiple" style="width: 100%">
+						<select class="js-example-basic-multiple" id="selector1" name="structure_type" multiple="multiple" style="width: 100%">
 							{% for filter in f1 %}
 								<option value= "{{ filter }}" > {{ filter }} </option>
 							{% endfor %}
@@ -49,7 +49,7 @@ Lisää projekti
 						<label>
 							Rakennusmateriaali
 						</label>
-						<select class="js-example-basic-multiple" name="building_material" multiple="multiple" style="width: 100%">
+						<select class="js-example-basic-multiple" id="selector2" name="building_material" multiple="multiple" style="width: 100%">
 							{% for filter in f2 %}
 								<option value= "{{ filter }}" > {{ filter }} </option>
 							{% endfor %}
@@ -62,7 +62,7 @@ Lisää projekti
 						<label>
 							Palvelu
 						</label>
-						<select class="js-example-basic-multiple" name="service" multiple="multiple" style="width: 100%">
+						<select class="js-example-basic-multiple" id="selector3" name="service" multiple="multiple" style="width: 100%">
 							{% for filter in f3 %}
 								<option value= "{{ filter }}" > {{ filter }} </option>
 							{% endfor %}
@@ -75,7 +75,7 @@ Lisää projekti
 						<label>
 							Rakennustoimenpide
 						</label>
-						<select class="js-example-basic-multiple" name="construction_operation" multiple="multiple" style="width: 100%">
+						<select class="js-example-basic-multiple" id="selector4" name="construction_operation" multiple="multiple" style="width: 100%">
 							{% for filter in f4 %}
 								<option value= "{{ filter }}" > {{ filter }} </option>
 							{% endfor %}
@@ -88,7 +88,7 @@ Lisää projekti
 						<label>
 							Rakenneosa
 						</label>
-						<select class="js-example-basic-multiple" name="structural_component" multiple="multiple" style="width: 100%">
+						<select class="js-example-basic-multiple" id="selector5" name="structural_component" multiple="multiple" style="width: 100%">
 							{% for filter in f5 %}
 								<option value= "{{ filter }}" > {{ filter }} </option>
 							{% endfor %}
@@ -135,6 +135,15 @@ Lisää projekti
 
 	var formChanged = false;
 	var myForm = document.getElementById('add_project_form');
+	var selectors = document.getElementsByClassName('js-example-basic-multiple');
+	for (let selector of selectors) {
+		console.log(selector.id);
+		$('#' + selector.id).on('select2:selecting', function(e) {
+			console.log("test this .......");
+			formChanged = true;
+		});
+	}
+
 	myForm.addEventListener('change', () => formChanged = true);
 	window.addEventListener('beforeunload', (event) => {
 	  if (formChanged && !window.btn_clicked) {
