@@ -59,7 +59,7 @@ def search(data_dict):
     return data_qs
 
 def save_entry_to_db(form, input_data):
-    input_filters = parse_util.parse_input_filters(input_data)
+    input_filters = parse_input_filters(input_data)
     obj = Project(
                 project_name=form.cleaned_data['project_name'],
                 destination_name=form.cleaned_data['destination_name'],
