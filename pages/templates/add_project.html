@@ -137,7 +137,6 @@ Lisää projekti
 	var myForm = document.getElementById('add_project_form');
 	var selectors = document.getElementsByClassName('js-example-basic-multiple');
 	for (let selector of selectors) {
-		console.log(selector.id);
 		$('#' + selector.id).on('select2:selecting', function(e) {
 			console.log("test this .......");
 			formChanged = true;
