@@ -24,14 +24,12 @@ import pages.scripts.parse_util as parse_util
 def home(request):
     form = SearchProjectForm()
     f1, f2, f3, f4, f5 = sql_util.get_filters()
-    result = []
     context = {'form': form,
                'f1': f1,
                'f2': f2,
                'f3': f3,
                'f4': f4,
                'f5': f5,
-               'result': result,
                }
     return render(request, 'home.html', context)
 
