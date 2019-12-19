@@ -131,6 +131,9 @@ class CreateProjectForm(forms.Form):
 
 class AddFilterForm(forms.ModelForm):
 
+    def clean_filter_name(self):
+        return self.cleaned_data['filter_name'].capitalize()
+
     class Meta:
         model = Filter
         fields = ['category', 'filter_name']
