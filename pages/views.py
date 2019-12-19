@@ -38,17 +38,17 @@ def home(request):
 
 @login_required(login_url='/login/')
 def search_project(request):
-  f1, f2, f3, f4, f5 = sql_util.get_filters()
-  input_data = request.GET.copy()
-  result = sql_util.search(input_data)
-  context = {'f1': f1,
-             'f2': f2,
-             'f3': f3,
-             'f4': f4,
-             'f5': f5,
-             'result': result,
-  }
-  return render(request, 'snippets/ajax_result_table.html', context)
+    f1, f2, f3, f4, f5 = sql_util.get_filters()
+    input_data = request.GET.copy()
+    result = sql_util.search(input_data)
+    context = {'f1': f1,
+               'f2': f2,
+               'f3': f3,
+               'f4': f4,
+               'f5': f5,
+               'result': result,
+               }
+    return render(request, 'snippets/ajax_result_table.html', context)
 
 
 @login_required(login_url='/login/')
