@@ -28,7 +28,7 @@ SECRET_KEY = 'jn%d6#nxfkr#2bkovuyhw&cwf_0ne_5fg-dre&hyrd^dtq+#lt'
 DEBUG = os.environ.get('OSAAMISPANKKI_DEBUG_MODE') != 'False'
 
 ALLOWED_HOSTS = [
-    'arcane-temple-76036.herokuapp.com',
+    'projektipankki.herokuapp.com/',
     '127.0.0.1',
 ]
 
