@@ -4,5 +4,5 @@ import pages.models
 
 admin.site.register(pages.models.Project)
 admin.site.register(pages.models.Filter)
-admin.site.site_header = 'Osaamispankki Administration'
+admin.site.site_header = 'Projektipankki Administration'
 admin.site.unregister(Group)
