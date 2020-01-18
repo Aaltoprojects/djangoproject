@@ -3,7 +3,6 @@
 
 {% block content %}
 
-
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-8">
@@ -17,18 +16,40 @@
 					</div>
 				{% endfor %}
 				<div class="col-6">
-					<button type="submit" id="submit_button" class="btn btn-primary" onclick="return confirm('Haluatko varmasti tallentaa tämän filterin?');">Lisää</button>
+					<button type="submit" id="submit_button" class="btn btn-primary" onclick="confirm('Haluatko varmasti tallentaa tämän filterin?');">Lisää</button>
 				</div>
 			</form>
+			<br>
+			<div class="alert alert-success" id="success-alert">
+ 				<button type="button" class="close" data-dismiss="alert">x</button>
+  				Filtteri luotu onnistuneesti
+			</div>
+
+			<div class="alert alert-danger" id="error-alert">
+			  <button type="button" class="close" data-dismiss="alert">x</button>
+			  Yritit luoda jo olemassa olevaa filtteriä
+			</div>
 		</div>
 	</div>
 </div>
 
-
-{% if indicator == 'EXISTS' %}
 <script type="text/javascript">
-	alert('Yritit luoda jo olemassa olevaa filtteriä');
+	{% if success == True and showMessage == True %}
+		$("#success-alert").show();
+		$("#error-alert").hide();
+		$("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+	    	$("#success-alert").slideUp(500);
+		});
+	{% elif success == False and showMessage == True %}
+		$("#success-alert").hide();
+		$("#error-alert").show();
+		$("#error-alert").fadeTo(2000, 500).slideUp(500, function(){
+	    	$("#error-alert").slideUp(500);
+		});
+	{% elif success == False and showMessage == False %}
+		$("#error-alert").hide();
+		$("#success-alert").hide();
+	{% endif %}
 </script>
-{% endif %}
 
 {% endblock content %}

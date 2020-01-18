@@ -6,27 +6,27 @@
   <meta charset='utf-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
   <!-- Bootstrap CSS -->
-  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO'crossorigin='anonymous'>
+  <link rel='stylesheet' href='../static/css/bootstrap.min.css'>
   <!-- Bootstrap JS -->
-  <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy'crossorigin='anonymous'></script>
+  <script src='../static/js/bootstrap.min.js'></script>
 
-  <script src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh' crossorigin='anonymous'></script>
+  <script src='../static/js/jquery-3.4.1.min.js'></script>
 
   <!-- Fengyuan Chen's Datepicker -->
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css' integrity='sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=' crossorigin='anonymous' />
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js' integrity='sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=' crossorigin='anonymous'></script>
+  <link rel='stylesheet' href='../static/css/datepicker.min.css'/>
+  <script src='../static/js/datepicker.min.js'></script>
 
   <!-- DataTables -->
-  <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css'/>
-  <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.css'/>
-  <script type='text/javascript' src='https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js'></script>
-  <script type='text/javascript' src='https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.js'></script>
+  <link rel='stylesheet' type='text/css' href='../static/css/jquery.dataTables.css'/>
+  <link rel='stylesheet' type='text/css' href='../static/css/responsive.dataTables.css'/>
+  <script type='text/javascript' src='../static/js/jquery.dataTables.js'></script>
+  <script type='text/javascript' src='../static/js/dataTables.responsive.js'></script>
 
   <!-- Select2 -->
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+  <link href="../static/css/select2.min.css" rel="stylesheet" />
+  <link href="../static/css/select2-bootstrap.min.css" rel="stylesheet" />
+  <link href="../static/css/select2-bootstrap.css" rel="stylesheet" />
+  <script src="../static/js/select2.min.js"></script>
 
   {% block header %}
   {% endblock header %}
@@ -44,9 +44,9 @@
     <div class='collapse navbar-collapse' id='navbarSupportedContent'>
       <ul class='navbar-nav mr-auto'>
         {% if request.user.is_anonymous %}
-        <li class='nav-item'>
-          <a class='nav-link' href='{% url 'signup' %}'>Luo käyttäjä</a>
-        </li>
+        <!-- <li class='nav-item'>
+          <a class='nav-link' href='{# url 'signup'#}'>Luo käyttäjä</a>
+        </li> -->
         <li class='nav-item'>
           <a class='nav-link' href='{% url 'login' %}'>Kirjaudu sisään</a>
         </li>
@@ -81,7 +81,7 @@
     <small>Copyright &copy; Nodesk inc. - All Rights Reserved</small>
   </center>
 
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js' integrity='sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut' crossorigin='anonymous'></script>
-  <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js' integrity='sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k' crossorigin='anonymous'></script>
+  <script src='../static/js/popper.min.js'></script>
+  <script src='../static/js/bootstrap.min.js'></script>
 </body>
 </html>

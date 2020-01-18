@@ -81,17 +81,23 @@ def edit_project(request, id):
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     filters_qset = project.filters.all()
     filters_dict = parse_util.filters_qs_to_dict(filters_qset)
-    form = CreateProjectForm(initial={'project_name': project.project_name,
-                                      'destination_name': project.destination_name,
-                                      'start_date': dt.datetime.strptime(str(project.start_date),
-                                                                         '%Y-%m-%d').strftime(DATE_FORMAT),
-                                      'end_date': dt.datetime.strptime(str(project.end_date),
-                                                                       '%Y-%m-%d').strftime(DATE_FORMAT),
-                                      'keywords': project.keywords,
-                                      'project_description': project.project_description,
-                                      'documentation_path': project.documentation_path,
-                                      'project_manager': project.project_manager,
-                                      })
+    form = CreateProjectForm(
+        initial={
+            'project_name': project.project_name,
+            'destination_name': project.destination_name,
+            'start_date': dt.datetime.strptime(
+                str(
+                    project.start_date),
+                '%Y-%m-%d').strftime(DATE_FORMAT) if project.start_date is not None else project.start_date,
+            'end_date': dt.datetime.strptime(
+                str(
+                    project.end_date),
+                '%Y-%m-%d').strftime(DATE_FORMAT) if project.end_date is not None else project.end_date,
+            'keywords': project.keywords,
+            'project_description': project.project_description,
+            'documentation_path': project.documentation_path,
+            'project_manager': project.project_manager,
+        })
     context = {'form': form,
                'f1': f1,
                'f2': f2,
@@ -112,20 +118,27 @@ def post_success(request):
     return render(request, 'snippets/success.html')
 
 
-@user_passes_test(lambda u: u.is_superuser,login_url='/admin/login/')
+@user_passes_test(lambda u: u.is_superuser, login_url='/admin/login/')
 def add_filter(request):
-    indicator = 'NOT EXISTS'
+    showMessage = True
+    success = True
     if request.method == 'POST':
         add_filter_form = AddFilterForm(request.POST)
         if add_filter_form.is_valid():
             matching_qs = sql_util.check_if_exists_in_db(add_filter_form)
             if not matching_qs:
                 new_filter = add_filter_form.save()
+                add_filter_form = AddFilterForm()
+                showMessage = True
+                success = True
             else:
-                indicator = 'EXISTS'
+                success = False
+                showMessage = True
     elif request.method == 'GET':
         add_filter_form = AddFilterForm()
-    context = {'form': add_filter_form,'indicator': indicator,}
+        showMessage = False
+        success = False
+    context = {'form': add_filter_form, 'success':success, 'showMessage':showMessage}
     return render(request, 'add_filter.html', context)
 
 # Signup and login functionalities:
