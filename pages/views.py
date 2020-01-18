@@ -83,10 +83,8 @@ def edit_project(request, id):
     filters_dict = parse_util.filters_qs_to_dict(filters_qset)
     form = CreateProjectForm(initial={'project_name': project.project_name,
                                       'destination_name': project.destination_name,
-                                      'start_date': dt.datetime.strptime(str(project.start_date),
-                                                                         '%Y-%m-%d').strftime(DATE_FORMAT),
-                                      'end_date': dt.datetime.strptime(str(project.end_date),
-                                                                       '%Y-%m-%d').strftime(DATE_FORMAT),
+                                      'start_date': dt.datetime.strptime(str(project.start_date),'%Y-%m-%d').strftime(DATE_FORMAT) if project.start_date != None else project.start_date,
+                                      'end_date': dt.datetime.strptime(str(project.end_date),'%Y-%m-%d').strftime(DATE_FORMAT) if project.end_date != None else project.end_date,
                                       'keywords': project.keywords,
                                       'project_description': project.project_description,
                                       'documentation_path': project.documentation_path,
