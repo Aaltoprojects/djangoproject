@@ -120,18 +120,25 @@ def post_success(request):
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/admin/login/')
 def add_filter(request):
-    indicator = 'NOT EXISTS'
+    showMessage = True
+    success = True
     if request.method == 'POST':
         add_filter_form = AddFilterForm(request.POST)
         if add_filter_form.is_valid():
             matching_qs = sql_util.check_if_exists_in_db(add_filter_form)
             if not matching_qs:
                 new_filter = add_filter_form.save()
+                add_filter_form = AddFilterForm()
+                showMessage = True
+                success = True
             else:
-                indicator = 'EXISTS'
+                success = False
+                showMessage = True
     elif request.method == 'GET':
         add_filter_form = AddFilterForm()
-    context = {'form': add_filter_form, 'indicator': indicator, }
+        showMessage = False
+        success = False
+    context = {'form': add_filter_form, 'success':success, 'showMessage':showMessage}
     return render(request, 'add_filter.html', context)
 
 # Signup and login functionalities:
