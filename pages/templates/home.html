@@ -93,7 +93,11 @@ Etsi projekteja tietokannasta
 						{{ form.key_phrase_search|as_crispy_field }}
 					</div>
 				</div>
-				<button type="submit" id="search_button" class="btn btn-primary">Etsi</button>
+				<div class="row">
+					<div class="col-12">
+						<button type="submit" id="search_button" class="btn btn-primary">Etsi</button>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -122,8 +126,8 @@ Etsi projekteja tietokannasta
 				url: '/search/',
 				data: $('#search_project_form').serialize(),
 				success: function(data, textStatus, jqXHR) {
-                	console.log( "Success!" );
                 	$('#table_div').html(data);
+                	console.log( "Success!" );
 	            },
 	            error: function(data, textStatus, jqXHR) {
 	                console.log( "Error!" );

@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.core import mail
 
+from openpyxl import Workbook
 import datetime as dt
 import pages.models as models
 import urllib.request
@@ -84,7 +85,7 @@ def edit_project(request, id):
     form = CreateProjectForm(
         initial={
             'project_name': project.project_name,
-            'destination_name': project.destination_name,
+            'destination_name': '' if project.destination_name == '—' else project.destination_name,
             'start_date': dt.datetime.strptime(
                 str(
                     project.start_date),
@@ -93,11 +94,12 @@ def edit_project(request, id):
                 str(
                     project.end_date),
                 '%Y-%m-%d').strftime(DATE_FORMAT) if project.end_date is not None else project.end_date,
-            'keywords': project.keywords,
+            'keywords': ''  if project.keywords == '—' else project.keywords,
             'project_description': project.project_description,
-            'documentation_path': project.documentation_path,
-            'project_manager': project.project_manager,
+            'documentation_path': ''  if project.documentation_path == '—' else project.documentation_path,
+            'project_manager': ''  if project.project_manager == '—' else project.project_manager,
         })
+    print(project.project_manager)
     context = {'form': form,
                'f1': f1,
                'f2': f2,
@@ -107,7 +109,7 @@ def edit_project(request, id):
                'sf1': filters_dict['Rakennustyyppi'],
                'sf2': filters_dict['Rakennusmateriaali'],
                'sf3': filters_dict['Palvelu'],
-               'sf4': filters_dict['Rakennustyyppi'],
+               'sf4': filters_dict['Rakennustoimenpide'],
                'sf5': filters_dict['Rakenneosa'],
                }
     return render(request, 'edit_project.html', context)
@@ -140,6 +142,19 @@ def add_filter(request):
         success = False
     context = {'form': add_filter_form, 'success':success, 'showMessage':showMessage}
     return render(request, 'add_filter.html', context)
+
+@login_required(login_url='/login/')
+def export_results(request):
+    input_data = request.GET.copy()
+    result = sql_util.search(input_data)
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    )
+    response['Content-Disposition'] = 'attachment; filename={date}-results.xlsx'.format(
+        date=dt.datetime.now().strftime('%Y-%m-%d'),
+    )
+    parse_util.write_to_excel(result, response)
+    return response
 
 # Signup and login functionalities:
 
