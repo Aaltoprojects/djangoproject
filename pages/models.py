@@ -18,6 +18,25 @@ class Filter(models.Model):
 	def __str__(self):
 		return self.filter_name
 
+class UploadFilesForm(models.Model):
+
+	file_db = models.Manager()
+
+	project_file = models.FileField(
+		blank=True,
+		null=True,
+		upload_to='project_files/%Y/%m/%D/'
+	)
+
+	project_image = models.ImageField(
+		blank=True,
+		null=True,
+		upload_to='project_images/%Y/%m/%D/'
+	)
+
+	def __str__(self):
+		return str(self.project_file)
+
 class Project(models.Model):
 
 	project_db = models.Manager()
@@ -58,6 +77,16 @@ class Project(models.Model):
 		max_length=100,
 		verbose_name='Projektipäällikkö',
 		)
+	project_file = models.FileField(
+		blank=True,
+		null=True,
+		upload_to='project_files/%Y/%m/%D/'
+	)
+	project_image = models.ImageField(
+		blank=True,
+		null=True,
+		upload_to='project_images/%Y/%m/%D/'
+	)
 	filters = models.ManyToManyField(Filter)
 
 	def __str__(self):
