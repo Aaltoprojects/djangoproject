@@ -30,7 +30,7 @@
         <tbody>
             {% for item in result %}
                 <tr>
-                    <td>{{ item.project_name }}</td>
+                    <td><img src="media/{{ item.project_image }}" alt="project_image" style="width:50px;height:50px;"> {{ item.project_name }}</td>
                     <td>{{ item.destination_name }}</td>
                     <td>{{ item.start_date|date:"d.m.Y" }}</td>
                     <td>{{ item.end_date|date:"d.m.Y" }}</td>
