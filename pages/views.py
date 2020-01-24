@@ -15,7 +15,7 @@ import urllib.request
 import urllib.parse
 import re
 from pages.constants import DATE_FORMAT
-from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm
+from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm, CreateUploadFilesForm
 from django import forms
 import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
@@ -54,13 +54,16 @@ def search_project(request):
 def add_project(request):
     if request.method == 'POST':
         form = CreateProjectForm(request.POST)
-        if form.is_valid():
+        uploadFilesForm = CreateUploadFilesForm(request.POST, request.FILES)
+        if form.is_valid() and uploadFilesForm.is_valid():
             input_data = request.POST.copy()
-            sql_util.save_entry_to_db(form, input_data)
+            sql_util.save_entry_to_db(form, input_data, uploadFilesForm)
             return render(request, 'snippets/success.html')
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     form = CreateProjectForm()
+    uploadFilesForm = CreateUploadFilesForm()
     context = {'form': form,
+               'uploadFilesForm': uploadFilesForm,
                'f1': f1,
                'f2': f2,
                'f3': f3,
