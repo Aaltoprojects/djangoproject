@@ -2,7 +2,7 @@ import datetime as dt
 from pages.models import Project, Filter
 from django.db.models import Q
 import pages.constants as constants
-from pages.scripts.parse_util import format_qset, parse_input_filters
+from pages.scripts.parse_util import format_qset, parse_input_filters, parse_input_files
 from pages.constants import FILTER_CATEGORY_NAMES
 
 
@@ -58,7 +58,7 @@ def search(data_dict):
     data_qs = sql_query(data_dict)
     return data_qs
 
-def save_entry_to_db(form, input_data):
+def save_entry_to_db(form, input_data, uploadFilesForm):
     input_filters = parse_input_filters(input_data)
     obj = Project(
                 project_name=form.cleaned_data['project_name'],
@@ -69,6 +69,8 @@ def save_entry_to_db(form, input_data):
                 project_description=form.cleaned_data['project_description'],
                 documentation_path=form.cleaned_data['documentation_path'],
                 project_manager=form.cleaned_data['project_manager'],
+                project_file=uploadFilesForm.cleaned_data['project_file'],
+                project_image=uploadFilesForm.cleaned_data['project_image']
                 )
     obj.save()
     for input_filter in input_filters:
