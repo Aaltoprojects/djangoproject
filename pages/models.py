@@ -18,7 +18,7 @@ class Filter(models.Model):
 	def __str__(self):
 		return self.filter_name
 
-class UploadFilesForm(models.Model):
+class UploadFilesModel(models.Model):
 
 	file_db = models.Manager()
 

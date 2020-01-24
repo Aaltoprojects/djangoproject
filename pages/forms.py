@@ -2,7 +2,7 @@ import datetime
 import pages.constants as constants
 from pages.models import Filter
 from pages.models import Project
-from pages.models import UploadFilesForm
+from pages.models import UploadFilesModel
 from django import forms
 from django.forms import DateInput
 from .widgets import FengyuanChenDatePickerInput
@@ -132,7 +132,7 @@ class CreateProjectForm(forms.Form):
 
 class CreateUploadFilesForm(forms.ModelForm):
     class Meta:
-        model = UploadFilesForm
+        model = UploadFilesModel
         fields = ['project_file', 'project_image']
 
 class AddFilterForm(forms.ModelForm):
