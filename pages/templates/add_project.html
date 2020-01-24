@@ -13,7 +13,7 @@ Lisää projekti
 		<div class="col-8">
 			<h1 class="mt-2">Lisää projekti</h1>
 			<hr class="mt-0 mb-4">
-			<form action="" id="add_project_form" method="post">
+			<form action="" id="add_project_form" method="post" enctype="multipart/form-data">
 				{% csrf_token %}
 				<div class="row">
 					<div class="col-6">
@@ -111,6 +111,11 @@ Lisää projekti
 				<div class="row">
 					<div class="col-12">
 						{{ form.documentation_path | as_crispy_field }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						{{ uploadFilesForm.as_p }}
 					</div>
 				</div>
 				<button type="submit" id="submit_button" class="btn btn-success">Tallenna</button>
