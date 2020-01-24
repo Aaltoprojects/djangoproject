@@ -2,7 +2,7 @@ import datetime as dt
 from pages.models import Project, Filter
 from django.db.models import Q
 import pages.constants as constants
-from pages.scripts.parse_util import format_qset, parse_input_filters, parse_input_files
+from pages.scripts.parse_util import format_qset, parse_input_filters
 from pages.constants import FILTER_CATEGORY_NAMES
 
 
