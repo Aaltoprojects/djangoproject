@@ -19,6 +19,7 @@ from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm
 from django import forms
 import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
+from attachments.models import Attachment
 
 
 @login_required(login_url='/login/')
@@ -60,7 +61,9 @@ def add_project(request):
             return render(request, 'snippets/success.html')
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     form = CreateProjectForm()
+    entry = Attachment(pk=1) # tää on viel kyssäri
     context = {'form': form,
+               'entry': entry,
                'f1': f1,
                'f2': f2,
                'f3': f3,
