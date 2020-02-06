@@ -4,6 +4,8 @@ from . import views
 import re
 from django.conf import settings
 from django.views.static import serve
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -19,3 +21,8 @@ urlpatterns = [
     path('edit_project/<int:id>', views.edit_project, name='edit_project'),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT,}),
 ]
+
+# NOTICE: Read how to serve files when in production e.g. this link 
+# https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

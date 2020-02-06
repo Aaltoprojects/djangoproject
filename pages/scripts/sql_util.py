@@ -58,7 +58,7 @@ def search(data_dict):
     data_qs = sql_query(data_dict)
     return data_qs
 
-def save_entry_to_db(form, input_data, uploadFilesForm):
+def save_entry_to_db(form, input_data):
     input_filters = parse_input_filters(input_data)
     obj = Project(
                 project_name=form.cleaned_data['project_name'],
@@ -69,8 +69,8 @@ def save_entry_to_db(form, input_data, uploadFilesForm):
                 project_description=form.cleaned_data['project_description'],
                 documentation_path=form.cleaned_data['documentation_path'],
                 project_manager=form.cleaned_data['project_manager'],
-                project_file=uploadFilesForm.cleaned_data['project_file'],
-                project_image=uploadFilesForm.cleaned_data['project_image']
+                project_file=form.cleaned_data['project_file'],
+                project_image=form.cleaned_data['project_image']
                 )
     obj.save()
     for input_filter in input_filters:

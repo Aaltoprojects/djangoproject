@@ -15,10 +15,12 @@ import urllib.request
 import urllib.parse
 import re
 from pages.constants import DATE_FORMAT
-from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm, CreateUploadFilesForm
+from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm
 from django import forms
 import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 
 @login_required(login_url='/login/')
@@ -53,17 +55,22 @@ def search_project(request):
 @login_required(login_url='/login/')
 def add_project(request):
     if request.method == 'POST':
-        form = CreateProjectForm(request.POST)
-        uploadFilesForm = CreateUploadFilesForm(request.POST, request.FILES)
-        if form.is_valid() and uploadFilesForm.is_valid():
+        form = CreateProjectForm(request.POST, request.FILES)
+        if form.is_valid():
             input_data = request.POST.copy()
-            sql_util.save_entry_to_db(form, input_data, uploadFilesForm)
-            return render(request, 'snippets/success.html')
+            sql_util.save_entry_to_db(form, input_data)
+            image, file = request.FILES['project_image'], request.FILES['project_file']
+            fs = FileSystemStorage()
+            image_name = fs.save(image.name, image)
+            file_name = fs.save(file.name, file)
+            uploaded_image_file_url = fs.url(image_name)
+            uploaded_file_file_url = fs.url(file_name)
+            return render(request, 'snippets/success.html', { 'uploaded_image_file_url': uploaded_image_file_url,
+                                                              'uploaded_file_file_url': uploaded_file_file_url
+                                                            })
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     form = CreateProjectForm()
-    uploadFilesForm = CreateUploadFilesForm()
     context = {'form': form,
-               'uploadFilesForm': uploadFilesForm,
                'f1': f1,
                'f2': f2,
                'f3': f3,

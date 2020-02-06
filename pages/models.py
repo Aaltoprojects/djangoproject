@@ -18,25 +18,6 @@ class Filter(models.Model):
 	def __str__(self):
 		return self.filter_name
 
-class UploadFilesModel(models.Model):
-
-	file_db = models.Manager()
-
-	project_file = models.FileField(
-		blank=True,
-		null=True,
-		upload_to='project_files/%Y/%m/%D/'
-	)
-
-	project_image = models.ImageField(
-		blank=True,
-		null=True,
-		upload_to='project_images/%Y/%m/%D/'
-	)
-
-	def __str__(self):
-		return str(self.project_file)
-
 class Project(models.Model):
 
 	project_db = models.Manager()
