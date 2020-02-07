@@ -128,8 +128,8 @@ class CreateProjectForm(forms.Form):
                                     }
         ),
     )
-    project_image=forms.ImageField()
-    project_file=forms.FileField()
+    project_image=forms.ImageField(required=False)
+    project_file=forms.FileField(required=False)
 
 class AddFilterForm(forms.ModelForm):
 

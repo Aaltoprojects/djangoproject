@@ -115,14 +115,19 @@ Lisää projekti
 				</div>
 				<div class="row">
 					<div class="col-12">
-						{{ form.project_image | as_crispy_field }}
+						Valitse projektille kansikuva <br>
+						{{ form.project_image }}
+						<br>
 					</div>
 				</div>
+				<br>
 				<div class="row">
 					<div class="col-12">
-						{{ form.project_file | as_crispy_field }}
+						Lisää tiedosto <br>
+						{{ form.project_file }}
 					</div>
 				</div>
+				<br>
 				<button type="submit" id="submit_button" class="btn btn-success">Tallenna</button>
 			</form>
 		</div>

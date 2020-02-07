@@ -86,6 +86,8 @@ def edit_entry_in_db(project, form, input_data):
     project.project_description = form.cleaned_data['project_description']
     project.documentation_path = form.cleaned_data['documentation_path']
     project.project_manager = form.cleaned_data['project_manager']
+    project.project_image = form.cleaned_data['project_image']
+    project.project_file = form.cleaned_data['project_file']
     project.save()
     project.filters.clear()
     for input_filter in input_filters:

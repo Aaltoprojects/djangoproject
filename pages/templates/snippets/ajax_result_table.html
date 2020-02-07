@@ -24,13 +24,14 @@
                 <th class='none'>Projektin kuvaus</th>
                 <th class='none'>Polku tiedostojen sijaintiin</th>
                 <th class='none'>Projektipäällikkö</th>
+                <th class='none'>Projektiin liitetyt tiedostot</th>
                 <th class='none'>Toiminnot</th>
             </tr>
         </thead>
         <tbody>
             {% for item in result %}
                 <tr>
-                    <td><img src="media/{{ item.project_image }}" alt="project_image" style="width:50px;height:50px;"> {{ item.project_name }}</td>
+                    <td><img src="media/{{ item.project_image }}" alt="project_image" style="width:25%;"> {{ item.project_name }}</td>
                     <td>{{ item.destination_name }}</td>
                     <td>{{ item.start_date|date:"d.m.Y" }}</td>
                     <td>{{ item.end_date|date:"d.m.Y" }}</td>
@@ -73,6 +74,13 @@
                     <td>{{ item.project_description | linebreaks }}</td>
                     <td>{{ item.documentation_path }}</td>
                     <td>{{ item.project_manager }}</td>
+                    <td>
+                        <br>
+                        <a href="media/{{ item.project_file }}" download="">
+                            <img src="https://lh3.googleusercontent.com/proxy/8g3cTY-yMNcn1pUBwo895AvMGYFnZ5OXxwoWzD-xB5eOX_Z7V8e9RENOWVclUDFr7g3obH6mp1YDvKxLXk9HuB4hnYM0UiJV65tbUttAIBp_TVOL81tsKvoTm6Iv2yamt46aNp0HwMTzYY7AALnXlYkW" style="width:3%;">
+                            {{ item.project_file.name }}
+                        </a>
+                    </td>
                     <td>
                         <a href="edit_project/{{ item.id }}" class="btn btn-secondary">Muokkaa tietoja</a>
                     </td>

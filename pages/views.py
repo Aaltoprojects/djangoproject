@@ -84,11 +84,19 @@ def add_project(request):
 def edit_project(request, id):
     project = models.Project.project_db.get(id=id)
     if request.method == 'POST':
-        form = CreateProjectForm(request.POST)
+        form = CreateProjectForm(request.POST, request.FILES)
         if form.is_valid():
             input_data = request.POST.copy()
+            image, file = request.FILES['project_image'], request.FILES['project_file']
+            fs = FileSystemStorage()
+            image_name = fs.save(image.name, image)
+            file_name = fs.save(file.name, file)
+            uploaded_image_file_url = fs.url(image_name)
+            uploaded_file_file_url = fs.url(file_name)
             sql_util.edit_entry_in_db(project, form, input_data)
-            return render(request, 'snippets/success.html')
+            return render(request, 'snippets/success.html', { 'uploaded_image_file_url': uploaded_image_file_url,
+                                                              'uploaded_file_file_url': uploaded_file_file_url
+                                                            })
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     filters_qset = project.filters.all()
     filters_dict = parse_util.filters_qs_to_dict(filters_qset)
@@ -108,6 +116,8 @@ def edit_project(request, id):
             'project_description': project.project_description,
             'documentation_path': ''  if project.documentation_path == '—' else project.documentation_path,
             'project_manager': ''  if project.project_manager == '—' else project.project_manager,
+            'project_file': project.project_file if project.project_file else '',
+            'project_image': project.project_image if project.project_image else '',
         })
     print(project.project_manager)
     context = {'form': form,
