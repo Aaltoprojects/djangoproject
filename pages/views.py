@@ -55,6 +55,7 @@ def search_project(request):
 def add_project(request):
     if request.method == 'POST':
         form = CreateProjectForm(request.POST)
+        entry = AttachmentForm(request.POST, request.FILES)
         if form.is_valid():
             input_data = request.POST.copy()
             sql_util.save_entry_to_db(form, input_data)
