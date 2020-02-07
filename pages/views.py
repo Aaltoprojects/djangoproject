@@ -20,6 +20,7 @@ from django import forms
 import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
 from attachments.models import Attachment
+from attachments.forms import AttachmentForm
 
 
 @login_required(login_url='/login/')
@@ -56,7 +57,7 @@ def add_project(request):
     if request.method == 'POST':
         form = CreateProjectForm(request.POST)
         entry = AttachmentForm(request.POST, request.FILES)
-        if form.is_valid():
+        if form.is_valid() and entry.is_valid():
             input_data = request.POST.copy()
             sql_util.save_entry_to_db(form, input_data)
             return render(request, 'snippets/success.html')
