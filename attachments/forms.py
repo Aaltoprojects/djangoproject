@@ -23,6 +23,7 @@ def validate_max_size(data):
 
 class AttachmentForm(forms.ModelForm):
     attachment_file = forms.FileField(
+        widget=forms.ClearableFileInput(attrs={'multiple': True}),
         label=_("Upload attachment"), validators=[validate_max_size]
     )
 

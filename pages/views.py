@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.core import mail
+from django.apps import apps
 
 from openpyxl import Workbook
 import datetime as dt
@@ -21,6 +22,8 @@ import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
 from attachments.models import Attachment
 from attachments.forms import AttachmentForm
+import attachments.views
+from django.utils.datastructures import MultiValueDict
 
 
 @login_required(login_url='/login/')
@@ -54,13 +57,32 @@ def search_project(request):
 
 @login_required(login_url='/login/')
 def add_project(request):
+
     if request.method == 'POST':
         form = CreateProjectForm(request.POST)
-        entry = AttachmentForm(request.POST, request.FILES)
-        if form.is_valid() and entry.is_valid():
+        if form.is_valid():
             input_data = request.POST.copy()
-            sql_util.save_entry_to_db(form, input_data)
-            return render(request, 'snippets/success.html')
+            pk = sql_util.save_entry_to_db(form, input_data)
+
+            app_label = 'pages'
+            model_name = 'Project'
+
+            if request.user.has_perm("attachments.add_attachment"):
+
+              model = apps.get_model(app_label, model_name)
+              obj = get_object_or_404(model, pk=pk)
+              files = request.FILES.getlist('attachment_file')
+              for f in files:
+                  print(f)
+                  test = MultiValueDict({'attachment_file': [f]})
+                  form = AttachmentForm(request.POST, test)
+
+                  if form.is_valid():
+                      form.save(request, obj)
+
+
+
+        return render(request, 'snippets/success.html')
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     form = CreateProjectForm()
     entry = Attachment(pk=1) # tää on viel kyssäri

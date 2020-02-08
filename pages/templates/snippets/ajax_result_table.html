@@ -1,3 +1,4 @@
+{% load attachments_tags %}
 <!doctype html>
 <html lang='en'>
 
@@ -24,6 +25,7 @@
                 <th class='none'>Projektin kuvaus</th>
                 <th class='none'>Polku tiedostojen sijaintiin</th>
                 <th class='none'>Projektipäällikkö</th>
+                <th class='none'>Projektiin liitetyt tiedostot</th>
                 <th class='none'>Toiminnot</th>
             </tr>
         </thead>
@@ -73,6 +75,25 @@
                     <td>{{ item.project_description | linebreaks }}</td>
                     <td>{{ item.documentation_path }}</td>
                     <td>{{ item.project_manager }}</td>
+                    <td>
+                        {% get_attachments_for item.id as my_entry_attachments %}
+
+                        <span>Object has {% attachments_count item.id %} attachments</span>
+                        {% if my_entry_attachments %}
+                        <ul>
+                        {% for attachment in my_entry_attachments %}
+                            <li>
+                                <a href="{{ attachment.attachment_file.url }}">
+                                    <img src="www.google.com" style="width:3%;">
+                                    {{ attachment.filename }}
+                                </a>
+                                {% attachment_delete_link attachment %}
+                            </li>
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+
+                    </td>
                     <td>
                         <a href="edit_project/{{ item.id }}" class="btn btn-secondary">Muokkaa tietoja</a>
                     </td>
