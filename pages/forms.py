@@ -166,6 +166,7 @@ class CreateReferenceProjectForm(forms.Form):
     area = forms.FloatField(
         label='Laajuus (brm2)',
         widget=forms.NumberInput(attrs={
+                                        'placeholder': 'Rakennuksen laajuus desimaalilukuna', 
                                         'id': 'ref_field3',
                                         }
         ),
@@ -173,6 +174,7 @@ class CreateReferenceProjectForm(forms.Form):
     construction_cost = forms.FloatField(
         label='Rakentamiskustannukset',
         widget=forms.NumberInput(attrs={
+                                        'placeholder': 'Rakentamiskustannukset desimaalilukuna', 
                                         'id': 'ref_field4',
                                         }
         ),
