@@ -15,7 +15,7 @@ import urllib.request
 import urllib.parse
 import re
 from pages.constants import DATE_FORMAT
-from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm
+from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm, CreateReferenceProjectForm
 from django import forms
 import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
@@ -53,21 +53,29 @@ def search_project(request):
 @login_required(login_url='/login/')
 def add_project(request):
     if request.method == 'POST':
-        form = CreateProjectForm(request.POST)
-        if form.is_valid():
-            input_data = request.POST.copy()
-            sql_util.save_entry_to_db(form, input_data)
-            return render(request, 'snippets/success.html')
-    f1, f2, f3, f4, f5 = sql_util.get_filters()
-    form = CreateProjectForm()
-    context = {'form': form,
-               'f1': f1,
-               'f2': f2,
-               'f3': f3,
-               'f4': f4,
-               'f5': f5,
-               }
-    return render(request, 'add_project.html', context)
+        print(request.POST)
+        form1 = CreateProjectForm(request.POST)
+        input_data = request.POST.copy()
+        if form1.is_valid():
+            obj1 = sql_util.save_entry_to_db(form1, input_data)
+        if 'undertaking' in input_data:
+            form2 = CreateReferenceProjectForm(request.POST)
+            if form2.is_valid():
+                obj2 = sql_util.save_ref_to_db(form2, obj1)
+        return render(request, 'snippets/success.html')
+    elif request.method == 'GET':
+        f1, f2, f3, f4, f5 = sql_util.get_filters()
+        form1 = CreateProjectForm()
+        form2 = CreateReferenceProjectForm()
+        context = {'form1': form1,
+                   'form2': form2,
+                   'f1': f1,
+                   'f2': f2,
+                   'f3': f3,
+                   'f4': f4,
+                   'f5': f5,
+                   }
+        return render(request, 'add_project.html', context)
 
 
 @login_required(login_url='/login/')
@@ -99,7 +107,6 @@ def edit_project(request, id):
             'documentation_path': ''  if project.documentation_path == '—' else project.documentation_path,
             'project_manager': ''  if project.project_manager == '—' else project.project_manager,
         })
-    print(project.project_manager)
     context = {'form': form,
                'f1': f1,
                'f2': f2,

@@ -1,5 +1,5 @@
 import datetime as dt
-from pages.models import Project, Filter
+from pages.models import Project, Filter, ReferenceProject
 from django.db.models import Q
 import pages.constants as constants
 from pages.scripts.parse_util import format_qset, parse_input_filters
@@ -73,6 +73,20 @@ def save_entry_to_db(form, input_data):
     obj.save()
     for input_filter in input_filters:
         obj.filters.add(input_filter)
+    return obj
+
+def save_ref_to_db(form, input_project):
+    obj = ReferenceProject(
+                project=input_project,
+                undertaking=form.cleaned_data['undertaking'],
+                client=form.cleaned_data['client'],
+                area=form.cleaned_data['area'],
+                construction_cost=form.cleaned_data['construction_cost'],
+                project_accepted=form.cleaned_data['project_accepted'],
+                construction_permit_granted=form.cleaned_data['construction_permit_granted'],
+                )
+    obj.save()
+    return obj
 
 def edit_entry_in_db(project, form, input_data):
     input_filters = parse_input_filters(input_data)
