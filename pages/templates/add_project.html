@@ -121,28 +121,30 @@ Lisää projekti
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-6">
-						{{ form2.undertaking | as_crispy_field }}
+				<div id=reference_fields>
+					<div class="row">
+						<div class="col-6">
+							{{ form2.undertaking | as_crispy_field }}
+						</div>
+						<div class="col-6">
+							{{ form2.client | as_crispy_field }}
+						</div>
 					</div>
-					<div class="col-6">
-						{{ form2.client | as_crispy_field }}
+					<div class="row">
+						<div class="col-6">
+							{{ form2.area | as_crispy_field}}
+						</div>
+						<div class="col-6">
+							{{ form2.construction_cost | as_crispy_field }}
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-6">
-						{{ form2.area | as_crispy_field}}
-					</div>
-					<div class="col-6">
-						{{ form2.construction_cost | as_crispy_field }}
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-6">
-						{{ form2.project_accepted | as_crispy_field }}
-					</div>
-					<div class="col-6">
-						{{ form2.construction_permit_granted | as_crispy_field }}
+					<div class="row">
+						<div class="col-6">
+							{{ form2.project_accepted | as_crispy_field }}
+						</div>
+						<div class="col-6">
+							{{ form2.construction_permit_granted | as_crispy_field }}
+						</div>
 					</div>
 				</div>
 
@@ -162,13 +164,9 @@ Lisää projekti
 	  var rf4 = document.getElementById("ref_field4");
 	  var rf5 = document.getElementById("ref_field5");
 	  var rf6 = document.getElementById("ref_field6");
+	  var rfs = document.getElementById("reference_fields")
 	  if (check_box.checked == true){
-	    rf1.style.display = "block";
-	    rf2.style.display = "block";
-	    rf3.style.display = "block";
-	    rf4.style.display = "block";
-	    rf5.style.display = "block";
-	    rf6.style.display = "block";
+	    rfs.style.display = "block";
 	    rf1.disabled = false;
 	    rf2.disabled = false;
 	    rf3.disabled = false;
@@ -176,12 +174,7 @@ Lisää projekti
 	    rf5.disabled = false;
 	    rf6.disabled = false;
 	  } else {
-	    rf1.style.display = "none";
-	    rf2.style.display = "none";
-	    rf3.style.display = "none";
-	    rf4.style.display = "none";
-	    rf5.style.display = "none";
-	    rf6.style.display = "none";
+	    rfs.style.display = "none";
 	    rf1.disabled = true;
 	    rf2.disabled = true;
 	    rf3.disabled = true;
