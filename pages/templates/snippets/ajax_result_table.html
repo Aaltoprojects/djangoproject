@@ -32,7 +32,17 @@
         <tbody>
             {% for item in result %}
                 <tr>
-                    <td>{{ item.project_name }}</td>
+                    <td>
+                    {% get_images_for item.id as images %}
+                        {% if images %}
+                            {% for image in images %}
+                                <a href="{{ image.attachment_image.url }}">
+                                    <img src="{{ image.attachment_image.url }}" style="width:20%;">
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                    {{ item.project_name }}
+                    </td>
                     <td>{{ item.destination_name }}</td>
                     <td>{{ item.start_date|date:"d.m.Y" }}</td>
                     <td>{{ item.end_date|date:"d.m.Y" }}</td>
