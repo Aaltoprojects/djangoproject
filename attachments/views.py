@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.utils.translation import gettext
 from django.views.decorators.http import require_POST
 
-from .forms import AttachmentForm
+from .forms import AttachmentForm, ImageForm
 from .models import Attachment
 
 
@@ -54,15 +54,21 @@ def add_attachment(
 
     model = apps.get_model(app_label, model_name)
     obj = get_object_or_404(model, pk=pk)
-    form = AttachmentForm(request.POST, request.FILES)
+    attachment_form = AttachmentForm(request.POST, request.FILES)
+    image_form = ImageForm(request.POST, request.FILES)
 
-    if form.is_valid():
-        form.save(request, obj)
+    if attachment_form.is_valid():
+        attachment_form.save(request, obj)
         messages.success(request, gettext("Your attachment was uploaded."))
+        return HttpResponseRedirect(next_)
+    if image_form.is_valid():
+        image_form.save(request, obj)
+        messages.success(request, gettext("Your image was uploaded."))
         return HttpResponseRedirect(next_)
 
     template_context = {
-        "form": form,
+        "attachment_form": attachment_form,
+        "image_form": image_form,
         "form_url": add_url_for_obj(obj),
         "next": next_,
     }
