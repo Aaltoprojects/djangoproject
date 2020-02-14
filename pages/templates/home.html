@@ -101,22 +101,14 @@ Etsi projekteja tietokannasta
 				</div>
 
 				<div id=reference_fields>
-					<div class="row">
-						<div class="col-2">
-							{{ form2.area_num | as_crispy_field}}
-						</div>
-						<div class="col-10">
-							{{ form2.area | as_crispy_field}}
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-3">
-							{{ form2.construction_cost_num | as_crispy_field}}
-						</div>
-						<div class="col-9">
-							{{ form2.construction_cost | as_crispy_field }}
-						</div>
-					</div>
+
+				    <div data-role="rangeslider">
+				        <label for="range-10a">Rangeslider:</label>
+				        <input type="range" name="range-10a" id="range-10a" min="0" max="10" step=".1" value="2.6">
+				        <label for="range-10b">Rangeslider:</label>
+				        <input type="range" name="range-10b" id="range-10b" min="0" max="10" step=".1" value="5.4">
+				    </div>
+
 				</div>
 				<br>
 				<button type="submit" id="search_button" class="btn btn-primary">Etsi</button>
@@ -127,31 +119,13 @@ Etsi projekteja tietokannasta
 </div>
 
 <script>
-	function updateTextInput1(val) {
-          document.getElementById('area_num_field').value=val; 
-        }
-</script>
-
-<script>
-	function updateTextInput2(val) {
-          document.getElementById('construction_cost_num_field').value=val; 
-        }
-</script>
-
-<script>
 	function HideAndReveal() {
 	  var check_box = document.getElementById("ref_check");
-	  var rf3 = document.getElementById("ref_field3");
-	  var rf4 = document.getElementById("ref_field4");
 	  var rfs = document.getElementById("reference_fields")
 	  if (check_box.checked == true){
 	    rfs.style.display = "block";
-	    rf3.disabled = false;
-	    rf4.disabled = false;
 	  } else {
 	    rfs.style.display = "none";
-	    rf3.disabled = true;
-	    rf4.disabled = true;
 	  }
 	}
 	HideAndReveal();
