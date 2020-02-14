@@ -21,7 +21,7 @@ from django import forms
 import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
 from attachments.models import Attachment
-from attachments.forms import AttachmentForm
+from attachments.forms import AttachmentForm, ImageForm
 import attachments.views
 from django.utils.datastructures import MultiValueDict
 
@@ -72,10 +72,19 @@ def add_project(request):
               model = apps.get_model(app_label, model_name)
               obj = get_object_or_404(model, pk=pk)
               files = request.FILES.getlist('attachment_file')
+              images = request.FILES.getlist('attachment_image')
               for f in files:
                   print(f)
                   test = MultiValueDict({'attachment_file': [f]})
                   form = AttachmentForm(request.POST, test)
+
+                  if form.is_valid():
+                      form.save(request, obj)
+
+              for i in images:
+                  print(f)
+                  test = MultiValueDict({'attachment_image': [i]})
+                  form = ImageForm(request.POST, test)
 
                   if form.is_valid():
                       form.save(request, obj)
