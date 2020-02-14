@@ -87,14 +87,12 @@
                     <td>{{ item.project_manager }}</td>
                     <td>
                         {% get_attachments_for item.id as my_entry_attachments %}
-
-                        <span>Object has {% attachments_count item.id %} attachments</span>
                         {% if my_entry_attachments %}
                         <ul>
                         {% for attachment in my_entry_attachments %}
                             <li>
                                 <a href="{{ attachment.attachment_file.url }}">
-                                    <img src="www.google.com" style="width:3%;">
+                                    <img src="{{ attachment.attachment_file.url }}" style="width:3%;">
                                     {{ attachment.filename }}
                                 </a>
                                 {% attachment_delete_link attachment %}
