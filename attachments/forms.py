@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.template.defaultfilters import filesizeformat
 from django.utils.translation import gettext_lazy as _
 
-from .models import Attachment
+from .models import Attachment, Image
 
 
 def validate_max_size(data):
@@ -36,3 +36,19 @@ class AttachmentForm(forms.ModelForm):
         self.instance.content_type = ContentType.objects.get_for_model(obj)
         self.instance.object_id = obj.pk
         super(AttachmentForm, self).save(*args, **kwargs)
+
+class ImageForm(forms.ModelForm):
+    attachment_image = forms.ImageField(
+        widget=forms.ClearableFileInput(attrs={'multiple': False}),
+        label=_("Upload image"), validators=[validate_max_size]
+    )
+
+    class Meta:
+        model = Image
+        fields = ("attachment_image",)
+
+    def save(self, request, obj, *args, **kwargs):
+        self.instance.creator = request.user
+        self.instance.content_type = ContentType.objects.get_for_model(obj)
+        self.instance.object_id = obj.pk
+        super(ImageForm, self).save(*args, **kwargs)
