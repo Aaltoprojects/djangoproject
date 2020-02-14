@@ -39,6 +39,54 @@ class SearchProjectForm(forms.Form):
         ),
     )
 
+class SearchReferenceProjectForm(forms.Form):
+
+    area_num = forms.FloatField(
+        required=False,
+        widget=forms.NumberInput(attrs={
+                                        'id': 'area_num_field',
+                                        }
+        ),
+    )
+
+    area = forms.FloatField(
+        label='Laajuus (brm2)',
+        required=False,
+        widget=forms.NumberInput(attrs={
+                                        'type': 'range',
+                                        'min': '0',
+                                        'max': '100000',
+                                        'step': '50',
+                                        'placeholder': 'Rakennuksen laajuus desimaalilukuna', 
+                                        'id': 'ref_field3',
+                                        'onchange':'updateTextInput1(this.value);',
+                                        }
+        ),
+    )
+
+    construction_cost_num = forms.FloatField(
+        required=False,
+        widget=forms.NumberInput(attrs={
+                                        'id': 'construction_cost_num_field',
+                                        }
+        ),
+    )
+
+    construction_cost = forms.FloatField(
+        label='Rakentamiskustannukset',
+        required=False,
+        widget=forms.NumberInput(attrs={
+                                        'type': 'range',
+                                        'min': '0',
+                                        'max': '20000000',
+                                        'step': '10000',
+                                        'placeholder': 'Rakentamiskustannukset desimaalilukuna', 
+                                        'id': 'ref_field4',
+                                        'onchange':'updateTextInput2(this.value);',
+                                        }
+        ),
+    )
+
 
 class CreateProjectForm(forms.Form):
 

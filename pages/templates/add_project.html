@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% load i18n %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% block title %}
 Lisää projekti
@@ -20,7 +20,7 @@ Lisää projekti
 			  	<label class="custom-control-label" for="ref_check">Kyllä</label>
 			</div>
 
-			<form action="" id="add_project_form" method="post">
+			<form id="add_project_form" method="post">
 				{% csrf_token %}
 				<div class="row">
 					<div class="col-6">
@@ -147,7 +147,7 @@ Lisää projekti
 						</div>
 					</div>
 				</div>
-
+				<br>
 				<button type="submit" id="submit_button" class="btn btn-success"> Tallenna </button>
 
 			</form>

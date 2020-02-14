@@ -15,7 +15,7 @@ import urllib.request
 import urllib.parse
 import re
 from pages.constants import DATE_FORMAT
-from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm, CreateReferenceProjectForm
+from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm, CreateReferenceProjectForm, SearchReferenceProjectForm
 from django import forms
 import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
@@ -23,9 +23,11 @@ import pages.scripts.parse_util as parse_util
 
 @login_required(login_url='/login/')
 def home(request):
-    form = SearchProjectForm()
     f1, f2, f3, f4, f5 = sql_util.get_filters()
-    context = {'form': form,
+    form1 = SearchProjectForm()
+    form2 = SearchReferenceProjectForm()
+    context = {'form1': form1,
+               'form2': form2,
                'f1': f1,
                'f2': f2,
                'f3': f3,
@@ -53,7 +55,6 @@ def search_project(request):
 @login_required(login_url='/login/')
 def add_project(request):
     if request.method == 'POST':
-        print(request.POST)
         form1 = CreateProjectForm(request.POST)
         input_data = request.POST.copy()
         if form1.is_valid():

@@ -13,14 +13,18 @@ Etsi projekteja tietokannasta
 		<div class="col-8">
 			<h1 class="mt-2">Etsi projekti</h1>
 			<hr class="mt-0 mb-4">
+
+			<h6 class="mt-2">Referenssiprojekti?</h6>
+			<div class="custom-control custom-checkbox">
+			  	<input type="checkbox" class="custom-control-input" id="ref_check" onclick="HideAndReveal()">
+			  	<label class="custom-control-label" for="ref_check">Kyllä</label>
+			</div>
+
 			<form id='search_project_form' method='get'>
 				{% csrf_token %}
 				<div class="row">
-					<div class="col-6">
-						{{ form.start_date|as_crispy_field }}
-					</div>
-					<div class="col-6">
-						{{ form.end_date|as_crispy_field }}
+					<div class="col-12">
+						{{ form1.key_phrase_search|as_crispy_field }}
 					</div>
 				</div>
 				<div class="row">
@@ -87,21 +91,71 @@ Etsi projekteja tietokannasta
 						</select>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-6">
+						{{ form1.start_date|as_crispy_field }}
+					</div>
+					<div class="col-6">
+						{{ form1.end_date|as_crispy_field }}
+					</div>
+				</div>
+
+				<div id=reference_fields>
+					<div class="row">
+						<div class="col-2">
+							{{ form2.area_num | as_crispy_field}}
+						</div>
+						<div class="col-10">
+							{{ form2.area | as_crispy_field}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-3">
+							{{ form2.construction_cost_num | as_crispy_field}}
+						</div>
+						<div class="col-9">
+							{{ form2.construction_cost | as_crispy_field }}
+						</div>
+					</div>
+				</div>
 				<br>
-				<div class="row">
-					<div class="col-12">
-						{{ form.key_phrase_search|as_crispy_field }}
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<button type="submit" id="search_button" class="btn btn-primary">Etsi</button>
-					</div>
-				</div>
+				<button type="submit" id="search_button" class="btn btn-primary">Etsi</button>
+
 			</form>
 		</div>
 	</div>
 </div>
+
+<script>
+	function updateTextInput1(val) {
+          document.getElementById('area_num_field').value=val; 
+        }
+</script>
+
+<script>
+	function updateTextInput2(val) {
+          document.getElementById('construction_cost_num_field').value=val; 
+        }
+</script>
+
+<script>
+	function HideAndReveal() {
+	  var check_box = document.getElementById("ref_check");
+	  var rf3 = document.getElementById("ref_field3");
+	  var rf4 = document.getElementById("ref_field4");
+	  var rfs = document.getElementById("reference_fields")
+	  if (check_box.checked == true){
+	    rfs.style.display = "block";
+	    rf3.disabled = false;
+	    rf4.disabled = false;
+	  } else {
+	    rfs.style.display = "none";
+	    rf3.disabled = true;
+	    rf4.disabled = true;
+	  }
+	}
+	HideAndReveal();
+</script>
 
 <script>
 	$(document).ready(function() {
@@ -127,10 +181,8 @@ Etsi projekteja tietokannasta
 				data: $('#search_project_form').serialize(),
 				success: function(data, textStatus, jqXHR) {
                 	$('#table_div').html(data);
-                	console.log( "Success!" );
 	            },
 	            error: function(data, textStatus, jqXHR) {
-	                console.log( "Error!" );
 	            },
 	            dataType: 'html'
 			});
