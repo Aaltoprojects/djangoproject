@@ -73,21 +73,20 @@ def add_project(request):
               obj = get_object_or_404(model, pk=pk)
               files = request.FILES.getlist('attachment_file')
               images = request.FILES.getlist('attachment_image')
-              for f in files:
-                  print(f)
-                  test = MultiValueDict({'attachment_file': [f]})
-                  form = AttachmentForm(request.POST, test)
+              if len(files) > 0:
+                for f in files:
+                    test = MultiValueDict({'attachment_file': [f]})
+                    form = AttachmentForm(request.POST, test)
 
-                  if form.is_valid():
-                      form.save(request, obj)
+                    if form.is_valid():
+                        form.save(request, obj)
+              if len(images) > 0:
+                for i in images:
+                    test = MultiValueDict({'attachment_image': [i]})
+                    form = ImageForm(request.POST, test)
 
-              for i in images:
-                  print(f)
-                  test = MultiValueDict({'attachment_image': [i]})
-                  form = ImageForm(request.POST, test)
-
-                  if form.is_valid():
-                      form.save(request, obj)
+                    if form.is_valid():
+                        form.save(request, obj)
 
 
 
