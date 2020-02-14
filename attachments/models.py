@@ -63,3 +63,41 @@ class Attachment(models.Model):
     @property
     def filename(self):
         return os.path.split(self.attachment_file.name)[1]
+
+
+@python_2_unicode_compatible
+class Image(models.Model):
+    objects = AttachmentManager()
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey("content_type", "object_id")
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="created_images",
+        verbose_name=_("creator"),
+        on_delete=models.CASCADE,
+    )
+    attachment_image = models.ImageField(
+        _("image"), upload_to=attachment_upload
+    )
+    created = models.DateTimeField(_("created"), auto_now_add=True)
+    modified = models.DateTimeField(_("modified"), auto_now=True)
+
+    class Meta:
+        verbose_name = _("image")
+        verbose_name_plural = _("images")
+        ordering = ["-created"]
+        permissions = (
+            ("delete_foreign_images", _("Can delete foreign images")),
+        )
+
+    def __str__(self):
+        return _("{username} attached {filename}").format(
+            username=self.creator.get_username(),
+            filename=self.attachment_image.name,
+        )
+
+    @property
+    def filename(self):
+        return os.path.split(self.attachment_image.name)[1]
