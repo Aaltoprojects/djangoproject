@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load attachments_tags %}
 
 {% block title %}
 Muokkaa projektia
@@ -131,6 +132,30 @@ Muokkaa projektia
 				<div class="row">
 					<div class="col-12">
 						{{ form.documentation_path | as_crispy_field }}
+					</div>
+				</div>
+				{% get_attachments_for id as my_entry_attachments %}
+                {% if my_entry_attachments %}
+                <ul>
+                {% for attachment in my_entry_attachments %}
+                    <li>
+                        <a href="{{ attachment.attachment_file.url }}">
+                            <img src="{{ attachment.attachment_file.url }}" style="width:3%;">
+                            {{ attachment.filename }}
+                        </a>
+                        {% attachment_delete_link attachment %}
+                    </li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+				<div class="row">
+					<div class="col-12">
+						{% image_form image %}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						{% attachment_form attachment %}
 					</div>
 				</div>
 				<button type="submit" class="btn btn-success">Päivitä</button>
