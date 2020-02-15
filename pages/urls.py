@@ -18,8 +18,8 @@ urlpatterns = [
     path('success', views.post_success),
     path('add_filter/', views.add_filter, name='add_filter'),
     path('edit_project/<int:id>', views.edit_project, name='edit_project'),
-    url(r'^media/(?P<path>.*)$',serve, {'document_root': settings.MEDIA_ROOT,}),
+    #url(r'^media/(?P<path>.*)$',serve, {'document_root': settings.MEDIA_ROOT,}),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+#if settings.DEBUG:
+#    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
