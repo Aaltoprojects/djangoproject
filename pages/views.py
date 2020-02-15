@@ -19,6 +19,7 @@ from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm
 from django import forms
 import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
+from django.urls import reverse
 
 
 @login_required(login_url='/login/')
@@ -33,6 +34,11 @@ def home(request):
                'f5': f5,
                }
     return render(request, 'home.html', context)
+
+
+@login_required(login_url='/login/')
+def success(request):
+    return render(request, 'snippets/success.html')
 
 
 @login_required(login_url='/login/')
@@ -57,7 +63,7 @@ def add_project(request):
         if form.is_valid():
             input_data = request.POST.copy()
             sql_util.save_entry_to_db(form, input_data)
-            return render(request, 'snippets/success.html')
+            return HttpResponseRedirect(reverse('success'))
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     form = CreateProjectForm()
     context = {'form': form,
@@ -78,7 +84,7 @@ def edit_project(request, id):
         if form.is_valid():
             input_data = request.POST.copy()
             sql_util.edit_entry_in_db(project, form, input_data)
-            return render(request, 'snippets/success.html')
+            return HttpResponseRedirect(reverse(success))
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     filters_qset = project.filters.all()
     filters_dict = parse_util.filters_qs_to_dict(filters_qset)
@@ -113,11 +119,6 @@ def edit_project(request, id):
                'sf5': filters_dict['Rakenneosa'],
                }
     return render(request, 'edit_project.html', context)
-
-
-@login_required(login_url='/login/')
-def post_success(request):
-    return render(request, 'snippets/success.html')
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/admin/login/')
