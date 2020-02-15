@@ -12,3 +12,5 @@ soupsieve==1.9.3
 virtualenv==16.3.0
 whitenoise==4.0.0
 django-widget-tweaks==1.4.3
+boto3==1.12.0
+django-storages==1.9.1
