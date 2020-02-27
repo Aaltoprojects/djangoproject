@@ -12,7 +12,16 @@ from six import python_2_unicode_compatible
 
 def attachment_upload(instance, filename):
     """Stores the attachment in a "per module/appname/primary key" folder"""
-    return "attachments/{app}_{model}/{pk}/{filename}".format(
+    return "{app}_{model}/attachments/{pk}/{filename}".format(
+        app=instance.content_object._meta.app_label,
+        model=instance.content_object._meta.object_name.lower(),
+        pk=instance.content_object.pk,
+        filename=filename,
+    )
+
+def image_upload(instance, filename):
+    """Stores the attachment in a "per module/appname/primary key" folder"""
+    return "{app}_{model}/images/{pk}/{filename}".format(
         app=instance.content_object._meta.app_label,
         model=instance.content_object._meta.object_name.lower(),
         pk=instance.content_object.pk,
@@ -79,7 +88,7 @@ class Image(models.Model):
         on_delete=models.CASCADE,
     )
     attachment_image = models.ImageField(
-        _("image"), upload_to=attachment_upload
+        _("image"), upload_to=image_upload
     )
     created = models.DateTimeField(_("created"), auto_now_add=True)
     modified = models.DateTimeField(_("modified"), auto_now=True)

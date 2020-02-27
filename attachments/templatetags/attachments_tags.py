@@ -61,7 +61,22 @@ def attachment_delete_link(context, attachment, **kwargs):
         return {
             "next": kwargs.get("next", context.request.build_absolute_uri()),
             "delete_url": reverse(
-                "attachments:delete", kwargs={"attachment_pk": attachment.pk}
+                "attachments:delete_attachment", kwargs={"attachment_pk": attachment.pk}
+            ),
+        }
+    return {"delete_url": None}
+
+
+@register.inclusion_tag("attachments/delete_link_image.html", takes_context=True)
+def image_delete_link(context, attachment, **kwargs):
+    if context["user"].has_perm("attachments.delete_foreign_attachments") or (
+        context["user"] == attachment.creator
+        and context["user"].has_perm("attachments.delete_attachment")
+    ):
+        return {
+            "next": kwargs.get("next", context.request.build_absolute_uri()),
+            "delete_url": reverse(
+                "attachments:delete_image", kwargs={"attachment_pk": attachment.pk}
             ),
         }
     return {"delete_url": None}

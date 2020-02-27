@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django.conf.urls import url
 
-from .views import add_attachment, delete_attachment
+from .views import add_attachment, delete_attachment, delete_image
 
 app_name = "attachments"
 
@@ -12,5 +12,6 @@ urlpatterns = [
         add_attachment,
         name="add",
     ),
-    url(r"^delete/(?P<attachment_pk>\d+)/$", delete_attachment, name="delete"),
+    url(r"^delete/attachment/(?P<attachment_pk>\d+)/$", delete_attachment, name="delete_attachment"),
+    url(r"^delete/image/(?P<attachment_pk>\d+)/$", delete_image, name="delete_image"),
 ]
