@@ -154,9 +154,9 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/login"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-AWS_ACCESS_KEY_ID = 'kato sieltä aws:äst'
-AWS_SECRET_ACCESS_KEY = 'kato sieltä aws:äst'
+AWS_ACCESS_KEY_ID = 'AKIAJT77TVWQTYDLYODA'
+AWS_SECRET_ACCESS_KEY = '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'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-AWS_STORAGE_BUCKET_NAME = 'kato sieltä aws:äst'
+AWS_STORAGE_BUCKET_NAME = 'ideastructura-s3-bucket'
 AWS_S3_REGION_NAME = 'eu-north-1'

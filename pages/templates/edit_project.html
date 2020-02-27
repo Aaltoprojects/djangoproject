@@ -134,6 +134,28 @@ Muokkaa projektia
 						{{ form.documentation_path | as_crispy_field }}
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-12">
+						{% get_images_for id as images %}
+						{% if images %}
+						{% for image in images %}
+							<a href="{{ image.attachment_image.url }}">
+								<img src="{{ image.attachment_image.url }}" style="width:100%;">
+								<br>
+								{{ image.filename}}
+							</a>
+							{% image_delete_link image %}
+						{% endfor %}
+						<br>
+						<br>
+						{% endif %}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						{% image_form image %}
+					</div>
+				</div>
 				{% get_attachments_for id as my_entry_attachments %}
                 {% if my_entry_attachments %}
                 <ul>
@@ -148,11 +170,6 @@ Muokkaa projektia
                 {% endfor %}
                 </ul>
                 {% endif %}
-				<div class="row">
-					<div class="col-12">
-						{% image_form image %}
-					</div>
-				</div>
 				<div class="row">
 					<div class="col-12">
 						{% attachment_form attachment %}
