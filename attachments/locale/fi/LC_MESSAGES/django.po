@@ -20,6 +20,8 @@ msgstr ""
 #: forms.py:7
 msgid "Upload attachment"
 msgstr "Lähetä liite"
+msgid "Upload image"
+msgstr "Lähetä kuva"
 
 #: models.py:29
 msgid "creator"
