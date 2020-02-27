@@ -136,17 +136,8 @@ Muokkaa projektia
 				</div>
 				{% get_attachments_for id as my_entry_attachments %}
                 {% if my_entry_attachments %}
-                <ul>
-                {% for attachment in my_entry_attachments %}
-                    <li>
-                        <a href="{{ attachment.attachment_file.url }}">
-                            <img src="{{ attachment.attachment_file.url }}" style="width:3%;">
-                            {{ attachment.filename }}
-                        </a>
-                        {% attachment_delete_link attachment %}
-                    </li>
-                {% endfor %}
-                </ul>
+				{% include "snippets/files_table.html" with delete_links_included=true %}
+            	<div>
                 {% endif %}
 				<div class="row">
 					<div class="col-12">

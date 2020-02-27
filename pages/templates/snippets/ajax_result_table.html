@@ -37,10 +37,11 @@
                         {% if images %}
                             {% for image in images %}
                                 <a href="{{ image.attachment_image.url }}">
-                                    <img src="{{ image.attachment_image.url }}" style="width:20%;">
+                                    <img src="{{ image.attachment_image.url }}" style="max-height:150px; max-width:100%">
                                 </a>
                             {% endfor %}
                         {% endif %}
+                    <br>
                     {{ item.project_name }}
                     </td>
                     <td>{{ item.destination_name }}</td>
@@ -88,16 +89,7 @@
                     <td>
                         {% get_attachments_for item.id as my_entry_attachments %}
                         {% if my_entry_attachments %}
-                        <ul>
-                        {% for attachment in my_entry_attachments %}
-                            <li>
-                                <a href="{{ attachment.attachment_file.url }}">
-                                    <img src="{{ attachment.attachment_file.url }}" style="width:3%;">
-                                    {{ attachment.filename }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                        </ul>
+                        {% include "snippets/files_table.html" %}
                         {% endif %}
 
                     </td>
