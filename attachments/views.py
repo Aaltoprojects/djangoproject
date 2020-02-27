@@ -15,6 +15,8 @@ from django.views.decorators.http import require_POST
 from .forms import AttachmentForm, ImageForm
 from .models import Attachment, Image
 
+def remove_file_from_s3(f):
+    f.delete(save=False)
 
 def add_url_for_obj(obj):
     return reverse(
@@ -84,7 +86,7 @@ def delete_attachment(request, attachment_pk):
         request.user.has_perm("attachments.delete_attachment")
         and request.user == g.creator
     ) or request.user.has_perm("attachments.delete_foreign_attachments"):
-        remove_file_from_disk(g.attachment_file)
+        remove_file_from_s3(g.attachment_file)
         g.delete()
         messages.success(request, gettext("Your attachment was deleted."))
     next_ = request.GET.get("next") or "/"
@@ -97,7 +99,7 @@ def delete_image(request, attachment_pk):
         request.user.has_perm("attachments.delete_attachment")
         and request.user == g.creator
     ) or request.user.has_perm("attachments.delete_foreign_attachments"):
-        remove_file_from_disk(g.attachment_image)
+        remove_file_from_s3(g.attachment_image)
         g.delete()
         messages.success(request, gettext("Your image was deleted."))
     next_ = request.GET.get("next") or "/"

@@ -7,6 +7,7 @@ from django.template.defaultfilters import filesizeformat
 from django.utils.translation import gettext_lazy as _
 
 from .models import Attachment, Image
+from django.dispatch import receiver
 
 
 def validate_max_size(data):
