@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.core import mail
+from django.apps import apps
 
 from openpyxl import Workbook
 import datetime as dt
@@ -20,6 +21,10 @@ from django import forms
 import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
 from django.urls import reverse
+from attachments.models import Attachment, Image
+from attachments.forms import AttachmentForm, ImageForm
+import attachments.views
+from django.utils.datastructures import MultiValueDict
 
 
 @login_required(login_url='/login/')
@@ -58,15 +63,45 @@ def search_project(request):
 
 @login_required(login_url='/login/')
 def add_project(request):
+
     if request.method == 'POST':
         form = CreateProjectForm(request.POST)
         if form.is_valid():
             input_data = request.POST.copy()
-            sql_util.save_entry_to_db(form, input_data)
-            return HttpResponseRedirect(reverse('success'))
+            pk = sql_util.save_entry_to_db(form, input_data)
+
+            app_label = 'pages'
+            model_name = 'Project'
+
+            if request.user.has_perm("attachments.add_attachment"):
+
+              model = apps.get_model(app_label, model_name)
+              obj = get_object_or_404(model, pk=pk)
+              files = request.FILES.getlist('attachment_file')
+              images = request.FILES.getlist('attachment_image')
+              if len(files) > 0:
+                for f in files:
+                    test = MultiValueDict({'attachment_file': [f]})
+                    form = AttachmentForm(request.POST, test)
+
+                    if form.is_valid():
+                        form.save(request, obj)
+              if len(images) > 0:
+                for i in images:
+                    test = MultiValueDict({'attachment_image': [i]})
+                    form = ImageForm(request.POST, test)
+
+                    if form.is_valid():
+                        form.save(request, obj)
+
+        return HttpResponseRedirect(reverse('success'))
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     form = CreateProjectForm()
+    attachment_model = Attachment(pk=1) # tää on viel kyssäri
+    image_model = Image(pk=1)
     context = {'form': form,
+               'attachment': attachment_model,
+               'image': image_model,
                'f1': f1,
                'f2': f2,
                'f3': f3,
@@ -84,6 +119,31 @@ def edit_project(request, id):
         if form.is_valid():
             input_data = request.POST.copy()
             sql_util.edit_entry_in_db(project, form, input_data)
+            app_label = 'pages'
+            model_name = 'Project'
+
+            if request.user.has_perm("attachments.add_attachment"):
+
+                model = apps.get_model(app_label, model_name)
+                obj = get_object_or_404(model, pk=id)
+                files = request.FILES.getlist('attachment_file')
+                images = request.FILES.getlist('attachment_image')
+                if len(files) > 0:
+                    for f in files:
+                        print(f)
+                        test = MultiValueDict({'attachment_file': [f]})
+                        form = AttachmentForm(request.POST, test)
+
+                        if form.is_valid():
+                          form.save(request, obj)
+                if len(images) > 0:
+                    for i in images:
+                      test = MultiValueDict({'attachment_image': [i]})
+                      form = ImageForm(request.POST, test)
+
+                      if form.is_valid():
+                        form.save(request, obj)
+
             return HttpResponseRedirect(reverse(success))
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     filters_qset = project.filters.all()
@@ -105,8 +165,12 @@ def edit_project(request, id):
             'documentation_path': ''  if project.documentation_path == '—' else project.documentation_path,
             'project_manager': ''  if project.project_manager == '—' else project.project_manager,
         })
-    print(project.project_manager)
+    attachment_model = Attachment(pk=1)
+    image_model = Image(pk=1)
     context = {'form': form,
+               'attachment': attachment_model,
+               'image': image_model,
+               'id': id,
                'f1': f1,
                'f2': f2,
                'f3': f3,

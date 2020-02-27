@@ -73,6 +73,7 @@ def save_entry_to_db(form, input_data):
     obj.save()
     for input_filter in input_filters:
         obj.filters.add(input_filter)
+    return obj.id
 
 def edit_entry_in_db(project, form, input_data):
     input_filters = parse_input_filters(input_data)

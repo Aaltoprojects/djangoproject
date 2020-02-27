@@ -1,3 +1,4 @@
+{% load attachments_tags %}
 <!doctype html>
 <html lang='en'>
 
@@ -24,13 +25,25 @@
                 <th class='none'>Projektin kuvaus</th>
                 <th class='none'>Polku tiedostojen sijaintiin</th>
                 <th class='none'>Projektipäällikkö</th>
+                <th class='none'>Projektiin liitetyt tiedostot</th>
                 <th class='none'>Toiminnot</th>
             </tr>
         </thead>
         <tbody>
             {% for item in result %}
                 <tr>
-                    <td>{{ item.project_name }}</td>
+                    <td>
+                    {% get_images_for item.id as images %}
+                        {% if images %}
+                            {% for image in images %}
+                                <a href="{{ image.attachment_image.url }}">
+                                    <img src="{{ image.attachment_image.url }}" style="max-height:150px; max-width:100%">
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                    <br>
+                    {{ item.project_name }}
+                    </td>
                     <td>{{ item.destination_name }}</td>
                     <td>{{ item.start_date|date:"d.m.Y" }}</td>
                     <td>{{ item.end_date|date:"d.m.Y" }}</td>
@@ -73,6 +86,13 @@
                     <td>{{ item.project_description | linebreaks }}</td>
                     <td>{{ item.documentation_path }}</td>
                     <td>{{ item.project_manager }}</td>
+                    <td>
+                        {% get_attachments_for item.id as my_entry_attachments %}
+                        {% if my_entry_attachments %}
+                        {% include "snippets/files_table.html" %}
+                        {% endif %}
+
+                    </td>
                     <td>
                         <a href="edit_project/{{ item.id }}" class="btn btn-secondary">Muokkaa tietoja</a>
                     </td>

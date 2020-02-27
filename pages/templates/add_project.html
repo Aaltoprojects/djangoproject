@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load attachments_tags %}
 
 {% block title %}
 Lisää projekti
@@ -13,7 +14,7 @@ Lisää projekti
 		<div class="col-8">
 			<h1 class="mt-2">Lisää projekti</h1>
 			<hr class="mt-0 mb-4">
-			<form action="" id="add_project_form" method="post">
+			<form action="" enctype="multipart/form-data" id="add_project_form" method="post">
 				{% csrf_token %}
 				<div class="row">
 					<div class="col-6">
@@ -111,6 +112,16 @@ Lisää projekti
 				<div class="row">
 					<div class="col-12">
 						{{ form.documentation_path | as_crispy_field }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						{% image_form image %}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						{% attachment_form attachment %}
 					</div>
 				</div>
 				<button type="submit" id="submit_button" class="btn btn-success">Tallenna</button>
