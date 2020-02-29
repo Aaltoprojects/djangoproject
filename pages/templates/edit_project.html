@@ -136,7 +136,23 @@ Muokkaa projektia
 				</div>
 				<div class="row">
 					<div class="col-12">
-						{% include "snippets/images_table.html" with delete_links_included=true %}
+						<label>
+							Kansikuva
+						</label>
+						{% get_images_for id as images %}
+						{% if images %}
+						{% for image in images %}
+							<a href="{{ image.attachment_image.url }}">
+								<img src="{{ image.attachment_image.url }}" style="width:100%; max-height: 2000px;">
+								<br>
+							</a>
+							<center>
+								{% image_delete_link image %}
+							</center>
+						{% endfor %}
+						<br>
+						<br>
+						{% endif %}
 					</div>
 				</div>
 				<div class="row">
