@@ -160,6 +160,9 @@ Muokkaa projektia
 						{% image_form image %}
 					</div>
 				</div>
+				<label>
+					Liitetiedostot
+				</label>
 				{% get_attachments_for id as my_entry_attachments %}
                 {% if my_entry_attachments %}
 				{% include "snippets/files_table.html" with delete_links_included=true %}
