@@ -37,9 +37,13 @@ Lisää projekti
 						<label>
 							Rakennustyyppi
 						</label>
-						<select class="js-example-basic-multiple" id="selector1" name="structure_type" multiple="multiple" style="width: 100%">
+						<select class="js-example-basic-multiple" name="structure_type" multiple="multiple" style="width: 100%">
 							{% for filter in f1 %}
-								<option value= "{{ filter }}" > {{ filter }} </option>
+								{% if filter in sf1 %}
+									<option value= "{{ filter }}" selected="selected"> {{ filter }} </option>
+								{% else %}
+									<option value= "{{ filter }}" > {{ filter }} </option>
+								{% endif %}
 							{% endfor %}
 						</select>
 					</div>
@@ -50,9 +54,13 @@ Lisää projekti
 						<label>
 							Rakennusmateriaali
 						</label>
-						<select class="js-example-basic-multiple" id="selector2" name="building_material" multiple="multiple" style="width: 100%">
+						<select class="js-example-basic-multiple" name="building_material" multiple="multiple" style="width: 100%">
 							{% for filter in f2 %}
-								<option value= "{{ filter }}" > {{ filter }} </option>
+								{% if filter in sf2 %}
+									<option value= "{{ filter }}" selected="selected"> {{ filter }} </option>
+								{% else %}
+									<option value= "{{ filter }}" > {{ filter }} </option>
+								{% endif %}
 							{% endfor %}
 						</select>
 					</div>
@@ -63,9 +71,13 @@ Lisää projekti
 						<label>
 							Palvelu
 						</label>
-						<select class="js-example-basic-multiple" id="selector3" name="service" multiple="multiple" style="width: 100%">
+						<select class="js-example-basic-multiple" name="service" multiple="multiple" style="width: 100%">
 							{% for filter in f3 %}
-								<option value= "{{ filter }}" > {{ filter }} </option>
+								{% if filter in sf3 %}
+									<option value= "{{ filter }}" selected="selected"> {{ filter }} </option>
+								{% else %}
+									<option value= "{{ filter }}" > {{ filter }} </option>
+								{% endif %}
 							{% endfor %}
 						</select>
 					</div>
@@ -76,9 +88,13 @@ Lisää projekti
 						<label>
 							Rakennustoimenpide
 						</label>
-						<select class="js-example-basic-multiple" id="selector4" name="construction_operation" multiple="multiple" style="width: 100%">
+						<select class="js-example-basic-multiple" name="construction_operation" multiple="multiple" style="width: 100%">
 							{% for filter in f4 %}
-								<option value= "{{ filter }}" > {{ filter }} </option>
+								{% if filter in sf4 %}
+									<option value= "{{ filter }}" selected="selected"> {{ filter }} </option>
+								{% else %}
+									<option value= "{{ filter }}" > {{ filter }} </option>
+								{% endif %}
 							{% endfor %}
 						</select>
 					</div>
@@ -89,9 +105,13 @@ Lisää projekti
 						<label>
 							Rakenneosa
 						</label>
-						<select class="js-example-basic-multiple" id="selector5" name="structural_component" multiple="multiple" style="width: 100%">
+						<select class="js-example-basic-multiple" name="structural_component" multiple="multiple" style="width: 100%">
 							{% for filter in f5 %}
-								<option value= "{{ filter }}" > {{ filter }} </option>
+								{% if filter in sf5 %}
+									<option value= "{{ filter }}" selected="selected"> {{ filter }} </option>
+								{% else %}
+									<option value= "{{ filter }}" > {{ filter }} </option>
+								{% endif %}
 							{% endfor %}
 						</select>
 					</div>

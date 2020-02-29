@@ -93,8 +93,30 @@ def add_project(request):
 
                     if form.is_valid():
                         form.save(request, obj)
-
-        return HttpResponseRedirect(reverse('success'))
+            return HttpResponseRedirect(reverse('success'))
+        else: 
+            f1, f2, f3, f4, f5 = sql_util.get_filters()
+            input_data = request.POST.copy()
+            filters_qset = parse_util.parse_input_filters(input_data)
+            filters_dict = parse_util.filters_qs_to_dict(filters_qset)
+            attachment_model = Attachment(pk=1) # tää on viel kyssäri
+            image_model = Image(pk=1)
+            context = {'form': form,
+                       'attachment': attachment_model,
+                       'image': image_model,
+                       'f1': f1,
+                       'f2': f2,
+                       'f3': f3,
+                       'f4': f4,
+                       'f5': f5,
+                       'sf1': filters_dict['Rakennustyyppi'],
+                       'sf2': filters_dict['Rakennusmateriaali'],
+                       'sf3': filters_dict['Palvelu'],
+                       'sf4': filters_dict['Rakennustoimenpide'],
+                       'sf5': filters_dict['Rakenneosa'],
+                       }
+            return render(request, 'add_project.html', context)
+        
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     form = CreateProjectForm()
     attachment_model = Attachment(pk=1) # tää on viel kyssäri
@@ -130,7 +152,6 @@ def edit_project(request, id):
                 images = request.FILES.getlist('attachment_image')
                 if len(files) > 0:
                     for f in files:
-                        print(f)
                         test = MultiValueDict({'attachment_file': [f]})
                         form = AttachmentForm(request.POST, test)
 
