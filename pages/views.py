@@ -25,6 +25,7 @@ from attachments.models import Attachment, Image
 from attachments.forms import AttachmentForm, ImageForm
 import attachments.views
 from django.utils.datastructures import MultiValueDict
+from attachments.views import delete_image
 
 
 @login_required(login_url='/login/')
@@ -154,14 +155,15 @@ def edit_project(request, id):
                     for f in files:
                         test = MultiValueDict({'attachment_file': [f]})
                         form = AttachmentForm(request.POST, test)
-
                         if form.is_valid():
                           form.save(request, obj)
                 if len(images) > 0:
+                    existing_images = Image.objects.attachments_for_object(id)
+                    for image in existing_images:
+                      delete_image(request, image.pk)
                     for i in images:
                       test = MultiValueDict({'attachment_image': [i]})
                       form = ImageForm(request.POST, test)
-
                       if form.is_valid():
                         form.save(request, obj)
 

@@ -4,39 +4,27 @@
 
 <table style="width: 730px;">
   {% for attachment in my_entry_attachments %}
-    {% cycle '<tr>' '' '' '' %}
     <center>
-      <td style="background-color: #DCDCDC">
-          <table>
-            <tr style="table-layout: fixed; height: 100px;">
-              <th>
+        <tr style="table-layout: fixed; height: 50px;">
+          <th>
+          <center>
+            <a href="{{ attachment.attachment_file.url }}">
+              <img src="{{ attachment.attachment_file.url }}" style="max-height:25px; max-width:25px" onerror="this.src='../../static/images/default-file-icon.png'">
+            </a>
+          </center>          
+          </th>
+          <th>
+            <a href="{{ attachment.attachment_file.url }}">
+              {{attachment.filename|truncatechars:50}}
+            </a>
+          </th>
+          {% if delete_links_included is not None %}
+          <th>
               <center>
-                <a href="{{ attachment.attachment_file.url }}">
-                  <img src="{{ attachment.attachment_file.url }}" style="max-height:100px; max-width:100px" onerror="this.src='../../static/images/default-file-icon.png'">
-                </a>
-              </center>          
-              </th>
-            </tr>
-            <tr>
-              <th>
-                <a href="{{ attachment.attachment_file.url }}">
-                  {{attachment.filename|truncatechars:15}}
-                </a>
-              </th>
-            </tr>
-            <tr>
-              <th>
-                {% if delete_links_included is not None %}
-                  <center>
-                    {% attachment_delete_link attachment %}
-                  </center>
-                {% endif %}
-              </th>
-            </tr>
-          </table>
-      </td>
-
-    {% cycle '' '' '' '</tr>' %}
+                {% attachment_delete_link attachment %}
+              </center>
+          </th>
+          {% endif %}
   {% endfor %}
 </table>
 
