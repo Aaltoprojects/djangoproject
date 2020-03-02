@@ -16,7 +16,7 @@ import urllib.request
 import urllib.parse
 import re
 from pages.constants import DATE_FORMAT
-from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm
+from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm, CreateReferenceProjectForm, SearchReferenceProjectForm
 from django import forms
 import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
@@ -30,9 +30,11 @@ from attachments.views import delete_image
 
 @login_required(login_url='/login/')
 def home(request):
-    form = SearchProjectForm()
     f1, f2, f3, f4, f5 = sql_util.get_filters()
-    context = {'form': form,
+    form1 = SearchProjectForm()
+    form2 = SearchReferenceProjectForm()
+    context = {'form1': form1,
+               'form2': form2,
                'f1': f1,
                'f2': f2,
                'f3': f3,
@@ -64,18 +66,15 @@ def search_project(request):
 
 @login_required(login_url='/login/')
 def add_project(request):
-
     if request.method == 'POST':
-        form = CreateProjectForm(request.POST)
-        if form.is_valid():
-            input_data = request.POST.copy()
-            pk = sql_util.save_entry_to_db(form, input_data)
-
+        form1 = CreateProjectForm(request.POST)
+        input_data = request.POST.copy()
+        if form1.is_valid():
+            obj1 = sql_util.save_entry_to_db(form1, input_data)
+            pk = obj1.id
             app_label = 'pages'
             model_name = 'Project'
-
             if request.user.has_perm("attachments.add_attachment"):
-
               model = apps.get_model(app_label, model_name)
               obj = get_object_or_404(model, pk=pk)
               files = request.FILES.getlist('attachment_file')
@@ -84,16 +83,18 @@ def add_project(request):
                 for f in files:
                     test = MultiValueDict({'attachment_file': [f]})
                     form = AttachmentForm(request.POST, test)
-
                     if form.is_valid():
                         form.save(request, obj)
               if len(images) > 0:
                 for i in images:
                     test = MultiValueDict({'attachment_image': [i]})
                     form = ImageForm(request.POST, test)
-
                     if form.is_valid():
                         form.save(request, obj)
+            if 'undertaking' in input_data:
+                form2 = CreateReferenceProjectForm(request.POST)
+                if form2.is_valid():
+                    obj2 = sql_util.save_ref_to_db(form2, obj1)
             return HttpResponseRedirect(reverse('success'))
         else: 
             f1, f2, f3, f4, f5 = sql_util.get_filters()
@@ -117,21 +118,23 @@ def add_project(request):
                        'sf5': filters_dict['Rakenneosa'],
                        }
             return render(request, 'add_project.html', context)
-        
-    f1, f2, f3, f4, f5 = sql_util.get_filters()
-    form = CreateProjectForm()
-    attachment_model = Attachment(pk=1) # tää on viel kyssäri
-    image_model = Image(pk=1)
-    context = {'form': form,
-               'attachment': attachment_model,
-               'image': image_model,
-               'f1': f1,
-               'f2': f2,
-               'f3': f3,
-               'f4': f4,
-               'f5': f5,
-               }
-    return render(request, 'add_project.html', context)
+    elif request.method == 'GET':    
+        f1, f2, f3, f4, f5 = sql_util.get_filters()
+        form1 = CreateProjectForm()
+        form2 = CreateReferenceProjectForm()
+        attachment_model = Attachment(pk=1) # tää on viel kyssäri
+        image_model = Image(pk=1)
+        context = {'form1': form1,
+                   'form2': form2,
+                   'attachment': attachment_model,
+                   'image': image_model,
+                   'f1': f1,
+                   'f2': f2,
+                   'f3': f3,
+                   'f4': f4,
+                   'f5': f5,
+                   }
+        return render(request, 'add_project.html', context)
 
 
 @login_required(login_url='/login/')

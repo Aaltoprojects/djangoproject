@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load i18n %}
 {% load crispy_forms_tags %}
 {% load attachments_tags %}
+{% load i18n %}
 
 {% block title %}
 Lisää projekti
@@ -14,22 +14,29 @@ Lisää projekti
 		<div class="col-8">
 			<h1 class="mt-2">Lisää projekti</h1>
 			<hr class="mt-0 mb-4">
+
+			<h6 class="mt-2">Referenssiprojekti?</h6>
+			<div class="custom-control custom-checkbox">
+			  	<input type="checkbox" class="custom-control-input" id="ref_check" onclick="HideAndReveal()">
+			  	<label class="custom-control-label" for="ref_check">Kyllä</label>
+			</div>
+
 			<form action="" enctype="multipart/form-data" id="add_project_form" method="post">
 				{% csrf_token %}
 				<div class="row">
 					<div class="col-6">
-						{{ form.project_name | as_crispy_field }}
+						{{ form1.project_name | as_crispy_field }}
 					</div>
 					<div class="col-6">
-						{{ form.destination_name | as_crispy_field }}
+						{{ form1.destination_name | as_crispy_field }}
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-6">
-						{{ form.start_date | as_crispy_field}}
+						{{ form1.start_date | as_crispy_field}}
 					</div>
 					<div class="col-6">
-						{{ form.end_date | as_crispy_field }}
+						{{ form1.end_date | as_crispy_field }}
 					</div>
 				</div>
 				<div class="row">
@@ -118,20 +125,20 @@ Lisää projekti
 				</div>
 				<div class="row">
 					<div class="col-6">
-						{{ form.keywords | as_crispy_field }}
+						{{ form1.keywords | as_crispy_field }}
 					</div>
 					<div class="col-6">
-						{{ form.project_manager | as_crispy_field }}
+						{{ form1.project_manager | as_crispy_field }}
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-12">
-						{{ form.project_description | as_crispy_field }}
+						{{ form1.project_description | as_crispy_field }}
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-12">
-						{{ form.documentation_path | as_crispy_field }}
+						{{ form1.documentation_path | as_crispy_field }}
 					</div>
 				</div>
 				<div class="row">
@@ -144,11 +151,70 @@ Lisää projekti
 						{% attachment_form attachment %}
 					</div>
 				</div>
-				<button type="submit" id="submit_button" class="btn btn-success">Tallenna</button>
+				
+				<div id=reference_fields>
+					<div class="row">
+						<div class="col-6">
+							{{ form2.undertaking | as_crispy_field }}
+						</div>
+						<div class="col-6">
+							{{ form2.client | as_crispy_field }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6">
+							{{ form2.area | as_crispy_field}}
+						</div>
+						<div class="col-6">
+							{{ form2.construction_cost | as_crispy_field }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6">
+							{{ form2.project_accepted | as_crispy_field }}
+						</div>
+						<div class="col-6">
+							{{ form2.construction_permit_granted | as_crispy_field }}
+						</div>
+					</div>
+				</div>
+				<br>
+				<button type="submit" id="submit_button" class="btn btn-success"> Tallenna </button>
 			</form>
 		</div>
 	</div>
 </div>
+
+<script>
+	function HideAndReveal() {
+	  var check_box = document.getElementById("ref_check");
+	  var rf1 = document.getElementById("ref_field1");
+	  var rf2 = document.getElementById("ref_field2");
+	  var rf3 = document.getElementById("ref_field3");
+	  var rf4 = document.getElementById("ref_field4");
+	  var rf5 = document.getElementById("ref_field5");
+	  var rf6 = document.getElementById("ref_field6");
+	  var rfs = document.getElementById("reference_fields")
+	  if (check_box.checked == true){
+	    rfs.style.display = "block";
+	    rf1.disabled = false;
+	    rf2.disabled = false;
+	    rf3.disabled = false;
+	    rf4.disabled = false;
+	    rf5.disabled = false;
+	    rf6.disabled = false;
+	  } else {
+	    rfs.style.display = "none";
+	    rf1.disabled = true;
+	    rf2.disabled = true;
+	    rf3.disabled = true;
+	    rf4.disabled = true;
+	    rf5.disabled = true;
+	    rf6.disabled = true;
+	  }
+	}
+	HideAndReveal();
+</script>
 
 <script>
 	$(document).ready(function() {
@@ -159,11 +225,10 @@ Lisää projekti
 	});
 </script>
 
-<script type="text/javascript">
+<script>
 	document.getElementById("submit_button").addEventListener("click", function(){
 	  window.btn_clicked = true; 
 	});
-
 	var formChanged = false;
 	var myForm = document.getElementById('add_project_form');
 	var selectors = document.getElementsByClassName('js-example-basic-multiple');

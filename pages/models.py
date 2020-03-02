@@ -103,7 +103,6 @@ class ReferenceProject(models.Model):
 		verbose_name='Rakennuslupa myönnetty',
 		)
 
-
 	def __str__(self):
 		return self.project.project_name
 

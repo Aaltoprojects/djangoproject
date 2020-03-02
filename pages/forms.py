@@ -40,6 +40,39 @@ class SearchProjectForm(forms.Form):
     )
 
 
+class SearchReferenceProjectForm(forms.Form):
+
+    area = forms.FloatField(
+        label='Laajuus (brm2)',
+        required=False,
+        widget=forms.NumberInput(attrs={
+                                        'type': 'range',
+                                        'min': '0',
+                                        'max': '100000',
+                                        'step': '50',
+                                        'placeholder': 'Rakennuksen laajuus desimaalilukuna', 
+                                        'id': 'ref_field3',
+                                        'onchange':'updateTextInput1(this.value);',
+                                        }
+        ),
+    )
+
+    construction_cost = forms.FloatField(
+        label='Rakentamiskustannukset',
+        required=False,
+        widget=forms.NumberInput(attrs={
+                                        'type': 'range',
+                                        'min': '0',
+                                        'max': '20000000',
+                                        'step': '10000',
+                                        'placeholder': 'Rakentamiskustannukset desimaalilukuna', 
+                                        'id': 'ref_field4',
+                                        'onchange':'updateTextInput2(this.value);',
+                                        }
+        ),
+    )
+
+
 class CreateProjectForm(forms.Form):
 
     project_name = forms.CharField(
@@ -137,3 +170,67 @@ class AddFilterForm(forms.ModelForm):
     class Meta:
         model = Filter
         fields = ['category', 'filter_name']
+
+
+class CreateReferenceProjectForm(forms.Form):
+
+    undertaking = forms.CharField(
+        label='Hanke',
+        empty_value='—',
+        max_length=200,
+        widget=forms.TextInput(attrs={
+                                    'placeholder': 'Anna hankkeen nimi', 
+                                    'autocomplete': 'off',
+                                    'id': 'ref_field1',
+                                    }
+        ),
+    )
+    client = forms.CharField(
+        label='Tilaaja',
+        empty_value='—',
+        max_length=200,
+        widget=forms.TextInput(attrs={
+                                    'placeholder': 'Anna tilaajan nimi', 
+                                    'autocomplete': 'off',
+                                    'id': 'ref_field2',
+                                    }
+        ),
+    )
+    area = forms.FloatField(
+        label='Laajuus (brm2)',
+        widget=forms.NumberInput(attrs={
+                                        'placeholder': 'Rakennuksen laajuus desimaalilukuna', 
+                                        'id': 'ref_field3',
+                                        }
+        ),
+    )
+    construction_cost = forms.FloatField(
+        label='Rakentamiskustannukset',
+        widget=forms.NumberInput(attrs={
+                                        'placeholder': 'Rakentamiskustannukset desimaalilukuna', 
+                                        'id': 'ref_field4',
+                                        }
+        ),
+    )
+    project_accepted = forms.DateTimeField(
+        label='Hanke vastaanotettu',
+        required=False,
+        input_formats=[constants.DATE_FORMAT],
+        widget=FengyuanChenDatePickerInput(attrs={
+                                                'placeholder': 'Hankkeen vastaanottopäivä',
+                                                'autocomplete': 'off',
+                                                'id': 'ref_field5',
+                                                }
+        ),
+    )
+    construction_permit_granted = forms.DateTimeField(
+        label='Rakennuslupa myönnetty',
+        required=False,
+        input_formats=[constants.DATE_FORMAT],
+        widget=FengyuanChenDatePickerInput(attrs={
+                                                'placeholder': 'Rakennusluvan myöntämispäivä',
+                                                'autocomplete': 'off',
+                                                'id': 'ref_field6',
+                                                }
+        ),
+    )

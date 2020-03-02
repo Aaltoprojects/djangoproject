@@ -13,14 +13,18 @@ Etsi projekteja tietokannasta
 		<div class="col-8">
 			<h1 class="mt-2">Etsi projekti</h1>
 			<hr class="mt-0 mb-4">
+
+			<h6 class="mt-2">Referenssiprojekti?</h6>
+			<div class="custom-control custom-checkbox">
+			  	<input type="checkbox" class="custom-control-input" id="ref_check" onclick="HideAndReveal()">
+			  	<label class="custom-control-label" for="ref_check">Kyllä</label>
+			</div>
+
 			<form id='search_project_form' method='get'>
 				{% csrf_token %}
 				<div class="row">
-					<div class="col-6">
-						{{ form.start_date|as_crispy_field }}
-					</div>
-					<div class="col-6">
-						{{ form.end_date|as_crispy_field }}
+					<div class="col-12">
+						{{ form1.key_phrase_search|as_crispy_field }}
 					</div>
 				</div>
 				<div class="row">
@@ -87,21 +91,45 @@ Etsi projekteja tietokannasta
 						</select>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-6">
+						{{ form1.start_date|as_crispy_field }}
+					</div>
+					<div class="col-6">
+						{{ form1.end_date|as_crispy_field }}
+					</div>
+				</div>
+
+				<div id=reference_fields>
+
+				    <div data-role="rangeslider">
+				        <label for="range-10a">Rangeslider:</label>
+				        <input type="range" name="range-10a" id="range-10a" min="0" max="10" step=".1" value="2.6">
+				        <label for="range-10b">Rangeslider:</label>
+				        <input type="range" name="range-10b" id="range-10b" min="0" max="10" step=".1" value="5.4">
+				    </div>
+
+				</div>
 				<br>
-				<div class="row">
-					<div class="col-12">
-						{{ form.key_phrase_search|as_crispy_field }}
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<button type="submit" id="search_button" class="btn btn-primary">Etsi</button>
-					</div>
-				</div>
+				<button type="submit" id="search_button" class="btn btn-primary">Etsi</button>
+
 			</form>
 		</div>
 	</div>
 </div>
+
+<script>
+	function HideAndReveal() {
+	  var check_box = document.getElementById("ref_check");
+	  var rfs = document.getElementById("reference_fields")
+	  if (check_box.checked == true){
+	    rfs.style.display = "block";
+	  } else {
+	    rfs.style.display = "none";
+	  }
+	}
+	HideAndReveal();
+</script>
 
 <script>
 	$(document).ready(function() {
@@ -127,10 +155,8 @@ Etsi projekteja tietokannasta
 				data: $('#search_project_form').serialize(),
 				success: function(data, textStatus, jqXHR) {
                 	$('#table_div').html(data);
-                	console.log( "Success!" );
 	            },
 	            error: function(data, textStatus, jqXHR) {
-	                console.log( "Error!" );
 	            },
 	            dataType: 'html'
 			});
