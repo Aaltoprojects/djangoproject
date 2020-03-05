@@ -142,7 +142,7 @@ Muokkaa projektia
 						{% get_images_for id as images %}
 						{% if images %}
 						{% for image in images %}
-							<a href="{{ image.attachment_image.url }}">
+							<a href="{{ image.attachment_image.url }}" target="_blank">
 								<img src="{{ image.attachment_image.url }}" style="width:100%; max-height: 2000px;">
 								<br>
 							</a>

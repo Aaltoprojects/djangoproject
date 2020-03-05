@@ -8,13 +8,13 @@
         <tr style="table-layout: fixed; height: 50px;">
           <th>
           <center>
-            <a href="{{ attachment.attachment_file.url }}">
+            <a href="{{ attachment.attachment_file.url }}" target="_blank">
               <img src="{{ attachment.attachment_file.url }}" style="max-height:25px; max-width:25px" onerror="this.src='../../static/images/default-file-icon.png'">
             </a>
           </center>          
           </th>
           <th>
-            <a href="{{ attachment.attachment_file.url }}">
+            <a href="{{ attachment.attachment_file.url }}" target="_blank">
               {{attachment.filename|truncatechars:50}}
             </a>
           </th>
