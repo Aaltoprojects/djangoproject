@@ -234,19 +234,6 @@ def add_filter(request):
     context = {'form': add_filter_form, 'success':success, 'showMessage':showMessage}
     return render(request, 'add_filter.html', context)
 
-@login_required(login_url='/login/')
-def export_results(request):
-    input_data = request.GET.copy()
-    result = sql_util.search(input_data)
-    response = HttpResponse(
-        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    )
-    response['Content-Disposition'] = 'attachment; filename={date}-results.xlsx'.format(
-        date=dt.datetime.now().strftime('%Y-%m-%d'),
-    )
-    parse_util.write_to_excel(result, response)
-    return response
-
 # Signup and login functionalities:
 
 
