@@ -29,6 +29,7 @@ from attachments.views import delete_image
 
 @login_required(login_url='/login/')
 def home(request):
+    print(request)
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     form1 = SearchProjectForm()
     form2 = SearchReferenceProjectForm()
@@ -50,6 +51,7 @@ def success(request):
 
 @login_required(login_url='/login/')
 def search_project(request):
+    print(request.GET)
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     input_data = request.GET.copy()
     result = sql_util.search(input_data)
