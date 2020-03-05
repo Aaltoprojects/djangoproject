@@ -105,7 +105,11 @@
 <script>
     $('#project_table').DataTable( {
         language: {url:'../static/languages/Finnish.json'},
-        searching: false
+        searching: false,
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
     } );
 </script>
 
