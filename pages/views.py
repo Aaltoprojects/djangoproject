@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 from django.core import mail
 from django.apps import apps
 
-from openpyxl import Workbook
 import datetime as dt
 import pages.models as models
 import urllib.request
