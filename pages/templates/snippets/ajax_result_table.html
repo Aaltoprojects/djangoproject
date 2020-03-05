@@ -22,7 +22,7 @@
                 <th class='none'>Projektipäällikkö</th>
                 <th class='none'>Projektiin liitetyt tiedostot</th>
                 <th class='none'>Toiminnot</th>
-                <th class='none'>Referenssiprojektitiedot</th>
+                <th class='none'>Referenssiprojektin tiedot</th>
             </tr>
         </thead>
         <tbody>
@@ -95,6 +95,8 @@
                     <td>
                         {% if item.referenceproject %}
                             {% include "snippets/reference_table.html" %}
+                        {% else %}
+                            <i>Projektia ei löydy referenssipankista</i>
                         {% endif %}
                     </td>
                 </tr>
