@@ -36,7 +36,7 @@
                     {% get_images_for item.id as images %}
                         {% if images %}
                             {% for image in images %}
-                                <a href="{{ image.attachment_image.url }}">
+                                <a href="{{ image.attachment_image.url }}" target="_blank">
                                     <img src="{{ image.attachment_image.url }}" style="max-height:150px; max-width:100%">
                                 </a>
                             {% endfor %}
