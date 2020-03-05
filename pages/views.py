@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.core import mail
+from django.core.exceptions import ObjectDoesNotExist
 from django.apps import apps
 
 import datetime as dt
@@ -119,7 +120,7 @@ def add_project(request):
                        'sf5': filters_dict['Rakenneosa'],
                        }
             return render(request, 'add_project.html', context)
-    elif request.method == 'GET':    
+    elif request.method == 'GET':
         f1, f2, f3, f4, f5 = sql_util.get_filters()
         form1 = CreateProjectForm()
         form2 = CreateReferenceProjectForm()
@@ -142,15 +143,13 @@ def add_project(request):
 def edit_project(request, id):
     project = models.Project.project_db.get(id=id)
     if request.method == 'POST':
-        form = CreateProjectForm(request.POST)
-        if form.is_valid():
+        form1 = CreateProjectForm(request.POST)
+        if form1.is_valid():
             input_data = request.POST.copy()
-            sql_util.edit_entry_in_db(project, form, input_data)
+            sql_util.edit_entry_in_db(project, form1, input_data)
             app_label = 'pages'
             model_name = 'Project'
-
             if request.user.has_perm("attachments.add_attachment"):
-
                 model = apps.get_model(app_label, model_name)
                 obj = get_object_or_404(model, pk=id)
                 files = request.FILES.getlist('attachment_file')
@@ -170,46 +169,63 @@ def edit_project(request, id):
                       form = ImageForm(request.POST, test)
                       if form.is_valid():
                         form.save(request, obj)
-
+            if 'undertaking' in input_data:
+                form2 = CreateReferenceProjectForm(request.POST)
+                if form2.is_valid():
+                    sql_util.edit_ref_in_db(project.referenceproject, form2)
             return HttpResponseRedirect(reverse(success))
-    f1, f2, f3, f4, f5 = sql_util.get_filters()
-    filters_qset = project.filters.all()
-    filters_dict = parse_util.filters_qs_to_dict(filters_qset)
-    form = CreateProjectForm(
-        initial={
-            'project_name': project.project_name,
-            'destination_name': '' if project.destination_name == '—' else project.destination_name,
-            'start_date': dt.datetime.strptime(
-                str(
-                    project.start_date),
-                '%Y-%m-%d').strftime(DATE_FORMAT) if project.start_date is not None else project.start_date,
-            'end_date': dt.datetime.strptime(
-                str(
-                    project.end_date),
-                '%Y-%m-%d').strftime(DATE_FORMAT) if project.end_date is not None else project.end_date,
-            'keywords': ''  if project.keywords == '—' else project.keywords,
-            'project_description': project.project_description,
-            'documentation_path': ''  if project.documentation_path == '—' else project.documentation_path,
-            'project_manager': ''  if project.project_manager == '—' else project.project_manager,
-        })
-    attachment_model = Attachment(pk=1)
-    image_model = Image(pk=1)
-    context = {'form': form,
-               'attachment': attachment_model,
-               'image': image_model,
-               'id': id,
-               'f1': f1,
-               'f2': f2,
-               'f3': f3,
-               'f4': f4,
-               'f5': f5,
-               'sf1': filters_dict['Rakennustyyppi'],
-               'sf2': filters_dict['Rakennusmateriaali'],
-               'sf3': filters_dict['Palvelu'],
-               'sf4': filters_dict['Rakennustoimenpide'],
-               'sf5': filters_dict['Rakenneosa'],
-               }
-    return render(request, 'edit_project.html', context)
+    elif request.method == 'GET':
+      f1, f2, f3, f4, f5 = sql_util.get_filters()
+      filters_qset = project.filters.all()
+      filters_dict = parse_util.filters_qs_to_dict(filters_qset)
+      form1 = CreateProjectForm(
+          initial={
+              'project_name': project.project_name,
+              'destination_name': '' if project.destination_name == '—' else project.destination_name,
+              'start_date': dt.datetime.strptime(
+                  str(
+                      project.start_date),
+                  '%Y-%m-%d').strftime(DATE_FORMAT) if project.start_date is not None else project.start_date,
+              'end_date': dt.datetime.strptime(
+                  str(
+                      project.end_date),
+                  '%Y-%m-%d').strftime(DATE_FORMAT) if project.end_date is not None else project.end_date,
+              'keywords': ''  if project.keywords == '—' else project.keywords,
+              'project_description': project.project_description,
+              'documentation_path': ''  if project.documentation_path == '—' else project.documentation_path,
+              'project_manager': ''  if project.project_manager == '—' else project.project_manager,
+          })
+      try:
+          form2 = CreateReferenceProjectForm(
+              initial={
+                  'undertaking': project.referenceproject.undertaking,
+                  'client': project.referenceproject.client,
+                  'area': project.referenceproject.area,
+                  'construction_cost': project.referenceproject.construction_cost,
+                  'project_accepted': project.referenceproject.project_accepted,
+                  'construction_permit_granted': project.referenceproject.construction_permit_granted,
+              })
+      except ObjectDoesNotExist:
+          form2 = False
+      attachment_model = Attachment(pk=1)
+      image_model = Image(pk=1)
+      context = {'form1': form1,
+                 'form2': form2,
+                 'attachment': attachment_model,
+                 'image': image_model,
+                 'id': id,
+                 'f1': f1,
+                 'f2': f2,
+                 'f3': f3,
+                 'f4': f4,
+                 'f5': f5,
+                 'sf1': filters_dict['Rakennustyyppi'],
+                 'sf2': filters_dict['Rakennusmateriaali'],
+                 'sf3': filters_dict['Palvelu'],
+                 'sf4': filters_dict['Rakennustoimenpide'],
+                 'sf5': filters_dict['Rakenneosa'],
+                 }
+      return render(request, 'edit_project.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/admin/login/')

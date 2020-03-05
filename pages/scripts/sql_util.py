@@ -103,6 +103,15 @@ def edit_entry_in_db(project, form, input_data):
     for input_filter in input_filters:
         project.filters.add(input_filter)
 
+def edit_ref_in_db(reference_project, form):
+    reference_project.undertaking = form.cleaned_data['undertaking']
+    reference_project.client = form.cleaned_data['client']
+    reference_project.area = form.cleaned_data['area']
+    reference_project.construction_cost = form.cleaned_data['construction_cost']
+    reference_project.project_accepted = form.cleaned_data['project_accepted']
+    reference_project.construction_permit_granted = form.cleaned_data['construction_permit_granted']
+    reference_project.save()
+
 def check_if_exists_in_db(add_filter_form):
     input_category = add_filter_form.cleaned_data['category']
     input_name = add_filter_form.cleaned_data['filter_name']
