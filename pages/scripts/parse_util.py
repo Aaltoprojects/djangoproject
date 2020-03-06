@@ -1,6 +1,9 @@
 import pages.constants as constants
 from pages.models import Filter
 from openpyxl import Workbook
+import datetime as dt
+from pages.constants import DATE_FORMAT
+
 
 def format_qset(data_qs):
     array = []
@@ -31,3 +34,6 @@ def parse_input_filters(data):
     chosen_filters += data.getlist('structural_component')
     filter_objs = Filter.filter_db.filter(filter_name__in=chosen_filters)
     return filter_objs
+
+def format_time(time):
+  return dt.datetime.strptime(str(time),'%Y-%m-%d').strftime(DATE_FORMAT) if time is not None else time

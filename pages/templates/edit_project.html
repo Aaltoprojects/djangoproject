@@ -32,85 +32,29 @@ Muokkaa projektia
 						{{ form1.end_date | as_crispy_field }}
 					</div>
 				</div>
+				{% for category, filters_array in filters.items%}
 				<div class="row">
-					<div class="col-6">
+					<div class="col-12">
 						<label>
-							Rakennustyyppi
+							{{ category }}
 						</label>
 						<select class="js-example-basic-multiple" name="structure_type" multiple="multiple" style="width: 100%">
-							{% for filter in f1 %}
-								{% if filter in sf1 %}
-									<option value= "{{ filter }}" selected="selected"> {{ filter }} </option>
+							{% for filter in filters_array %}
+								{% if edit_project is true %}
+									{% if filter in selected_filters|get_item:category %}
+										<option value= "{{ filter }}" selected="selected"> {{ filter }} </option>
+									{% else %}
+										<option value= "{{ filter }}" > {{ filter }} </option>
+									{% endif %}
 								{% else %}
 									<option value= "{{ filter }}" > {{ filter }} </option>
 								{% endif %}
 							{% endfor %}
 						</select>
-					</div>
-					<div class="col-6">
-						<label>
-							Rakennusmateriaali
-						</label>
-						<select class="js-example-basic-multiple" name="building_material" multiple="multiple" style="width: 100%">
-							{% for filter in f2 %}
-								{% if filter in sf2 %}
-									<option value= "{{ filter }}" selected="selected"> {{ filter }} </option>
-								{% else %}
-									<option value= "{{ filter }}" > {{ filter }} </option>
-								{% endif %}
-							{% endfor %}
-						</select>
+						<br>
 					</div>
 				</div>
-				<br>
-				<div class="row">
-					<div class="col-6">
-						<label>
-							Palvelu
-						</label>
-						<select class="js-example-basic-multiple" name="service" multiple="multiple" style="width: 100%">
-							{% for filter in f3 %}
-								{% if filter in sf3 %}
-									<option value= "{{ filter }}" selected="selected"> {{ filter }} </option>
-								{% else %}
-									<option value= "{{ filter }}" > {{ filter }} </option>
-								{% endif %}
-							{% endfor %}
-						</select>
-					</div>
-					<div class="col-6">
-						<label>
-							Rakennustoimenpide
-						</label>
-						<select class="js-example-basic-multiple" name="construction_operation" multiple="multiple" style="width: 100%">
-							{% for filter in f4 %}
-								{% if filter in sf4 %}
-									<option value= "{{ filter }}" selected="selected"> {{ filter }} </option>
-								{% else %}
-									<option value= "{{ filter }}" > {{ filter }} </option>
-								{% endif %}
-							{% endfor %}
-						</select>
-					</div>
-				</div>
-				<br>
-				<div class="row">
-					<div class="col-6">
-						<label>
-							Rakenneosa
-						</label>
-						<select class="js-example-basic-multiple" name="structural_component" multiple="multiple" style="width: 100%">
-							{% for filter in f5 %}
-								{% if filter in sf5 %}
-									<option value= "{{ filter }}" selected="selected"> {{ filter }} </option>
-								{% else %}
-									<option value= "{{ filter }}" > {{ filter }} </option>
-								{% endif %}
-							{% endfor %}
-						</select>
-					</div>
-				</div>
-				<br>
+				{% endfor %}
 				<div class="row">
 					<div class="col-6">
 						{{ form1.keywords | as_crispy_field }}
