@@ -32,9 +32,9 @@ Etsi projekteja tietokannasta
 					<div class="col-12">
 						{{ form1.area|as_crispy_field }}
 					</div>
-				</div>	
+				</div>
 				<div class="row">
-					<div class="col-12">
+					<div class="col-6">
 						<label>
 							Rakennustyyppi
 						</label>
@@ -44,10 +44,7 @@ Etsi projekteja tietokannasta
 							{% endfor %}
 						</select>
 					</div>
-				</div>
-				<br>
-				<div class="row">
-					<div class="col-12">
+					<div class="col-6">
 						<label>
 							Rakennusmateriaali
 						</label>
@@ -60,7 +57,7 @@ Etsi projekteja tietokannasta
 				</div>
 				<br>
 				<div class="row">
-					<div class="col-12">
+					<div class="col-6">
 						<label>
 							Palvelu
 						</label>
@@ -70,10 +67,7 @@ Etsi projekteja tietokannasta
 							{% endfor %}
 						</select>
 					</div>
-				</div>
-				<br>
-				<div class="row">
-					<div class="col-12">
+					<div class="col-6">
 						<label>
 							Rakennustoimenpide
 						</label>
@@ -86,7 +80,7 @@ Etsi projekteja tietokannasta
 				</div>
 				<br>
 				<div class="row">
-					<div class="col-12">
+					<div class="col-6">
 						<label>
 							Rakenneosa
 						</label>
@@ -97,6 +91,7 @@ Etsi projekteja tietokannasta
 						</select>
 					</div>
 				</div>
+				<br>
 				<div class="row">
 					<div class="col-6">
 						{{ form1.start_date|as_crispy_field }}
