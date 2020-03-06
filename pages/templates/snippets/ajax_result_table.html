@@ -98,12 +98,55 @@
 </div>
 
 <script>
-    $('#project_table').DataTable( {
+
+    function strip(html){
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
+    }
+
+
+    var excelButton = {
+        autoFilter: true,
+        title: 'Projektipankki export',
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    return strip(data).replace( /\s\s+/g, ' ' );
+                }
+            },
+            columns: [':visible', 10, 11, 12]
+        }
+    };
+
+
+
+    var table = $('#project_table').DataTable( {
         language: {url:'../static/languages/Finnish.json'},
         searching: false,
+        stateSave: true,
+        lengthChange: false,
         dom: 'Bfrtip',
+        columnDefs: [
+            {
+                targets: [10, 11, 12, 13, 14],
+                className: 'noVis'
+            }
+        ],
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
+            $.extend( true, {}, excelButton, {
+                extend: 'excelHtml5'
+            } ),
+            {
+                extend: 'colvis',
+                collectionLayout: 'fixed two-column',
+                columns: ':not(.noVis)'
+            }
+        ],
+        language: {
+            buttons: {
+                colvis: 'Näytä sarakkeet'
+            }
+        }
     } );
+    //table.buttons().container().appendTo( '#project_table_wrapper .col-sm-6:eq(0)' );
 </script>
