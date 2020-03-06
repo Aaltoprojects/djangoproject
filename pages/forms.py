@@ -34,40 +34,17 @@ class SearchProjectForm(forms.Form):
         max_length=100,
         widget=forms.TextInput(attrs={
                                     'placeholder': 'Etsi projekteja syöttämällä hakusanoja', 
-                                    'autocomplete': 'off'
+                                    'autocomplete': 'off',
                                     }
         ),
     )
-
-
-class SearchReferenceProjectForm(forms.Form):
-
     area = forms.FloatField(
-        label='Laajuus (brm2)',
+        label='Vähimmäislaajuus (brm2)',
         required=False,
         widget=forms.NumberInput(attrs={
-                                        'type': 'range',
                                         'min': '0',
-                                        'max': '100000',
-                                        'step': '50',
-                                        'placeholder': 'Rakennuksen laajuus desimaalilukuna', 
-                                        'id': 'ref_field3',
-                                        'onchange':'updateTextInput1(this.value);',
-                                        }
-        ),
-    )
-
-    construction_cost = forms.FloatField(
-        label='Rakentamiskustannukset',
-        required=False,
-        widget=forms.NumberInput(attrs={
-                                        'type': 'range',
-                                        'min': '0',
-                                        'max': '20000000',
-                                        'step': '10000',
-                                        'placeholder': 'Rakentamiskustannukset desimaalilukuna', 
-                                        'id': 'ref_field4',
-                                        'onchange':'updateTextInput2(this.value);',
+                                        'placeholder': 'Rakennuksen vähimmäislaajuus desimaalilukuna',
+                                        'id': 'ref_field1'
                                         }
         ),
     )

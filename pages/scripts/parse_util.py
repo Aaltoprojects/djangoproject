@@ -31,38 +31,3 @@ def parse_input_filters(data):
     chosen_filters += data.getlist('structural_component')
     filter_objs = Filter.filter_db.filter(filter_name__in=chosen_filters)
     return filter_objs
-
-def write_to_excel(result, response):
-    workbook = Workbook()
-    worksheet = workbook.active
-    worksheet.title = 'Tuloste'
-    columns = [
-        'Projektin nimi',
-        'Kohteen nimi',
-        'Aloituspäivämäärä',
-        'Lopetuspäivämäärä',
-        'Avainsanat',
-        'Projektin kuvaus',
-        'Polku tiedostojen sijaintiin',
-        'Projektipäällikkö',
-    ]
-    row_num = 1
-    for col_num, column_title in enumerate(columns, 1):
-        cell = worksheet.cell(row=row_num, column=col_num)
-        cell.value = column_title
-    for project in result:
-        row_num += 1
-        row = [
-            project.project_name,
-            project.destination_name,
-            project.start_date,
-            project.end_date,
-            project.keywords,
-            project.project_description,
-            project.documentation_path,
-            project.project_manager,
-        ]
-        for col_num, cell_value in enumerate(row, 1):
-            cell = worksheet.cell(row=row_num, column=col_num)
-            cell.value = cell_value
-    workbook.save(response)
