@@ -7,7 +7,8 @@ from pages.constants import FILTER_CATEGORY_NAMES
 
 
 def get_filters():
-    return tuple(format_qset(Filter.filter_db.filter(category=filter)) for filter in FILTER_CATEGORY_NAMES)
+    filters = {str(filter):format_qset(Filter.filter_db.filter(category=filter)) for filter in FILTER_CATEGORY_NAMES}
+    return filters
 
 def is_reference_search(data_dict):
     if 'is_ref' in data_dict:

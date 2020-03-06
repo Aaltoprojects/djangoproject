@@ -9,8 +9,6 @@ from django.contrib.auth.models import User
 from django.core import mail
 from django.core.exceptions import ObjectDoesNotExist
 from django.apps import apps
-
-import datetime as dt
 import pages.models as models
 import urllib.request
 import urllib.parse
@@ -26,18 +24,18 @@ from attachments.forms import AttachmentForm, ImageForm
 import attachments.views
 from django.utils.datastructures import MultiValueDict
 from attachments.views import delete_image
+from django.template.defaulttags import register
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
 
 
 @login_required(login_url='/login/')
 def home(request):
-    f1, f2, f3, f4, f5 = sql_util.get_filters()
     form1 = SearchProjectForm()
     context = {'form1': form1,
-               'f1': f1,
-               'f2': f2,
-               'f3': f3,
-               'f4': f4,
-               'f5': f5,
+               'filters':sql_util.get_filters(),
                }
     return render(request, 'home.html', context)
 
@@ -53,11 +51,8 @@ def search_project(request):
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     input_data = request.GET.copy()
     result = sql_util.search(input_data)
-    context = {'f1': f1,
-               'f2': f2,
-               'f3': f3,
-               'f4': f4,
-               'f5': f5,
+    context = {
+               'filters':sql_util.get_filters(),
                'result': result,
                }
     return render(request, 'snippets/ajax_result_table.html', context)
@@ -105,16 +100,8 @@ def add_project(request):
             context = {'form': form,
                        'attachment': attachment_model,
                        'image': image_model,
-                       'f1': f1,
-                       'f2': f2,
-                       'f3': f3,
-                       'f4': f4,
-                       'f5': f5,
-                       'sf1': filters_dict['Rakennustyyppi'],
-                       'sf2': filters_dict['Rakennusmateriaali'],
-                       'sf3': filters_dict['Palvelu'],
-                       'sf4': filters_dict['Rakennustoimenpide'],
-                       'sf5': filters_dict['Rakenneosa'],
+                       'filters':sql_util.get_filters(),
+                       'selected_filters': parse_util.filters_qs_to_dict(project.filters.all())
                        }
             return render(request, 'add_project.html', context)
     elif request.method == 'GET':
@@ -127,14 +114,9 @@ def add_project(request):
                    'form2': form2,
                    'attachment': attachment_model,
                    'image': image_model,
-                   'f1': f1,
-                   'f2': f2,
-                   'f3': f3,
-                   'f4': f4,
-                   'f5': f5,
+                   'filters':sql_util.get_filters(),
                    }
         return render(request, 'add_project.html', context)
-
 
 @login_required(login_url='/login/')
 def edit_project(request, id):
@@ -166,8 +148,10 @@ def edit_project(request, id):
                       form = ImageForm(request.POST, test)
                       if form.is_valid():
                         form.save(request, obj)
+            print(input_data)
             if 'undertaking' in input_data:
                 form2 = CreateReferenceProjectForm(request.POST)
+                print(form2.is_valid())
                 if form2.is_valid():
                     sql_util.edit_ref_in_db(project.referenceproject, form2)
             return HttpResponseRedirect(reverse(success))
@@ -179,14 +163,8 @@ def edit_project(request, id):
           initial={
               'project_name': project.project_name,
               'destination_name': '' if project.destination_name == '—' else project.destination_name,
-              'start_date': dt.datetime.strptime(
-                  str(
-                      project.start_date),
-                  '%Y-%m-%d').strftime(DATE_FORMAT) if project.start_date is not None else project.start_date,
-              'end_date': dt.datetime.strptime(
-                  str(
-                      project.end_date),
-                  '%Y-%m-%d').strftime(DATE_FORMAT) if project.end_date is not None else project.end_date,
+              'start_date': parse_util.format_time(project.start_date),
+              'end_date': parse_util.format_time(project.end_date),
               'keywords': ''  if project.keywords == '—' else project.keywords,
               'project_description': project.project_description,
               'documentation_path': ''  if project.documentation_path == '—' else project.documentation_path,
@@ -199,8 +177,8 @@ def edit_project(request, id):
                   'client': project.referenceproject.client,
                   'area': project.referenceproject.area,
                   'construction_cost': project.referenceproject.construction_cost,
-                  'project_accepted': project.referenceproject.project_accepted,
-                  'construction_permit_granted': project.referenceproject.construction_permit_granted,
+                  'project_accepted': parse_util.format_time(project.referenceproject.project_accepted),
+                  'construction_permit_granted': parse_util.format_time(project.referenceproject.construction_permit_granted),
               })
       except ObjectDoesNotExist:
           form2 = False
@@ -211,16 +189,8 @@ def edit_project(request, id):
                  'attachment': attachment_model,
                  'image': image_model,
                  'id': id,
-                 'f1': f1,
-                 'f2': f2,
-                 'f3': f3,
-                 'f4': f4,
-                 'f5': f5,
-                 'sf1': filters_dict['Rakennustyyppi'],
-                 'sf2': filters_dict['Rakennusmateriaali'],
-                 'sf3': filters_dict['Palvelu'],
-                 'sf4': filters_dict['Rakennustoimenpide'],
-                 'sf5': filters_dict['Rakenneosa'],
+                 'filters': sql_util.get_filters(),
+                 'selected_filters': parse_util.filters_qs_to_dict(project.filters.all())
                  }
       return render(request, 'edit_project.html', context)
 
