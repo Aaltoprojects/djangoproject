@@ -9,13 +9,18 @@ from pages.constants import FILTER_CATEGORY_NAMES
 def get_filters():
     return tuple(format_qset(Filter.filter_db.filter(category=filter)) for filter in FILTER_CATEGORY_NAMES)
 
+def is_reference_search(data_dict):
+    if 'is_ref' in data_dict:
+        return True
+    else:
+        return False
 
 def sql_query(data_dict):
-    temp1 = str(data_dict.getlist('start_date')[0])
-    temp2 = str(data_dict.getlist('end_date')[0])
-    temp3 = str(data_dict.getlist('key_phrase_search')[0])
+    start_date = str(data_dict.getlist('start_date')[0])
+    end_date = str(data_dict.getlist('end_date')[0])
+    key_phrases = str(data_dict.getlist('key_phrase_search')[0])
     filter_names = []
-    data_qs = Project.project_db.all()
+    projects = Project.project_db.all()
 
     if 'structure_type' in data_dict:
         filter_names += data_dict.getlist('structure_type')
@@ -30,33 +35,45 @@ def sql_query(data_dict):
 
     if filter_names:
         filter_qs = Filter.filter_db.filter(filter_name__in=filter_names)
-        data_qs = data_qs.filter(filters__in=filter_qs)
+        projects = projects.filter(filters__in=filter_qs)
 
-    if temp1 != '':
-        temp1 = str(dt.datetime.strptime(temp1,'%d.%m.%Y').strftime('%Y-%m-%d'))
-        data_qs = data_qs.filter(end_date__range=[temp1, '2100-01-01'])
-    if temp2 != '':
-        temp2 = str(dt.datetime.strptime(temp2,'%d.%m.%Y').strftime('%Y-%m-%d'))
-        data_qs = data_qs.filter(start_date__range=['1970-01-01', temp2])
-    if temp3 != '':
-        qset = Q()
-        for term in temp3.split():
-            tmp = Q()
-            tmp |= Q(project_name__icontains=term)
-            tmp |= Q(destination_name__icontains=term)
-            tmp |= Q(keywords__icontains=term)
-            tmp |= Q(project_description__icontains=term)
-            tmp |= Q(documentation_path__icontains=term)
-            tmp |= Q(project_manager__icontains=term)
-            qset &= tmp
-        data_qs = data_qs.filter(qset)
-
-    return data_qs
-
+    if start_date != '':
+        start_date = str(dt.datetime.strptime(start_date,'%d.%m.%Y').strftime('%Y-%m-%d'))
+        projects = projects.filter(end_date__range=[start_date, '2100-01-01'])
+    if end_date != '':
+        end_date = str(dt.datetime.strptime(end_date,'%d.%m.%Y').strftime('%Y-%m-%d'))
+        projects = projects.filter(start_date__range=['1970-01-01', end_date])
+    if is_reference_search(data_dict):
+        references = ReferenceProject.objects.all()
+        if str(data_dict.getlist('area')[0]) != '':
+            area = float(data_dict.getlist('area')[0])
+            references = references.filter(area__range=[area, 10000000])
+        projects = projects.filter(referenceproject__in=references)
+    if key_phrases != '':
+        qset1 = Q()
+        qset2 = Q()
+        for term in key_phrases.split():
+            tmp1 = Q()
+            tmp1 |= Q(project_name__icontains=term)
+            tmp1 |= Q(destination_name__icontains=term)
+            tmp1 |= Q(keywords__icontains=term)
+            tmp1 |= Q(project_description__icontains=term)
+            tmp1 |= Q(documentation_path__icontains=term)
+            tmp1 |= Q(project_manager__icontains=term)
+            qset1 &= tmp1
+            tmp2 = Q()
+            tmp2 |= Q(undertaking__icontains=term)
+            tmp2 |= Q(client__icontains=term)
+            qset2 &= tmp2
+        p1 = projects.filter(qset1)
+        p2 = ReferenceProject.objects.all().filter(qset2)
+        p3 = projects.filter(referenceproject__in=p2)
+        projects = p1.union(p3)
+    return projects
 
 def search(data_dict):
-    data_qs = sql_query(data_dict)
-    return data_qs
+    projects = sql_query(data_dict)
+    return projects
 
 def save_entry_to_db(form, input_data):
     input_filters = parse_input_filters(input_data)

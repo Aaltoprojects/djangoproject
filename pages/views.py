@@ -16,7 +16,7 @@ import urllib.request
 import urllib.parse
 import re
 from pages.constants import DATE_FORMAT
-from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm, CreateReferenceProjectForm, SearchReferenceProjectForm
+from pages.forms import CreateProjectForm, SearchProjectForm, AddFilterForm, CreateReferenceProjectForm
 from django import forms
 import pages.scripts.sql_util as sql_util
 import pages.scripts.parse_util as parse_util
@@ -30,12 +30,9 @@ from attachments.views import delete_image
 
 @login_required(login_url='/login/')
 def home(request):
-    print(request)
     f1, f2, f3, f4, f5 = sql_util.get_filters()
     form1 = SearchProjectForm()
-    form2 = SearchReferenceProjectForm()
     context = {'form1': form1,
-               'form2': form2,
                'f1': f1,
                'f2': f2,
                'f3': f3,
