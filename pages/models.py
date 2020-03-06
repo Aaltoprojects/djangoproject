@@ -62,3 +62,48 @@ class Project(models.Model):
 
 	def __str__(self):
 		return self.project_name
+
+class ReferenceProject(models.Model):
+
+	project = models.OneToOneField(
+		Project,
+		on_delete=models.CASCADE,
+		primary_key=True,
+		)
+
+	undertaking = models.CharField(
+		null=True,
+		max_length=200,
+		verbose_name='Hanke',
+		)
+
+	client = models.CharField(
+		null=True,
+		max_length=200,
+		verbose_name='Tilaaja',
+		)
+
+	area = models.FloatField(
+		null=True,
+		verbose_name='Laajuus (brm2)',
+		)
+
+	construction_cost = models.FloatField(
+		null=True,
+		verbose_name='Rakentamiskustannukset',
+		)
+
+	project_accepted = models.DateField(
+		null=True,
+		verbose_name='Hanke vastaanotettu',
+		)
+
+	construction_permit_granted = models.DateField(
+		null=True,
+		verbose_name='Rakennuslupa myönnetty',
+		)
+
+	def __str__(self):
+		return self.project.project_name
+
+

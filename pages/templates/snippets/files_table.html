@@ -1,0 +1,31 @@
+{% load attachments_tags %}
+
+
+
+<table style="width: 730px;">
+  {% for attachment in my_entry_attachments %}
+    <center>
+        <tr style="table-layout: fixed; height: 50px;">
+          <th>
+          <center>
+            <a href="{{ attachment.attachment_file.url }}" target="_blank">
+              <img src="{{ attachment.attachment_file.url }}" style="max-height:25px; max-width:25px" onerror="this.src='../../static/images/default-file-icon.png'">
+            </a>
+          </center>          
+          </th>
+          <th>
+            <a href="{{ attachment.attachment_file.url }}" target="_blank">
+              {{attachment.filename|truncatechars:50}}
+            </a>
+          </th>
+          {% if delete_links_included is not None %}
+          <th>
+              <center>
+                {% attachment_delete_link attachment %}
+              </center>
+          </th>
+          {% endif %}
+  {% endfor %}
+</table>
+
+<br>

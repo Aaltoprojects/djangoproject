@@ -1,0 +1,8 @@
+{% load i18n %}
+{% if form %}
+<div class="add-attachment">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}"/>
+    {{ form.as_p }}
+</div>
+{% endif %}

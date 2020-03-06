@@ -28,6 +28,7 @@ SECRET_KEY = 'jn%d6#nxfkr#2bkovuyhw&cwf_0ne_5fg-dre&hyrd^dtq+#lt'
 DEBUG = os.environ.get('OSAAMISPANKKI_DEBUG_MODE') != 'False'
 
 ALLOWED_HOSTS = [
+    'projektipankki-staging.herokuapp.com',
     'projektipankki.herokuapp.com',
     '127.0.0.1',
 ]
@@ -48,6 +49,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'formtools',
     'widget_tweaks',
+    'attachments',
+    'storages',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -131,7 +134,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
+#MEDIA_URL = '/'
+#MEDIA_ROOT = os.path.join(BASE_DIR,'')
 STATIC_ROOT  =   os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
@@ -149,3 +153,10 @@ DATABASES['default'].update(prod_db)
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/login"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = 'eu-north-1'
