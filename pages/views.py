@@ -147,8 +147,10 @@ def edit_project(request, id):
                       form = ImageForm(request.POST, test)
                       if form.is_valid():
                         form.save(request, obj)
+            print(input_data)
             if 'undertaking' in input_data:
                 form2 = CreateReferenceProjectForm(request.POST)
+                print(form2.is_valid())
                 if form2.is_valid():
                     sql_util.edit_ref_in_db(project.referenceproject, form2)
             return HttpResponseRedirect(reverse(success))
