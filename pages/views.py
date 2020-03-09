@@ -47,7 +47,6 @@ def success(request):
 
 @login_required(login_url='/login/')
 def search_project(request):
-    f1, f2, f3, f4, f5 = sql_util.get_filters()
     input_data = request.GET.copy()
     result = sql_util.search(input_data)
     context = {
@@ -90,21 +89,19 @@ def add_project(request):
                     obj2 = sql_util.save_ref_to_db(form2, obj1)
             return HttpResponseRedirect(reverse('success'))
         else: 
-            f1, f2, f3, f4, f5 = sql_util.get_filters()
             input_data = request.POST.copy()
-            filters_qset = parse_util.parse_input_filters(input_data)
-            filters_dict = parse_util.filters_qs_to_dict(filters_qset)
             attachment_model = Attachment(pk=1) # tää on viel kyssäri
             image_model = Image(pk=1)
-            context = {'form': form,
+            context = {'form1': CreateProjectForm(request.POST),
+                       'form2': CreateReferenceProjectForm(request.POST),
                        'attachment': attachment_model,
                        'image': image_model,
                        'filters':sql_util.get_filters(),
-                       'selected_filters': parse_util.filters_qs_to_dict(project.filters.all())
+                       'selected_filters': parse_util.filters_qs_to_dict(parse_util.parse_input_filters(input_data)),
+                       'is_reference': 'undertaking' in input_data
                        }
             return render(request, 'add_project.html', context)
     elif request.method == 'GET':
-        f1, f2, f3, f4, f5 = sql_util.get_filters()
         form1 = CreateProjectForm()
         form2 = CreateReferenceProjectForm()
         attachment_model = Attachment(pk=1) # tää on viel kyssäri
@@ -154,6 +151,19 @@ def edit_project(request, id):
                 if form2.is_valid():
                     sql_util.edit_ref_in_db(project.referenceproject, form2)
             return HttpResponseRedirect(reverse(success))
+        else:
+            input_data = request.POST.copy()
+            attachment_model = Attachment(pk=1) # tää on viel kyssäri
+            image_model = Image(pk=1)
+            context = {'form1': CreateProjectForm(request.POST),
+                       'form2': CreateReferenceProjectForm(request.POST),
+                       'attachment': attachment_model,
+                       'image': image_model,
+                       'filters':sql_util.get_filters(),
+                       'selected_filters': parse_util.filters_qs_to_dict(parse_util.parse_input_filters(input_data)),
+                       }
+            return render(request, 'edit_project.html', context)
+
     elif request.method == 'GET':
       f1, f2, f3, f4, f5 = sql_util.get_filters()
       filters_qset = project.filters.all()

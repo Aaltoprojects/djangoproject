@@ -17,8 +17,14 @@ Lisää projekti
 
 			<h6 class="mt-2">Lisätäänkö projekti Referenssipankkiin?</h6>
 			<div class="custom-control custom-checkbox">
-			  	<input type="checkbox" class="custom-control-input" id="ref_check" onclick="HideAndReveal()">
-			  	<label class="custom-control-label" for="ref_check">Kyllä</label>
+				{% if is_reference %}
+				  	<input type="checkbox" class="custom-control-input" id="ref_check" name="is_ref" value="true" onclick="HideAndReveal()" checked>
+				  	<label class="custom-control-label" for="ref_check">Kyllä</label>
+				{% else %}
+				  	<input type="checkbox" class="custom-control-input" id="ref_check" name="is_ref" value="true" onclick="HideAndReveal()">
+				  	<label class="custom-control-label" for="ref_check">Kyllä</label>
+				{% endif %}
+
 			</div>
 
 			<form action="" enctype="multipart/form-data" id="add_project_form" method="post">
