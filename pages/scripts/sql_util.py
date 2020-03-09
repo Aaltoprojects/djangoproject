@@ -70,7 +70,7 @@ def sql_query(data_dict):
         p2 = ReferenceProject.objects.all().filter(qset2)
         p3 = projects.filter(referenceproject__in=p2)
         projects = p1.union(p3)
-    return projects
+    return projects.distinct()
 
 def search(data_dict):
     projects = sql_query(data_dict)
