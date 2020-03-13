@@ -33,65 +33,22 @@ Etsi projekteja tietokannasta
 						{{ form1.area|as_crispy_field }}
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-6">
-						<label>
-							Rakennustyyppi
-						</label>
-						<select class="js-example-basic-multiple" name="structure_type" multiple="multiple" style="width: 100%">
-							{% for filter in f1 %}
-								<option value= "{{ filter }}" > {{ filter }} </option>
-							{% endfor %}
-						</select>
-					</div>
-					<div class="col-6">
-						<label>
-							Rakennusmateriaali
-						</label>
-						<select class="js-example-basic-multiple" name="building_material" multiple="multiple" style="width: 100%">
-							{% for filter in f2 %}
-								<option value= "{{ filter }}" > {{ filter }} </option>
-							{% endfor %}
-						</select>
-					</div>
+				<div>
+					{% for category, filters_array in filters.items%}
+						{% cycle '<div class="row">' '' '<div class="row">' '' '<div class="row">'%}
+							<div class="col-6">
+								<label>
+									{{ category }}
+								</label>
+								<select class="js-example-basic-multiple" name="structure_type" multiple="multiple" style="width: 100%">
+									{% for filter in filters_array %}
+										<option value= "{{ filter }}" > {{ filter }} </option>
+									{% endfor %}
+								</select>
+							</div>
+						{% cycle '' '</div><br>' '' '</div><br>' '</div><br>'%}
+					{% endfor %}
 				</div>
-				<br>
-				<div class="row">
-					<div class="col-6">
-						<label>
-							Palvelu
-						</label>
-						<select class="js-example-basic-multiple" name="service" multiple="multiple" style="width: 100%">
-							{% for filter in f3 %}
-								<option value= "{{ filter }}" > {{ filter }} </option>
-							{% endfor %}
-						</select>
-					</div>
-					<div class="col-6">
-						<label>
-							Rakennustoimenpide
-						</label>
-						<select class="js-example-basic-multiple" name="construction_operation" multiple="multiple" style="width: 100%">
-							{% for filter in f4 %}
-								<option value= "{{ filter }}" > {{ filter }} </option>
-							{% endfor %}
-						</select>
-					</div>
-				</div>
-				<br>
-				<div class="row">
-					<div class="col-6">
-						<label>
-							Rakenneosa
-						</label>
-						<select class="js-example-basic-multiple" name="structural_component" multiple="multiple" style="width: 100%">
-							{% for filter in f5 %}
-								<option value= "{{ filter }}" > {{ filter }} </option>
-							{% endfor %}
-						</select>
-					</div>
-				</div>
-				<br>
 				<div class="row">
 					<div class="col-6">
 						{{ form1.start_date|as_crispy_field }}
