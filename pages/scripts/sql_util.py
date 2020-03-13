@@ -34,8 +34,8 @@ def sql_query(data_dict):
     if 'structural_component' in data_dict:
         filter_names += data_dict.getlist('structural_component')
 
-    if filter_names:
-        filter_qs = Filter.filter_db.filter(filter_name__in=filter_names)
+    for filter in filter_names:
+        filter_qs = Filter.filter_db.filter(filter_name__iexact=filter)
         projects = projects.filter(filters__in=filter_qs)
 
     if start_date != '':
@@ -70,7 +70,7 @@ def sql_query(data_dict):
         p2 = ReferenceProject.objects.all().filter(qset2)
         p3 = projects.filter(referenceproject__in=p2)
         projects = p1.union(p3)
-    return projects.distinct()
+    return projects
 
 def search(data_dict):
     projects = sql_query(data_dict)
