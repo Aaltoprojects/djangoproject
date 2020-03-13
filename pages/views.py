@@ -135,6 +135,7 @@ def edit_project(request, id):
                         form = AttachmentForm(request.POST, test)
                         if form.is_valid():
                           form.save(request, obj)
+                        #else invalid
                 if len(images) > 0:
                     existing_images = Image.objects.attachments_for_object(id)
                     for image in existing_images:
@@ -144,12 +145,14 @@ def edit_project(request, id):
                       form = ImageForm(request.POST, test)
                       if form.is_valid():
                         form.save(request, obj)
+                      #else invalid
             print(input_data)
             if 'undertaking' in input_data:
                 form2 = CreateReferenceProjectForm(request.POST)
                 print(form2.is_valid())
                 if form2.is_valid():
                     sql_util.edit_ref_in_db(project.referenceproject, form2)
+                #else invalid - look at what happens when form1 is not valid
             return HttpResponseRedirect(reverse(success))
         else:
             input_data = request.POST.copy()
@@ -159,8 +162,9 @@ def edit_project(request, id):
                        'form2': CreateReferenceProjectForm(request.POST),
                        'attachment': attachment_model,
                        'image': image_model,
+                       'id': id,
                        'filters':sql_util.get_filters(),
-                       'selected_filters': parse_util.filters_qs_to_dict(parse_util.parse_input_filters(input_data)),
+                       'selected_filters': parse_util.filters_qs_to_dict(parse_util.parse_input_filters(input_data))
                        }
             return render(request, 'edit_project.html', context)
 
