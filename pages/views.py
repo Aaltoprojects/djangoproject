@@ -169,9 +169,6 @@ def edit_project(request, id):
             return render(request, 'edit_project.html', context)
 
     elif request.method == 'GET':
-      f1, f2, f3, f4, f5 = sql_util.get_filters()
-      filters_qset = project.filters.all()
-      filters_dict = parse_util.filters_qs_to_dict(filters_qset)
       project_form = CreateProjectForm(
           initial={
               'project_name': project.project_name,
