@@ -79,14 +79,14 @@ def handle_adding_attachments(request, db_object):
 
 def save_project(request):
     project_form = CreateProjectForm(request.POST)
+    reference_project_form = CreateReferenceProjectForm(request.POST)
     input_data = request.POST.copy()
-    if project_form.is_valid():
+    is_reference = 'undertaking' in input_data
+    if project_form.is_valid() and reference_project_form.is_valid() or not is_reference:
         obj1 = sql_util.save_entry_to_db(project_form, input_data)
         handle_adding_attachments(request, obj1)
-        if 'undertaking' in input_data:
-            reference_project_form = CreateReferenceProjectForm(request.POST)
-            if reference_project_form.is_valid():
-                obj2 = sql_util.save_ref_to_db(reference_project_form, obj1)
+        if is_reference:
+            sql_util.save_ref_to_db(reference_project_form, obj1)
         return HttpResponseRedirect(reverse('success'))
     else: 
         input_data = request.POST.copy()
@@ -98,7 +98,7 @@ def save_project(request):
                     'image': image_model,
                     'filters':sql_util.get_filters(),
                     'selected_filters': parse_util.filters_qs_to_dict(parse_util.parse_input_filters(input_data)),
-                    'is_reference': 'undertaking' in input_data
+                    'is_reference': is_reference
                     }
         return render(request, 'add_project.html', context)
 
