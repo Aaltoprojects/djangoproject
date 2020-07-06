@@ -127,9 +127,11 @@ def add_project(request):
 def edit_project(request, id):
     project = models.Project.project_db.get(id=id)
     if request.method == 'POST':
+        input_data = request.POST.copy()
+        is_reference = 'undertaking' in input_data
         project_form = CreateProjectForm(request.POST)
-        if project_form.is_valid():
-            input_data = request.POST.copy()
+        reference_project_form = CreateReferenceProjectForm(request.POST)
+        if project_form.is_valid() and reference_project_form.is_valid() or not is_reference:
             sql_util.edit_entry_in_db(project, project_form, input_data)
             app_label = 'pages'
             model_name = 'Project'
@@ -144,7 +146,6 @@ def edit_project(request, id):
                         form = AttachmentForm(request.POST, test)
                         if form.is_valid():
                           form.save(request, obj)
-                        #else invalid
                 if len(images) > 0:
                     existing_images = Image.objects.attachments_for_object(id)
                     for image in existing_images:
@@ -154,14 +155,8 @@ def edit_project(request, id):
                       form = ImageForm(request.POST, test)
                       if form.is_valid():
                         form.save(request, obj)
-                      #else invalid
-            print(input_data)
-            if 'undertaking' in input_data:
-                reference_project_form = CreateReferenceProjectForm(request.POST)
-                print(reference_project_form.is_valid())
-                if reference_project_form.is_valid():
-                    sql_util.edit_ref_in_db(project.referenceproject, reference_project_form)
-                #else invalid - look at what happens when project_form is not valid
+            if is_reference:
+                sql_util.edit_ref_in_db(project.referenceproject, reference_project_form)
             return HttpResponseRedirect(reverse(success))
         else:
             input_data = request.POST.copy()
