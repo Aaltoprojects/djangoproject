@@ -55,6 +55,7 @@ def search_project(request):
                }
     return render(request, 'snippets/ajax_result_table.html', context)
 
+@login_required(login_url='/login/')
 def handle_adding_attachments(request, db_object):
     pk = db_object.id
     app_label = 'pages'
@@ -77,6 +78,7 @@ def handle_adding_attachments(request, db_object):
                 if form.is_valid():
                     form.save(request, obj)
 
+@login_required(login_url='/login/')
 def save_project(request):
     project_form = CreateProjectForm(request.POST)
     reference_project_form = CreateReferenceProjectForm(request.POST)
@@ -102,6 +104,7 @@ def save_project(request):
                     }
         return render(request, 'add_project.html', context)
 
+@login_required(login_url='/login/')
 def load_form_fields(request):
     project_form = CreateProjectForm()
     reference_project_form = CreateReferenceProjectForm()
@@ -123,6 +126,7 @@ def add_project(request):
     elif request.method == 'GET':
         return load_form_fields(request)
 
+@login_required(login_url='/login/')
 def save_edited_project(request, project, id):
     input_data = request.POST.copy()
     is_reference = 'undertaking' in input_data
@@ -169,6 +173,7 @@ def save_edited_project(request, project, id):
                     }
         return render(request, 'edit_project.html', context)
 
+@login_required(login_url='/login/')
 def prefill_project_fields(request, project, id):
     project_form = CreateProjectForm(
     initial={
