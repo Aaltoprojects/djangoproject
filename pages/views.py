@@ -33,8 +33,8 @@ def get_item(dictionary, key):
 
 @login_required(login_url='/login/')
 def home(request):
-    form1 = SearchProjectForm()
-    context = {'form1': form1,
+    project_form = SearchProjectForm()
+    context = {'project_form': project_form,
                'filters':sql_util.get_filters(),
                }
     return render(request, 'home.html', context)
@@ -59,10 +59,10 @@ def search_project(request):
 @login_required(login_url='/login/')
 def add_project(request):
     if request.method == 'POST':
-        form1 = CreateProjectForm(request.POST)
+        project_form = CreateProjectForm(request.POST)
         input_data = request.POST.copy()
-        if form1.is_valid():
-            obj1 = sql_util.save_entry_to_db(form1, input_data)
+        if project_form.is_valid():
+            obj1 = sql_util.save_entry_to_db(project_form, input_data)
             pk = obj1.id
             app_label = 'pages'
             model_name = 'Project'
@@ -84,16 +84,16 @@ def add_project(request):
                     if form.is_valid():
                         form.save(request, obj)
             if 'undertaking' in input_data:
-                form2 = CreateReferenceProjectForm(request.POST)
-                if form2.is_valid():
-                    obj2 = sql_util.save_ref_to_db(form2, obj1)
+                reference_project_form = CreateReferenceProjectForm(request.POST)
+                if reference_project_form.is_valid():
+                    obj2 = sql_util.save_ref_to_db(reference_project_form, obj1)
             return HttpResponseRedirect(reverse('success'))
         else: 
             input_data = request.POST.copy()
             attachment_model = Attachment(pk=1) # tää on viel kyssäri
             image_model = Image(pk=1)
-            context = {'form1': CreateProjectForm(request.POST),
-                       'form2': CreateReferenceProjectForm(request.POST),
+            context = {'project_form': CreateProjectForm(request.POST),
+                       'reference_project_form': CreateReferenceProjectForm(request.POST),
                        'attachment': attachment_model,
                        'image': image_model,
                        'filters':sql_util.get_filters(),
@@ -102,12 +102,12 @@ def add_project(request):
                        }
             return render(request, 'add_project.html', context)
     elif request.method == 'GET':
-        form1 = CreateProjectForm()
-        form2 = CreateReferenceProjectForm()
+        project_form = CreateProjectForm()
+        reference_project_form = CreateReferenceProjectForm()
         attachment_model = Attachment(pk=1) # tää on viel kyssäri
         image_model = Image(pk=1)
-        context = {'form1': form1,
-                   'form2': form2,
+        context = {'project_form': project_form,
+                   'reference_project_form': reference_project_form,
                    'attachment': attachment_model,
                    'image': image_model,
                    'filters':sql_util.get_filters(),
@@ -118,10 +118,10 @@ def add_project(request):
 def edit_project(request, id):
     project = models.Project.project_db.get(id=id)
     if request.method == 'POST':
-        form1 = CreateProjectForm(request.POST)
-        if form1.is_valid():
+        project_form = CreateProjectForm(request.POST)
+        if project_form.is_valid():
             input_data = request.POST.copy()
-            sql_util.edit_entry_in_db(project, form1, input_data)
+            sql_util.edit_entry_in_db(project, project_form, input_data)
             app_label = 'pages'
             model_name = 'Project'
             if request.user.has_perm("attachments.add_attachment"):
@@ -148,18 +148,18 @@ def edit_project(request, id):
                       #else invalid
             print(input_data)
             if 'undertaking' in input_data:
-                form2 = CreateReferenceProjectForm(request.POST)
-                print(form2.is_valid())
-                if form2.is_valid():
-                    sql_util.edit_ref_in_db(project.referenceproject, form2)
-                #else invalid - look at what happens when form1 is not valid
+                reference_project_form = CreateReferenceProjectForm(request.POST)
+                print(reference_project_form.is_valid())
+                if reference_project_form.is_valid():
+                    sql_util.edit_ref_in_db(project.referenceproject, reference_project_form)
+                #else invalid - look at what happens when project_form is not valid
             return HttpResponseRedirect(reverse(success))
         else:
             input_data = request.POST.copy()
             attachment_model = Attachment(pk=1) # tää on viel kyssäri
             image_model = Image(pk=1)
-            context = {'form1': CreateProjectForm(request.POST),
-                       'form2': CreateReferenceProjectForm(request.POST),
+            context = {'project_form': CreateProjectForm(request.POST),
+                       'reference_project_form': CreateReferenceProjectForm(request.POST),
                        'attachment': attachment_model,
                        'image': image_model,
                        'id': id,
@@ -172,7 +172,7 @@ def edit_project(request, id):
       f1, f2, f3, f4, f5 = sql_util.get_filters()
       filters_qset = project.filters.all()
       filters_dict = parse_util.filters_qs_to_dict(filters_qset)
-      form1 = CreateProjectForm(
+      project_form = CreateProjectForm(
           initial={
               'project_name': project.project_name,
               'destination_name': '' if project.destination_name == '—' else project.destination_name,
@@ -184,7 +184,7 @@ def edit_project(request, id):
               'project_manager': ''  if project.project_manager == '—' else project.project_manager,
           })
       try:
-          form2 = CreateReferenceProjectForm(
+          reference_project_form = CreateReferenceProjectForm(
               initial={
                   'undertaking': project.referenceproject.undertaking,
                   'client': project.referenceproject.client,
@@ -194,11 +194,11 @@ def edit_project(request, id):
                   'construction_permit_granted': parse_util.format_time(project.referenceproject.construction_permit_granted),
               })
       except ObjectDoesNotExist:
-          form2 = False
+          reference_project_form = False
       attachment_model = Attachment(pk=1)
       image_model = Image(pk=1)
-      context = {'form1': form1,
-                 'form2': form2,
+      context = {'project_form': project_form,
+                 'reference_project_form': reference_project_form,
                  'attachment': attachment_model,
                  'image': image_model,
                  'id': id,

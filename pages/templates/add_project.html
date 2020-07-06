@@ -31,18 +31,18 @@ Lisää projekti
 				{% csrf_token %}
 				<div class="row">
 					<div class="col-6">
-						{{ form1.project_name | as_crispy_field }}
+						{{ project_form.project_name | as_crispy_field }}
 					</div>
 					<div class="col-6">
-						{{ form1.destination_name | as_crispy_field }}
+						{{ project_form.destination_name | as_crispy_field }}
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-6">
-						{{ form1.start_date | as_crispy_field}}
+						{{ project_form.start_date | as_crispy_field}}
 					</div>
 					<div class="col-6">
-						{{ form1.end_date | as_crispy_field }}
+						{{ project_form.end_date | as_crispy_field }}
 					</div>
 				</div>
 				{% for category, filters_array in filters.items%}
@@ -70,20 +70,20 @@ Lisää projekti
 				{% endfor %}
 				<div class="row">
 					<div class="col-6">
-						{{ form1.keywords | as_crispy_field }}
+						{{ project_form.keywords | as_crispy_field }}
 					</div>
 					<div class="col-6">
-						{{ form1.project_manager | as_crispy_field }}
+						{{ project_form.project_manager | as_crispy_field }}
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-12">
-						{{ form1.project_description | as_crispy_field }}
+						{{ project_form.project_description | as_crispy_field }}
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-12">
-						{{ form1.documentation_path | as_crispy_field }}
+						{{ project_form.documentation_path | as_crispy_field }}
 					</div>
 				</div>
 				<div class="row">
@@ -100,26 +100,26 @@ Lisää projekti
 				<div id=reference_fields>
 					<div class="row">
 						<div class="col-6">
-							{{ form2.undertaking | as_crispy_field }}
+							{{ reference_project_form.undertaking | as_crispy_field }}
 						</div>
 						<div class="col-6">
-							{{ form2.client | as_crispy_field }}
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-6">
-							{{ form2.area | as_crispy_field}}
-						</div>
-						<div class="col-6">
-							{{ form2.construction_cost | as_crispy_field }}
+							{{ reference_project_form.client | as_crispy_field }}
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-6">
-							{{ form2.project_accepted | as_crispy_field }}
+							{{ reference_project_form.area | as_crispy_field}}
 						</div>
 						<div class="col-6">
-							{{ form2.construction_permit_granted | as_crispy_field }}
+							{{ reference_project_form.construction_cost | as_crispy_field }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6">
+							{{ reference_project_form.project_accepted | as_crispy_field }}
+						</div>
+						<div class="col-6">
+							{{ reference_project_form.construction_permit_granted | as_crispy_field }}
 						</div>
 					</div>
 				</div>
