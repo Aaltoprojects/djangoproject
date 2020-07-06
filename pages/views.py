@@ -55,64 +55,73 @@ def search_project(request):
                }
     return render(request, 'snippets/ajax_result_table.html', context)
 
+def handle_adding_attachments(request, db_object):
+    pk = db_object.id
+    app_label = 'pages'
+    model_name = 'Project'
+    if request.user.has_perm("attachments.add_attachment"):
+        model = apps.get_model(app_label, model_name)
+        obj = get_object_or_404(model, pk=pk)
+        files = request.FILES.getlist('attachment_file')
+        images = request.FILES.getlist('attachment_image')
+        if len(files) > 0:
+            for f in files:
+                test = MultiValueDict({'attachment_file': [f]})
+                form = AttachmentForm(request.POST, test)
+                if form.is_valid():
+                    form.save(request, obj)
+        if len(images) > 0:
+            for i in images:
+                test = MultiValueDict({'attachment_image': [i]})
+                form = ImageForm(request.POST, test)
+                if form.is_valid():
+                    form.save(request, obj)
+
+def save_project(request):
+    project_form = CreateProjectForm(request.POST)
+    input_data = request.POST.copy()
+    if project_form.is_valid():
+        obj1 = sql_util.save_entry_to_db(project_form, input_data)
+        handle_adding_attachments(request, obj1)
+        if 'undertaking' in input_data:
+            reference_project_form = CreateReferenceProjectForm(request.POST)
+            if reference_project_form.is_valid():
+                obj2 = sql_util.save_ref_to_db(reference_project_form, obj1)
+        return HttpResponseRedirect(reverse('success'))
+    else: 
+        input_data = request.POST.copy()
+        attachment_model = Attachment(pk=1) # tää on viel kyssäri
+        image_model = Image(pk=1)
+        context = {'project_form': CreateProjectForm(request.POST),
+                    'reference_project_form': CreateReferenceProjectForm(request.POST),
+                    'attachment': attachment_model,
+                    'image': image_model,
+                    'filters':sql_util.get_filters(),
+                    'selected_filters': parse_util.filters_qs_to_dict(parse_util.parse_input_filters(input_data)),
+                    'is_reference': 'undertaking' in input_data
+                    }
+        return render(request, 'add_project.html', context)
+
+def load_form_fields(request):
+    project_form = CreateProjectForm()
+    reference_project_form = CreateReferenceProjectForm()
+    attachment_model = Attachment(pk=1) # tää on viel kyssäri
+    image_model = Image(pk=1)
+    context = {'project_form': project_form,
+                'reference_project_form': reference_project_form,
+                'attachment': attachment_model,
+                'image': image_model,
+                'filters':sql_util.get_filters(),
+                }
+    return render(request, 'add_project.html', context)
+
 
 @login_required(login_url='/login/')
 def add_project(request):
     if request.method == 'POST':
-        project_form = CreateProjectForm(request.POST)
-        input_data = request.POST.copy()
-        if project_form.is_valid():
-            obj1 = sql_util.save_entry_to_db(project_form, input_data)
-            pk = obj1.id
-            app_label = 'pages'
-            model_name = 'Project'
-            if request.user.has_perm("attachments.add_attachment"):
-              model = apps.get_model(app_label, model_name)
-              obj = get_object_or_404(model, pk=pk)
-              files = request.FILES.getlist('attachment_file')
-              images = request.FILES.getlist('attachment_image')
-              if len(files) > 0:
-                for f in files:
-                    test = MultiValueDict({'attachment_file': [f]})
-                    form = AttachmentForm(request.POST, test)
-                    if form.is_valid():
-                        form.save(request, obj)
-              if len(images) > 0:
-                for i in images:
-                    test = MultiValueDict({'attachment_image': [i]})
-                    form = ImageForm(request.POST, test)
-                    if form.is_valid():
-                        form.save(request, obj)
-            if 'undertaking' in input_data:
-                reference_project_form = CreateReferenceProjectForm(request.POST)
-                if reference_project_form.is_valid():
-                    obj2 = sql_util.save_ref_to_db(reference_project_form, obj1)
-            return HttpResponseRedirect(reverse('success'))
-        else: 
-            input_data = request.POST.copy()
-            attachment_model = Attachment(pk=1) # tää on viel kyssäri
-            image_model = Image(pk=1)
-            context = {'project_form': CreateProjectForm(request.POST),
-                       'reference_project_form': CreateReferenceProjectForm(request.POST),
-                       'attachment': attachment_model,
-                       'image': image_model,
-                       'filters':sql_util.get_filters(),
-                       'selected_filters': parse_util.filters_qs_to_dict(parse_util.parse_input_filters(input_data)),
-                       'is_reference': 'undertaking' in input_data
-                       }
-            return render(request, 'add_project.html', context)
+        return save_project(request)
     elif request.method == 'GET':
-        project_form = CreateProjectForm()
-        reference_project_form = CreateReferenceProjectForm()
-        attachment_model = Attachment(pk=1) # tää on viel kyssäri
-        image_model = Image(pk=1)
-        context = {'project_form': project_form,
-                   'reference_project_form': reference_project_form,
-                   'attachment': attachment_model,
-                   'image': image_model,
-                   'filters':sql_util.get_filters(),
-                   }
-        return render(request, 'add_project.html', context)
+        return load_form_fields(request)
 
 @login_required(login_url='/login/')
 def edit_project(request, id):
